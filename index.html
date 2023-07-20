@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Salvar Texto em Formato TXT</title>
+  <!-- Adicione os links para o Bootstrap e JavaScript -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-12 md-3">
+        <form>
+          <div class="form-group row">
+            <div class="col-sm-12">
+			<button type="button" class="btn btn-primary" onclick="salvarTexto()">Salvar</button>
+            <input type="text" class="form-control" id="nomeArquivoInput" placeholder="Digite o nome do arquivo">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="textoArea">Anotações:</label>
+            <textarea class="form-control rounded" id="textoArea" rows="5" readonly></textarea>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function salvarTexto() {
+      const nomeArquivo = document.getElementById("nomeArquivoInput").value;
+      const textoArea = document.getElementById("textoArea").value;
+      const conteudoArquivo = `${textoArea}`;
+
+      const blob = new Blob([conteudoArquivo], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `${nomeArquivo}.txt`;
+      link.click();
+    }
+  </script>
+</body>
+</html>
