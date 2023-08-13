@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Exemplo de Acesso a Dados do Google Sheets com Bootstrap</title>
+    <title>Acionamento</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h2 class="mb-4">Acesso a Dados do Google Sheets</h2>
+                <h2 class="mb-4">Insira o numero</h2>
                 <div class="form-group">
                     <input type="text" class="form-control" id="numeroInput" placeholder="Insira o número">
                 </div>
@@ -34,14 +34,14 @@
             
             return gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-                range: 'MEDIOS!D:E',
+                range: 'MEDIOS!D:M',
     }).then(response => {
         const values = response.result.values;
         if (values && values.length > 0) {
             let informacaoDesejada = null; // Variável para armazenar a informação encontrada
             for (let i = 0; i < values.length; i++) { // Laço para percorrer os valores
-                if (values[i][0] == numero) { // Se o valor da coluna A for igual ao input
-                    informacaoDesejada = values[i][1]; // Atribui o valor da coluna B à variável
+                if (values[i][0] == numero) { // Se o valor da coluna D for igual ao input
+                    informacaoDesejada = values[i][1]; // Atribui o valor da coluna M à variável
                     break; // Sai do laço
                 }
             }
