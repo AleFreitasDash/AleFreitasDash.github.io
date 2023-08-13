@@ -67,14 +67,14 @@
             
             gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-                range: 'SITE!D:M',
+                range: 'SITE!D:AM',
             }).then(response => {
                 const values = response.result.values;
                 if (values && values.length > 0) {
                     for (let i = 0; i < values.length; i++) {
                         if (values[i][0] === chave) {
                             document.getElementById("planilha").innerText = values[i][0];
-                            document.getElementById("embarque").innerText = values[i][0];
+                            document.getElementById("embarque").innerText = values[i][1];
                             document.getElementById("status").innerText = values[i][2];
                             document.getElementById("quemContratou").innerText = values[i][3];
                             document.getElementById("motorista").innerText = values[i][4];
@@ -89,6 +89,7 @@
                             document.getElementById("descarga").innerText = values[i][13];
                             document.getElementById("peso").innerText = values[i][14];
                             document.getElementById("entregas").innerText = values[i][15];
+                            document.getElementById("agendado").innerText = values[i][16];
                             return; // Encerra o loop após encontrar a chave
                         }
                     }
