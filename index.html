@@ -7,7 +7,7 @@
 <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h2 class="mb-4">Insira o numero</h2>
+                <h2 class="mb-4">Insira o numero da planilha</h2>
                 <div class="form-group">
                     <input type="text" class="form-control" id="chaveInput" placeholder="Insira a chave">
                 </div>
@@ -94,7 +94,7 @@
                             return; // Encerra o loop após encontrar a chave
                         }
                     }
-                    document.getElementById("status").innerText = "Chave não encontrada.";
+                    document.getElementById("status").innerText = "Planilha não encontrada.";
                 } else {
                     document.getElementById("status").innerText = "Nenhum dado encontrado.";
                 }
