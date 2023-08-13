@@ -67,7 +67,7 @@
             
             gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-                range: 'MEDIOS!D:M',
+                range: 'SITE!D:M',
             }).then(response => {
                 const values = response.result.values;
                 if (values && values.length > 0) {
