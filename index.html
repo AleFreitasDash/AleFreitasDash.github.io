@@ -16,12 +16,37 @@
                     <div><strong>Status:</strong> <span id="status"></span></div>
                     <div><strong>Quem Contratou:</strong> <span id="quemContratou"></span></div>
                     <div><strong>Motorista:</strong> <span id="motorista"></span></div>
-                    <div><strong>Destino Final:</strong> <span id="destinoFinal"></span></div>
-                    <div><strong>Cidades de Entrega:</strong> <span id="cidadesEntrega"></span></div>
-                    <div><strong>KM:</strong> <span id="km"></span></div>
                     <div><strong>Veículo:</strong> <span id="veiculo"></span></div>
-                    <div><strong>Frete:</strong> <span id="frete"></span></div>
-                </div>
+                
+    <div class="alert alert-info">
+      <p>Queremos garantir que o processo de transporte ocorra de forma eficiente e sem problemas. Um ponto crucial para isso é a sua chegada no horário agendado. Atrasos têm impacto direto na operação, causando retrabalho e afetando outros processos. Para evitar complicações, pedimos sua cooperação em cumprir rigorosamente o horário de embarque.</p>
+    </div>
+
+    <div class="alert alert-secondary">
+      <p><strong>Detalhes da Coleta:</strong></p>
+      <ul>
+        <li><strong>Planilha:</strong><span id="planilha"></span></li>
+        <li><strong>Entregas:</strong><span id="entregas"></span></li>
+        <li><strong>Origem:</strong> Vinhedo - SP</li>
+        <li><strong>Destino Final:</strong><span id="destinoFinal"></span></li>
+        <li><strong>Cidades de Entregas:</strong> <em><span id="cidadesEntrega"></span></em></li>
+        <li><strong>Volumes:</strong><span id="volumes"></span></li>
+        <li><strong>Peso:</strong><span id="peso"></span></li>
+        <li><strong>Data e hora de embarque:</strong><em><span id="embarque"></span><em></li>
+        <li><strong>Data de descarga:</strong><span id="descarga"></span></li>
+        <li><strong>Agendado:</strong> <em><span id="agendado"></span></em></li>
+        <li><strong>Refrigerada:</strong> <em><span id="refrigerado"></span></em></li>
+        <li><strong>Rastreada:</strong> <em><span id="rastreada"></span></em></li>
+        <li><strong>Divisória:</strong> <em><span id="divisoria"></span></em></li>
+        <li><strong>KM:</strong><em><span id="km"></span></em></li>
+        <li><strong>Frete:</strong><em><span id="frete"></span></em></li>
+      </ul>
+    </div>
+
+    <div class="alert alert-warning">
+      <p><strong>Atenção, querido parceiro!</strong> Para cargas refrigeradas, lembre-se de manter o sistema de refrigeração na temperatura adequada (<strong>🌡️ +2º a +8º 🌡️</strong>). Isso é fundamental para garantir a qualidade da carga durante o transporte.</p>
+    </div>
+  </div>
             </div>
         </div>
     </div>
@@ -48,14 +73,20 @@
                 if (values && values.length > 0) {
                     for (let i = 0; i < values.length; i++) {
                         if (values[i][0] === chave) {
-                            document.getElementById("status").innerText = values[i][1];
-                            document.getElementById("quemContratou").innerText = values[i][2];
-                            document.getElementById("motorista").innerText = values[i][3];
-                            document.getElementById("destinoFinal").innerText = values[i][4];
-                            document.getElementById("cidadesEntrega").innerText = values[i][5];
-                            document.getElementById("km").innerText = values[i][6];
-                            document.getElementById("veiculo").innerText = values[i][7];
-                            document.getElementById("frete").innerText = values[i][8];
+                            document.getElementById("planilha").innerText = values[i][0];
+                            document.getElementById("embarque").innerText = values[i][0];
+                            document.getElementById("status").innerText = values[i][2];
+                            document.getElementById("quemContratou").innerText = values[i][3];
+                            document.getElementById("motorista").innerText = values[i][4];
+                            document.getElementById("destinoFinal").innerText = values[i][5];
+                            document.getElementById("cidadesEntrega").innerText = values[i][6];
+                            document.getElementById("km").innerText = values[i][7];
+                            document.getElementById("veiculo").innerText = values[i][8];
+                            document.getElementById("frete").innerText = values[i][9];
+                            document.getElementById("rastreada").innerText = values[i][10];
+                            document.getElementById("refrigerada").innerText = values[i][11];
+                            document.getElementById("divisoria").innerText = values[i][12];
+                            document.getElementById("descarga").innerText = values[i][13];
                             return; // Encerra o loop após encontrar a chave
                         }
                     }
