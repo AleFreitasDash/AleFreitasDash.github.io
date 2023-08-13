@@ -4,16 +4,24 @@
     <title>Acionamento</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container mt-5">
+<div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h2 class="mb-4">Insira o numero</h2>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="numeroInput" placeholder="Insira o número">
+                    <input type="text" class="form-control" id="chaveInput" placeholder="Insira a chave">
                 </div>
                 <button class="btn btn-primary" id="buscarButton">Buscar Informações</button>
-                <div class="mt-3" id="informacoes"></div>
+                <div class="mt-3">
+                    <div><strong>Status:</strong> <span id="status"></span></div>
+                    <div><strong>Quem Contratou:</strong> <span id="quemContratou"></span></div>
+                    <div><strong>Motorista:</strong> <span id="motorista"></span></div>
+                    <div><strong>Destino Final:</strong> <span id="destinoFinal"></span></div>
+                    <div><strong>Cidades de Entrega:</strong> <span id="cidadesEntrega"></span></div>
+                    <div><strong>KM:</strong> <span id="km"></span></div>
+                    <div><strong>Veículo:</strong> <span id="veiculo"></span></div>
+                    <div><strong>Frete:</strong> <span id="frete"></span></div>
+                </div>
             </div>
         </div>
     </div>
@@ -30,33 +38,35 @@
         });
 
         function buscarInformacoes() {
-            const numero = document.getElementById("numeroInput").value;
+            const chave = document.getElementById("chaveInput").value;
             
-            return gapi.client.sheets.spreadsheets.values.get({
+            gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
                 range: 'MEDIOS!D:M',
-    }).then(response => {
-        const values = response.result.values;
-        if (values && values.length > 0) {
-            let informacaoDesejada = null; // Variável para armazenar a informação encontrada
-            for (let i = 0; i < values.length; i++) { // Laço para percorrer os valores
-                if (values[i][0] == numero) { // Se o valor da coluna D for igual ao input
-                    informacaoDesejada = values[i][9]; // Atribui o valor da coluna M à variável
-                    break; // Sai do laço
+            }).then(response => {
+                const values = response.result.values;
+                if (values && values.length > 0) {
+                    for (let i = 0; i < values.length; i++) {
+                        if (values[i][0] === chave) {
+                            document.getElementById("status").innerText = values[i][1];
+                            document.getElementById("quemContratou").innerText = values[i][2];
+                            document.getElementById("motorista").innerText = values[i][3];
+                            document.getElementById("destinoFinal").innerText = values[i][4];
+                            document.getElementById("cidadesEntrega").innerText = values[i][5];
+                            document.getElementById("km").innerText = values[i][6];
+                            document.getElementById("veiculo").innerText = values[i][7];
+                            document.getElementById("frete").innerText = values[i][8];
+                            return; // Encerra o loop após encontrar a chave
+                        }
+                    }
+                    document.getElementById("status").innerText = "Chave não encontrada.";
+                } else {
+                    document.getElementById("status").innerText = "Nenhum dado encontrado.";
                 }
-            }
-            if (informacaoDesejada) { // Se a informação foi encontrada
-                document.getElementById("informacoes").innerText = informacaoDesejada;
-            } else { // Se a informação não foi encontrada
-                document.getElementById("informacoes").innerText = "Nenhuma informação encontrada para esse número.";
-            }
-        } else {
-            document.getElementById("informacoes").innerText = "Nenhum dado encontrado.";
+            }, response => {
+                console.error('Erro ao buscar informações:', response.result.error.message);
+            });
         }
-    }, response => {
-        console.error('Erro ao buscar informações:', response.result.error.message);
-    });
-}
     </script>
 </body>
 </html>
