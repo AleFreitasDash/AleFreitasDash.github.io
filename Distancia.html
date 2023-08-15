@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Distância</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>Calculadora de Distância entre Cidades</h2>
+    <div class="form-group">
+        <label for="origem">Cidade de Origem:</label>
+        <input type="text" class="form-control" id="origem" placeholder="Digite a cidade de origem">
+    </div>
+    <div class="form-group">
+        <label for="destino">Cidade de Destino:</label>
+        <input type="text" class="form-control" id="destino" placeholder="Digite a cidade de destino">
+    </div>
+    <button class="btn btn-primary" onclick="calcularDistancia()">Calcular Distância</button>
+    <div id="resultadoDistancia" class="mt-3"></div>
+    <div id="resultadoDuracao"></div>
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk&libraries=places"></script>
+<script>
+    function calcularDistancia() {
+        var origem = document.getElementById("origem").value;
+        var destino = document.getElementById("destino").value;
+
+        var service = new google.maps.DistanceMatrixService();
+
+        service.getDistanceMatrix({
+            origins: [origem],
+            destinations: [destino],
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.METRIC,
+            avoidHighways: false,
+            avoidTolls: false
+        }, callback);
+    }
+
+    function callback(response, status) {
+        if (status == "OK") {
+            var distancia = response.rows[0].elements[0].distance.text;
+            var duracao = response.rows[0].elements[0].duration.text;
+
+            document.getElementById("resultadoDistancia").innerHTML = "Distância: " + distancia;
+            document.getElementById("resultadoDuracao").innerHTML = "Duração: " + duracao;
+        }
+    }
+</script>
+
+</body>
+</html>
