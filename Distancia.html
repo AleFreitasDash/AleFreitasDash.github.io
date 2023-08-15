@@ -23,14 +23,7 @@
     <div id="resultadoDuracao"></div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk&libraries=places&callback=inicializarMapa"></script>
-
 <script>
-    function inicializarMapa() {
-    // Esta função é chamada quando a API do Google Maps é carregada
-    // Agora você pode adicionar o restante do seu código aqui
-
-    // Código para calcular a distância e mostrar os resultados
     function calcularDistancia() {
         var origem = document.getElementById("origem").value;
         var destino = document.getElementById("destino").value;
@@ -56,8 +49,7 @@
             document.getElementById("resultadoDuracao").innerHTML = "Duração: " + duracao;
         }
     }
-}
 </script>
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk&libraries=places&callback=inicializarMapa"></script>
 </body>
 </html>
