@@ -1,15 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Acionamento</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+	<link rel="stylesheet" href="css/style.css">
+    <title>Consulta Planilha</title>
 </head>
-<div class="container mt-5">
+<body>
+    <div class="d-flex">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3>...</h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="index.html">
+                        <i class="fas fa-file-alt"></i>
+                        Consulta Planilha
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-truck"></i>
+                        Consulta Motorista
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-sticky-note"></i>
+                        Anotações
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <h2>Consulta Planilha</h2>
+			<div class="container mt-5">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h2 class="mb-4">Insira o numero da planilha</h2>
+            <div class="col-md-10 offset-md-1">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="chaveInput" placeholder="Insira a chave">
+                    <input type="text" class="form-control" id="chaveInput" placeholder="Insira a planilha">
                 </div>
                 <button class="btn btn-primary" id="buscarButton">Buscar Informações</button>
                 <div class="mt-3">
@@ -54,59 +87,15 @@
         </div>
     </div>
 
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-        gapi.load('client', function() {
-            gapi.client.init({
-                apiKey: 'AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk',
-                discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-            }).then(function() {
-                document.getElementById("buscarButton").addEventListener("click", buscarInformacoes);
-            });
-        });
+    
+        </div>
+    </div>
 
-        function buscarInformacoes() {
-            const chave = document.getElementById("chaveInput").value;
-            
-            gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-                range: 'SITE!D:AM',
-            }).then(response => {
-                const values = response.result.values;
-                if (values && values.length > 0) {
-                    for (let i = 0; i < values.length; i++) {
-                        if (values[i][0] === chave) {
-                            document.getElementById("planilha").innerText = values[i][0];
-                            document.getElementById("embarque").innerText = values[i][1];
-                            document.getElementById("status").innerText = values[i][2];
-                            document.getElementById("quemContratou").innerText = values[i][3];
-                            document.getElementById("motorista").innerText = values[i][4];
-                            document.getElementById("destinoFinal").innerText = values[i][5];
-                            document.getElementById("cidadesEntrega").innerText = values[i][6];
-                            document.getElementById("km").innerText = values[i][7];
-                            document.getElementById("veiculo").innerText = values[i][8];
-                            document.getElementById("frete").innerText = values[i][9];
-                            document.getElementById("rastreada").innerText = values[i][10];
-                            document.getElementById("refrigerado").innerText = values[i][11];
-                            document.getElementById("divisoria").innerText = values[i][12];
-                            document.getElementById("descarga").innerText = values[i][13];
-                            document.getElementById("peso").innerText = values[i][14];
-                            document.getElementById("entregas").innerText = values[i][15];
-                            document.getElementById("agendado").innerText = values[i][16];
-                            document.getElementById("volumes").innerText = values[i][17];
-							document.getElementById("placa").innerText = values[i][20];
-							document.getElementById("kmajustado").innerText = values[i][19];
-                            return; // Encerra o loop após encontrar a chave
-                        }
-                    }
-                    document.getElementById("status").innerText = "Planilha não encontrada.";
-                } else {
-                    document.getElementById("status").innerText = "Nenhum dado encontrado.";
-                }
-            }, response => {
-                console.error('Erro ao buscar informações:', response.result.error.message);
-            });
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+	<script src="js/aledash.js"></script>
+    
 </body>
 </html>
