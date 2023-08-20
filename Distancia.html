@@ -14,7 +14,27 @@
         <h1>Exemplo de distância entre cidades</h1>
         <p>Escolha duas cidades e veja a distância entre elas.</p>
         <form id="form-cidades">
-            <!-- ... (seu formulário e campos) ... -->
+            <div class="form-group">
+                <label for="cidade-origem">Cidade de origem:</label>
+                <select id="cidade-origem" class="form-control">
+                    <option value="-23.550520,-46.633308">São Paulo</option>
+                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
+                    <option value="-15.794229,-47.882166">Brasília</option>
+                    <option value="-3.718394,-38.543395">Fortaleza</option>
+                    <option value="-30.034647,-51.217658">Porto Alegre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cidade-destino">Cidade de destino:</label>
+                <select id="cidade-destino" class="form-control">
+                    <option value="-23.550520,-46.633308">São Paulo</option>
+                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
+                    <option value="-15.794229,-47.882166">Brasília</option>
+                    <option value="-3.718394,-38.543395">Fortaleza</option>
+                    <option value="-30.034647,-51.217658">Porto Alegre</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Calcular distância</button>
         </form>
         <div id="resultado" class="alert alert-success" style="display: none;"></div>
         <!-- Div onde o mapa será mostrado -->
