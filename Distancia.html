@@ -1,66 +1,133 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Distância</title>
-    <!-- Inclua os estilos do Bootstrap aqui -->
+    <title>Exemplo de distância entre cidades</title>
+    <!-- Inclui o Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Inclui o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Inclui o Bing Maps SDK -->
+    <script src="https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario" async defer></script>
 </head>
 <body>
     <div class="container">
-        <h1>Consulta de Distância entre Cidades</h1>
-        <form id="distanceForm">
-            <label for="origin">Cidade de Origem:</label>
-            <input type="text" id="origin" required><br><br>
-            <label for="destination">Cidade de Destino:</label>
-            <input type="text" id="destination" required><br><br>
-            <button type="submit">Calcular Distância</button>
+        <h1>Exemplo de distância entre cidades</h1>
+        <p>Escolha duas cidades e veja a distância entre elas.</p>
+        <form id="form-cidades">
+            <div class="form-group">
+                <label for="cidade-origem">Cidade de origem:</label>
+                <select id="cidade-origem" class="form-control">
+                    <option value="-23.550520,-46.633308">São Paulo</option>
+                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
+                    <option value="-15.794229,-47.882166">Brasília</option>
+                    <option value="-3.718394,-38.543395">Fortaleza</option>
+                    <option value="-30.034647,-51.217658">Porto Alegre</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cidade-destino">Cidade de destino:</label>
+                <select id="cidade-destino" class="form-control">
+                    <option value="-23.550520,-46.633308">São Paulo</option>
+                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
+                    <option value="-15.794229,-47.882166">Brasília</option>
+                    <option value="-3.718394,-38.543395">Fortaleza</option>
+                    <option value="-30.034647,-51.217658">Porto Alegre</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Calcular distância</button>
         </form>
+        <div id="resultado" class="alert alert-success" style="display: none;"></div>
+        <!-- Div onde o mapa será mostrado -->
+        <div id="mapa" style="width: 800px; height: 600px;"></div>
     </div>
 
+    <!-- Script para carregar o mapa e calcular a distância -->
     <script>
-        document.getElementById('distanceForm').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const origin = document.getElementById('origin').value;
-            const destination = document.getElementById('destination').value;
 
-            // Chamada à API do Bing Maps para calcular a distância
-            const bingApiKey = 'AlqUFiLlbuRfALG8dH9Tca8eA2fnacLq9VX1ic8n29op_INF1sKPZbb3BAE5jZhs';
-            const bingMapsUrl = `https://dev.virtualearth.net/REST/v1/Routes/Driving?wp.0=${origin}&wp.1=${destination}&key=${bingApiKey}`;
+        // Substitua pela sua chave da API do Bing Maps
+        var bingMapsKey = "AlqUFiLlbuRfALG8dH9Tca8eA2fnacLq9VX1ic8n29op_INF1sKPZbb3BAE5jZhs";
 
-            fetch(bingMapsUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const distance = data.resourceSets[0].resources[0].travelDistance;
-                    console.log(`Distância entre ${origin} e ${destination}: ${distance} km`);
+        // Substitua pela sua chave da API do Google Sheets
+        var googleSheetsKey = "AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk";
 
-                    // Chamada à API do Google Sheets para atualizar a planilha
-                    const googleSheetsApiKey = 'AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk';
-                    const spreadsheetId = '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k'; // Substitua pelo ID da sua planilha
-                    const range = 'KM!A1'; // Substitua pela célula onde deseja inserir os resultados
+        // Substitua pelo ID da sua planilha no Google Sheets
+        var googleSheetsId = "1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k";
 
-                    const googleSheetsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${googleSheetsApiKey}`;
+        // Substitua pelo nome da aba da sua planilha no Google Sheets
+        var googleSheetsTab = "KM!A1";
 
-                    const valueInputOption = 'RAW';
-                    const values = [[origin, destination, distance]];
+        // Função que é chamada quando o Bing Maps SDK é carregado
+        function loadMapScenario() {
+            // Cria um mapa na div com o ID "mapa"
+            var mapa = new Microsoft.Maps.Map(document.getElementById("mapa"), {
+                credentials: bingMapsKey
+            });
 
-                    fetch(googleSheetsUrl, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ values }),
-                    })
-                    .then(response => response.json())
-                    .then(result => {
-                        console.log('Resultado enviado para o Google Sheets:', result);
-                    })
-                    .catch(error => {
-                        console.error('Erro ao enviar para o Google Sheets:', error);
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao consultar a API do Bing Maps:', error);
+            // Adiciona um evento de submit ao formulário com o ID "form-cidades"
+            $("#form-cidades").submit(function(event) {
+                // Previne o comportamento padrão do formulário (recarregar a página)
+                event.preventDefault();
+
+                // Pega os valores das coordenadas das cidades selecionadas
+                var origem = $("#cidade-origem").val();
+                var destino = $("#cidade-destino").val();
+
+                // Cria um objeto de requisição para a API do Bing Maps
+                               // Cria um objeto de requisição para a API do Bing Maps
+                var request = {
+                    // Define o tipo de rota como "driving" (dirigindo)
+                    travelMode: Microsoft.Maps.Directions.TravelMode.driving,
+                    // Define a origem e o destino como pontos geográficos
+                    origin: new Microsoft.Maps.Location(origem.split(",")[0], origem.split(",")[1]),
+                    destination: new Microsoft.Maps.Location(destino.split(",")[0], destino.split(",")[1])
+                };
+
+                // Cria um objeto de direções para o mapa
+                var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(mapa);
+
+                // Adiciona a requisição ao objeto de direções
+                directionsManager.addWaypoint(request.origin);
+                directionsManager.addWaypoint(request.destination);
+
+                // Define uma função para ser chamada quando a rota for calculada
+                directionsManager.setRenderOptions({
+                    itineraryContainer: document.getElementById("resultado")
                 });
-        });
+
+                // Calcula a rota usando a API do Bing Maps
+                directionsManager.calculateDirections();
+
+                // Pega a distância em quilômetros da rota
+                var distancia = directionsManager.getCurrentRoute().routeLegs[0].summary.distance;
+
+                // Mostra o resultado na div com o ID "resultado"
+                $("#resultado").html("A distância entre as cidades é de " + distancia + " km.");
+                $("#resultado").show();
+
+                // Cria um objeto de dados para enviar para a API do Google Sheets
+                var dados = {
+                    // Define os valores das células da planilha
+                    values: [
+                        [origem, destino, distancia]
+                    ]
+                };
+
+                // Envia uma requisição POST para a API do Google Sheets para atualizar a planilha
+                $.ajax({
+                    url: "https://sheets.googleapis.com/v4/spreadsheets/" + googleSheetsId + "/values/" + googleSheetsTab + ":append?valueInputOption=USER_ENTERED&key=" + googleSheetsKey,
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(dados),
+                    success: function(response) {
+                        // Mostra uma mensagem de sucesso se a planilha foi atualizada
+                        alert("Planilha atualizada com sucesso!");
+                    },
+                    error: function(error) {
+                        // Mostra uma mensagem de erro se houve algum problema
+                        alert("Erro ao atualizar a planilha: " + error.responseText);
+                    }
+                });
+            });
+        }
     </script>
 </body>
 </html>
