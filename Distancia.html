@@ -1,42 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Distância</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Consulta de Distância</title>
+    <!-- Inclua os estilos do Bootstrap aqui -->
 </head>
 <body>
-
-<div class="container mt-5">
-    <h2>Calculadora de Distância entre Cidades</h2>
-    <div class="form-group">
-        <label for="origem">Cidade de Origem:</label>
-        <input type="text" class="form-control" id="origem" placeholder="Digite a cidade de origem">
+    <div class="container">
+        <h1>Consulta de Distância entre Cidades</h1>
+        <form id="distanceForm">
+            <label for="origin">Cidade de Origem:</label>
+            <input type="text" id="origin" required><br><br>
+            <label for="destination">Cidade de Destino:</label>
+            <input type="text" id="destination" required><br><br>
+            <button type="submit">Calcular Distância</button>
+        </form>
     </div>
-    <div class="form-group">
-        <label for="destino">Cidade de Destino:</label>
-        <input type="text" class="form-control" id="destino" placeholder="Digite a cidade de destino">
-    </div>
-    <button class="btn btn-primary" onclick="calcularDistancia()">Calcular Distância</button>
-    <div id="resultadoDistancia" class="mt-3"></div>
-</div>
 
-<script>
-    function calcularDistancia() {
-        var origem = document.getElementById("origem").value;
-        var destino = document.getElementById("destino").value;
+    <script>
+        document.getElementById('distanceForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const origin = document.getElementById('origin').value;
+            const destination = document.getElementById('destination').value;
 
-        fetch(`https://api.openrouteservice.org/v2/matrix/driving-car?sources=0&destinations=1&locations=${origem}|${destino}&api_key=5b3ce3597851110001cf6248c9840e035c7e4684a6193f6c220ad193`)
-            .then(response => response.json())
-            .then(data => {
-                var distancia = data.distances[0][1] / 1000; // Convertendo para quilômetros
-                document.getElementById("resultadoDistancia").innerHTML = `Distância: ${distancia.toFixed(2)} km`;
-            })
-            .catch(error => {
-                console.error("Erro:", error);
-            });
-    }
-</script>
+            // Chamada à API do Bing Maps para calcular a distância
+            const bingApiKey = 'AlqUFiLlbuRfALG8dH9Tca8eA2fnacLq9VX1ic8n29op_INF1sKPZbb3BAE5jZhs';
+            const bingMapsUrl = `https://dev.virtualearth.net/REST/v1/Routes/Driving?wp.0=${origin}&wp.1=${destination}&key=${bingApiKey}`;
+
+            fetch(bingMapsUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const distance = data.resourceSets[0].resources[0].travelDistance;
+                    console.log(`Distância entre ${origin} e ${destination}: ${distance} km`);
+
+                    // Chamada à API do Google Sheets para atualizar a planilha
+                    const googleSheetsApiKey = 'AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk';
+                    const spreadsheetId = '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k'; // Substitua pelo ID da sua planilha
+                    const range = 'KM!A1'; // Substitua pela célula onde deseja inserir os resultados
+
+                    const googleSheetsUrl = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${googleSheetsApiKey}`;
+
+                    const valueInputOption = 'RAW';
+                    const values = [[origin, destination, distance]];
+
+                    fetch(googleSheetsUrl, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ values }),
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log('Resultado enviado para o Google Sheets:', result);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar para o Google Sheets:', error);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao consultar a API do Bing Maps:', error);
+                });
+        });
+    </script>
 </body>
 </html>
