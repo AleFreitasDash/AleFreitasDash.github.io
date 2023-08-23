@@ -147,15 +147,16 @@
         <!--**********************************
             Content body start
         ***********************************-->
-        <div class="content-body">
+        
+		
+		<div class="content-body">
             <div class="container-fluid">
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
                             <h4>Acionamento</h4>
-                            <span>Espelho</span>
+                            <span>...</span>
                         </div>
-		
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                         <ol class="breadcrumb">
@@ -164,8 +165,9 @@
                         </ol>
                     </div>
                 </div>
+                <!-- row -->
                 <div class="row">
-                    <div class="col-xl-12">
+				<div class="col-xl-12">
                         <div class="card">
                             <div class="card-body">
                                 <!-- Nav tabs -->
@@ -195,34 +197,34 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content tabcontent-border">
                                     <div class="tab-pane fade show active" id="espelho" role="tabpanel">
-                                        <div class="pt-4">
-										<div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Formulario</h4>
-                                                    </div>
-                                                        <div class="card-body">
-										<div class="input-group input-group-sm mb-3">
+				<div class="row">
+				<div class="col-xl-4 col-lg-4">
+						<div class="card">
+                            <div class="card-header border-0 pb-0">
+								<h2 class="card-title">Planilha</h2>
+							</div>
+							<div class="card-body pb-0">
+								
+								<div class="input-group input-group-sm mb-3">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Planilha</span>
                                             </div>
                                             <input type="text" id="chaveInput" class="form-control">
                                         </div>
 										<button class="btn btn-primary" id="buscarButton">Buscar Informações</button>
-                                                        </div>
-                                                </div>
-                                            </div>
-										
-											<div class="col-xl-6 col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Espelho</h4>
-													</div>
-                                                        <div class="card-body">
-														
-														<div class="mt-3">
-                    <div><strong>Status:</strong> <span id="status"></span></div>
+								
+                            </div>
+                            
+                        </div>
+				</div>
+				<div class="col-xl-8 col-lg-8">
+						<div class="card">
+                            <div class="card-header border-0 pb-0">
+								<h2 class="card-title">Espelho</h2>
+							</div>
+							<div class="card-body pb-0">
+							
+							<div><strong>Status:</strong> <span id="status"></span></div>
                     <div><strong>Quem Contratou:</strong> <span id="quemContratou"></span></div>
                     <div><strong>Motorista:</strong> <span id="motorista"></span></div>
                     <div><strong>Veículo:</strong> <span id="veiculo"></span></div>
@@ -233,8 +235,8 @@
     <div class="alert alert-info">
       <p>Queremos garantir que o processo de transporte ocorra de forma eficiente e sem problemas. Um ponto crucial para isso é a sua chegada no horário agendado. Atrasos têm impacto direto na operação, causando retrabalho e afetando outros processos. Para evitar complicações, pedimos sua cooperação em cumprir rigorosamente o horário de embarque.</p>
     </div>
-
-    <div class="alert alert-secondary">
+								
+								<div class="alert alert-secondary">
       <p><strong>Detalhes da Coleta:</strong></p>
       <ul>
         <li><strong>Planilha:</strong><span id="planilha"></span></li>
@@ -258,64 +260,23 @@
     <div class="alert alert-warning">
       <p><strong>Atenção, querido parceiro!</strong> Para cargas refrigeradas, lembre-se de manter o sistema de refrigeração na temperatura adequada (<strong>🌡️ +2º a +8º 🌡️</strong>). Isso é fundamental para garantir a qualidade da carga durante o transporte.</p>
     </div>
-  </div>
-														
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-										</div>
-                                    </div>
-                                    <div class="tab-pane fade" id="anotacoes" role="tabpanel">
-                                        <div class="pt-4">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-													<div class="input-group mb-3 col-xl-6">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-primary" onclick="salvarTexto()" type="button">Salva TXT</button>
-                                            </div>
-                                            <input id="nomeA" type="text" class="form-control">
-                                            </div>
-											</div>
-											
-                                                        <div class="card-body">
-                                                        <textarea id="textoA" style="border-radius: 1rem; box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white); margin: 2px; width: 100%; height: 700px; padding: 10px; font-size: 14px;"></textarea>
-                                                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-									</div>
-									<div class="tab-pane fade" id="distancia" role="tabpanel">
-                                        <div class="pt-4">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Distancia</h4>
-                                                    </div>
-                                                        <div class="card-body">
-                                <span id="DGOOGLE"></span>
-								<label for="fonte">Fonte:</label>
-											<a href="https://pt.distance.to/" target="_blank">distance.to</a>
-											<div class="containerx">
-                                                <iframe scrolling="no" class="responsive-iframe" src="https://pt.distance.to/Brasil" ></iframe>
-												</div>
-                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-									
-                                </div>
-								
+								</div>
+								</div>
+								</div>
+								</div>
+								</div>
+								</div>
 								
                             </div>
+                            
                         </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+				</div>
+				
+				</div>
+			</div>
+		</div>
+		
+		
         <!--**********************************
             Content body end
         ***********************************-->
