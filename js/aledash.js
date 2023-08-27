@@ -4,6 +4,7 @@ gapi.load('client', function() {
         discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
     }).then(function() {
         document.getElementById("buscarButton").addEventListener("click", buscarInformacoes);
+        document.getElementById("atualizarButton").addEventListener("click", atualizarTipoVeiculo);
     });
 });
 
@@ -36,9 +37,6 @@ function buscarInformacoes() {
                         <option value="TOCO">TOCO</option>
                     `;
                     tipoVeiculoSelect.value = values[i][8]; // Definir o valor atual
-                    tipoVeiculoSelect.addEventListener("change", function() {
-                        atualizarTipoVeiculo(values[i][0], this.value);
-                    });
                     document.getElementById("veiculo").innerHTML = "";
                     document.getElementById("veiculo").appendChild(tipoVeiculoSelect);
 
@@ -56,15 +54,18 @@ function buscarInformacoes() {
     });
 }
 
-function atualizarTipoVeiculo(chave, novoTipo) {
+function atualizarTipoVeiculo() {
+    const chave = document.getElementById("chaveInput").value;
+    const novoTipo = document.getElementById("tipoVeiculo").value;
+
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-        range: 'SITE!A:AM', // Supondo que os valores procurados estão nas colunas A a D
+        range: 'SITE!A:D', // Supondo que os valores procurados estão nas colunas A a D
     }).then(response => {
         const values = response.result.values;
         for (let i = 0; i < values.length; i++) {
             if (values[i][0] === chave) {
-                const columnIndexToUpdate = 8; // Coluna H (8ª coluna) para o tipo de veículo
+                const columnIndexToUpdate = 7; // Coluna H (8ª coluna) para o tipo de veículo
                 values[i][columnIndexToUpdate] = novoTipo;
                 atualizarCelula(values[i], columnIndexToUpdate);
                 return;
