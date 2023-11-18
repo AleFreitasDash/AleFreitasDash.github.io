@@ -1,382 +1,55 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title id="titleE">Acionamento</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="./css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-Qz2TYV2jsuWwYYOrj7k/M12zDCJuVMe8uOz9jwu7/tIY+dwC/jwpj0Hb1RvM1PlG6U5k6P5o3fCQ2IHU+ScLzg==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="./vendor/toastr/css/toastr.min.css">
-	<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
-	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
-	<link rel="stylesheet" href="./vendor/pickadate/themes/default.css">
-    <link rel="stylesheet" href="./vendor/pickadate/themes/default.date.css">
-	<link href="./vendor/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <link href="./vendor/clockpicker/css/bootstrap-clockpicker.min.css" rel="stylesheet">
-    <link href="./vendor/jquery-asColorPicker/css/asColorPicker.min.css" rel="stylesheet">
-    <link href="./vendor/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <title>...</title>
+  <!-- Adicione os arquivos CSS do Bootstrap -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+    #confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="text-center">
+    <h1 id="loadingText">Carregando email Outlook</h1>
+    <h1 id="successText" style="display: none;">Email de churrasco enviado</h1>
+  </div>
 
-    <!--*******************
-        Preloader inicio
-    ********************-->
-    <div id="preloader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-        </div>
-    </div>
-    <!--*******************
-        Preloader fim
-    ********************-->
+  <canvas id="confetti"></canvas>
 
+  <!-- Adicione os arquivos JS do Bootstrap e o código JS para o efeito de confete -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Adicione o script para o efeito de confete -->
+  <script src="https://cdn.jsdelivr.net/gh/mathusummut/confetti.js/confetti.min.js"></script>
+  <script>
+    // Função para mostrar texto após 3 segundos
+    setTimeout(function() {
+      document.getElementById('loadingText').style.display = 'none';
+      document.getElementById('successText').style.display = 'block';
+      startConfetti();
+    }, 3000);
 
-    <!--**********************************
-        Main wrapper inicio
-    ***********************************-->
-    <div id="main-wrapper">
-
-        <!--**********************************
-            Nav header inicio
-        ***********************************-->
-        <div class="nav-header">
-            <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="./images/logo.png" alt="">
-                <img class="logo-compact" src="./images/logo-text.svg" alt="">
-                <img class="brand-title" src="./images/logo-text.svg" alt="">
-            </a>
-
-            <div class="nav-control">
-                <div class="hamburger">
-                    <span class="line"></span><span class="line"></span><span class="line"></span>
-                </div>
-            </div>
-        </div>
-        <!--**********************************
-            Nav header fim
-        ***********************************-->
-
-        <!--**********************************
-            Header inicio
-        ***********************************-->
-        <div class="header">
-            <div class="header-content">
-                <nav class="navbar navbar-expand">
-                    <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-                            <div class="search_bar dropdown show">
-                                <div class="dropdown-menu p-0 m-0 show">
-                                    <form>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ul class="navbar-nav header-right">
-							<li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link dz-fullscreen primary" href="#">
-									<svg id="Capa_1" enable-background="new 0 0 482.239 482.239" height="22" viewBox="0 0 482.239 482.239" width="22" xmlns="http://www.w3.org/2000/svg"><path d="m0 17.223v120.56h34.446v-103.337h103.337v-34.446h-120.56c-9.52 0-17.223 7.703-17.223 17.223z" fill=""/><path d="m465.016 0h-120.56v34.446h103.337v103.337h34.446v-120.56c0-9.52-7.703-17.223-17.223-17.223z" fill=""/><path d="m447.793 447.793h-103.337v34.446h120.56c9.52 0 17.223-7.703 17.223-17.223v-120.56h-34.446z" fill="" /><path d="m34.446 344.456h-34.446v120.56c0 9.52 7.703 17.223 17.223 17.223h120.56v-34.446h-103.337z" fill=""/></svg>
-                                </a>
-							</li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!--**********************************
-            Header fim
-        ***********************************-->
-
-        <!--**********************************
-            Sidebar inicio
-        ***********************************-->
-        <div class="deznav">
-            <div class="deznav-scroll">
-				<ul class="metismenu" id="menu">
-					<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-381-notepad"></i>
-							<span class="nav-text small">Desenvolvido por:</span>
-						</a>
-                        <ul aria-expanded="false">
-							<li><a href="index.html" target="_blank">Alexandre M. Freitas</a></li>
-						</ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-							<i class="flaticon-381-television"></i>
-							<span class="nav-text">Espelho</span>
-						</a>
-                        <ul aria-expanded="false">
-							<li><a href="acionamento.html" target="_blank">Acionamento</a></li>
-							<li><a href="cadastro.html" target="_blank">Cadastro</a></li>
-						</ul>
-                    </li>
-                    <li><a href="pagina-desenvolvimento.html" class="ai-icon" aria-expanded="false" target="_blank">
-							<i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Filtro Parceiros</span>
-						</a>
-					</li>
-                </ul>
-            
-				<div class="add-menu-sidebar">
-					<img src="images/icon1.png" alt=""/>
-					<p>...</p>
-					<a href="https://wa.me/5511997218020?text=Olá" class="btn btn-primary btn-block light" target="_blank">Contato</a>
-				</div>
-				<div class="copyright">
-					<p><strong>Alexandre M Freitas</strong> © 2023</p>
-				
-				</div>
-			</div>
-        </div>
-        <!--**********************************
-            Sidebar fim
-        ***********************************-->
-
-        <!--**********************************
-            Content body inicio
-        ***********************************-->
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4>Acionamento</h4>
-                            <span>Espelho</span>
-                        </div>
-		
-                    </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Espelho</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Acionamento</a></li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Nav tabs -->
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#espelho">
-                                            <span>
-                                                <i class="flaticon-381-television"></i> Espelho
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#anotacoes">
-                                            <span>
-                                                <i class="ti-notepad"></i> Anotações
-                                            </span>
-                                        </a>
-                                    </li>
-									<li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#distancia">
-                                            <span>
-                                                <i class="la la-map-marker-alt"></i> Distancia
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!-- Tab panes -->
-                                <div class="tab-content tabcontent-border">
-                                    <div class="tab-pane fade show active" id="espelho" role="tabpanel">
-                                        <div class="pt-4">
-										<div class="row">
-                                            <div class="col-xl-6 col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Planilha</h4>
-                                                    </div>
-                                                        <div class="card-body">
-										                    
-															
-                                            <input type="text" id="chaveInput" class="form-control"><br><br>
-										<button class="btn btn-primary" id="buscarButton">Buscar Informações</button><button class="btn btn-primary" id="atualizarTipoVeiculo">Atualizar"</button><br><br>
-
-								<div><strong>Status:</strong> <span id="status"></span></div>
-														<div><strong>Quem Contratou:</strong> <span id="quemContratou"></span></div>
-														<div><strong>Motorista:</strong> <span id="motorista"></span></div>
-														<div><strong>Veículo:</strong> <select id="tipoVeiculo">
-    <option value="VUC">VUC</option>
-    <option value="3/4">3/4</option>
-    <option value="TOCO">TOCO</option>
-</select></div>
-														<div><strong>Placa:</strong> <span id="placa"></span></div>
-														<div><strong>KM Ajustado?:</strong> <span id="kmajustado"></span></div>
-															
-                                                        </div>
-                                                </div>
-                                            </div>
-										
-											<div class="col-xl-6 col-lg-6">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Espelho</h4>
-													</div>
-                                                        <div class="card-body">
-														
-														
-					
-                
-											<div class="alert alert-info">
-												<p>Queremos garantir que o processo de transporte ocorra de forma eficiente e sem problemas. Um ponto crucial para isso é a sua chegada no horário agendado. Atrasos têm impacto direto na operação, causando retrabalho e afetando outros processos. Para evitar complicações, pedimos sua cooperação em cumprir rigorosamente o horário de embarque.</p>
-											</div>
-								
-								<div class="alert alert-secondary">
-									<p><strong>Detalhes da Coleta:</strong></p>
-										<ul>
-											<li>
-												<strong>Planilha:</strong><span id="planilha"></span>
-											</li>
-											<li>
-												<strong>Entregas:</strong><span id="entregas"></span>
-											</li>
-        									<li>
-												<strong>Origem:</strong> Vinhedo - SP
-											</li>
-        									<li>
-												<strong>Destino Final:</strong><span id="destinoFinal"></span>
-											</li>
-        									<li>
-												<strong>Cidades de Entregas:</strong> <span id="cidadesEntrega"></span>
-											</li>
-        									<li>
-												<strong>Volumes:</strong><span id="volumes"></span>
-											</li>
-        									<li>
-												<strong>Peso:</strong><span id="peso"></span>
-											</li>
-        									<li>
-												<strong>Data e hora de embarque:</strong><span id="embarque"></span>
-											</li>
-        									<li>
-												<strong>Data de descarga:</strong><span id="descarga"></span>
-											</li>
-        									<li>
-												<strong>Agendado:</strong> <span id="agendado"></span>
-											</li>
-        									<li>
-												<strong>Refrigerada:</strong> <span id="refrigerado"></span>
-											</li>
-        									<li>
-												<strong>Rastreada:</strong> <span id="rastreada"></span>
-											</li>
-        									<li>
-												<strong>Divisória:</strong> <span id="divisoria"></span>
-											</li>
-        									<li>
-												<strong>KM:</strong><span id="km"></span>
-											</li>
-        									<li>
-												<strong>Frete:</strong><span id="frete"></span>
-											</li>
-      									</ul>
-    </div>
-
-    <div class="alert alert-warning">
-      <p><strong>Atenção, querido parceiro!</strong> Para cargas refrigeradas, lembre-se de manter o sistema de refrigeração na temperatura adequada (<strong>🌡️ +2º a +8º 🌡️</strong>). Isso é fundamental para garantir a qualidade da carga durante o transporte.</p>
-    </div>
-														
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-										</div>
-                                    </div>
-                                    <div class="tab-pane fade" id="anotacoes" role="tabpanel">
-                                        <div class="pt-4">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-													<div class="input-group mb-3 col-xl-6">
-                                            <div class="input-group-prepend">
-                                                <button class="btn btn-primary" onclick="salvarTexto()" type="button">Salva TXT</button>
-                                            </div>
-                                            <input id="nomeA" type="text" class="form-control">
-                                            </div>
-											
-											</div>
-											
-                                                        <div class="card-body">
-                                                        <textarea id="textoA" style="border-radius: 1rem; box-shadow: 0.3rem 0.3rem 0.6rem var(--greyLight-2), -0.2rem -0.2rem 0.5rem var(--white); margin: 2px; width: 100%; height: 700px; padding: 10px; font-size: 14px;"></textarea>
-                                                        </div>
-                                            </div>
-                                        </div>
-                                    </div>
-									</div>
-									<div class="tab-pane fade" id="distancia" role="tabpanel">
-                                        <div class="pt-4">
-                                            <div class="col-xl-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Distancia</h4>
-                                                    </div>
-                                                        <div class="card-body">
-                                <span id="DGOOGLE"></span>
-								<label for="fonte">Fonte:</label>
-											<a href="https://pt.distance.to/" target="_blank">distance.to</a>
-											<div class="containerx">
-                                                <iframe scrolling="no" class="responsive-iframe" src="https://pt.distance.to/Brasil" ></iframe>
-												</div>
-                                            </div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-									
-                                </div>
-								
-								
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!--**********************************
-            Content body fim
-        ***********************************-->
-    
-    </div>
-    <!--**********************************
-        Main wrapper fim
-    ***********************************-->
-
-    <!--**********************************
-        Scripts
-    ***********************************-->
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
-    <script src="./vendor/global/global.min.js"></script>
-	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
-    <script src="./js/custom.min.js"></script>
-	<script src="./js/deznav-init.js"></script>
-	<script src="js/styleSwitcher.js"></script>
-	<script src="./vendor/waypoints/jquery.waypoints.min.js"></script>
-	<script src="./vendor/jquery.counterup/jquery.counterup.min.js"></script>
-	<script src="./vendor/apexchart/apexchart.js"></script>
-	<script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="./js/plugins-init/datatables.init.js"></script>
-	<script src="./vendor/toastr/js/toastr.min.js"></script>
-	<script src="./js/plugins-init/toastr-init.js"></script>
-	<script src="https://apis.google.com/js/api.js"></script>
-	<script src="js/aledash.js"></script>
-	<script src="./vendor/apexchart/apexchart.js"></script>
-
+    // Efeito de confete
+    function startConfetti() {
+      var confettiSettings = { target: 'confetti' };
+      var confetti = new ConfettiGenerator(confettiSettings);
+      confetti.render();
+    }
+  </script>
 </body>
-
 </html>
