@@ -75,7 +75,6 @@
                             <div class="card-body">
                                 <div class="profile-blog mb-5">
                                     <h5 class="text-primary d-inline">Observação</h5>
-					<p class="mb-0">TRUCK e CARRETA ainda em desenvolvimento.</p>
                                     <p class="mb-0">Para as tipologias TRUCK e CARRETA o cálculo do frete depende da unidade federativa (UF) de destino da planilha.</p>
                                 </div>
                             </div>
@@ -104,13 +103,13 @@
                         <label>Tipologia</label>
                         <select class="form-control" id="TIPOLOGIA" onchange="calcularFrete()">
                             <option selected>Selecione...</option>
-                            <option>FIORINO</option>
-                            <option>VAN</option>
-                            <option>VUC</option>
-                            <option>3/4</option>
-                            <option>TOCO</option>
-                            <option>TRUCK</option>
-                            <option>CARRETA</option>
+                            <option value="FIORINO">FIORINO</option>
+                            <option value="VAN">VAN</option>
+                            <option value="VUC">VUC</option>
+                            <option value="3/4">3/4</option>
+                            <option value="TOCO">TOCO</option>
+                            <option value="TRUCK">TRUCK</option>
+                            <option value="CARRETA">CARRETA</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
@@ -169,6 +168,267 @@
 	
 <script>
     function calcularFrete() {
+	
+	    
+		var tabelaValores = {
+		"AC": {
+        "TRUCK": {
+		    "2401+": 6.1,
+		},
+		"CARRETA": {
+		    "2401+": 8,
+		}
+		},
+		"PB": {
+        "TRUCK": {
+		    "2401+": 5.75,
+		},
+		"CARRETA": {
+		    "2401+": 7.49,
+		}
+		},
+		"AM": {
+        "TRUCK": {
+		    "2401+": 7.1,
+		},
+		"CARRETA": {
+		    "2401+": 8.35,
+		}
+		},
+		"RR": {
+        "TRUCK": {
+		    "2401+": 7.1,
+		},
+		"CARRETA": {
+		    "2401+": 8.35,
+		}
+		},
+		"RN": {
+        "TRUCK": {
+		    "2401+": 5.75,
+		},
+		"CARRETA": {
+		    "2401+": 7.49,
+		}
+		},
+		"CE": {
+        "TRUCK": {
+		    "2401+": 5.25,
+		},
+		"CARRETA": {
+		    "2401+": 7.17,
+		}
+		},
+		"AL": {
+        "TRUCK": {
+		    "801-2400": 6,
+			"2401+": 5.95,
+		},
+		"CARRETA": {
+		    "801-2400": 7.4,
+			"2401+": 7.33,
+		}
+		},
+		"BA": {
+        "TRUCK": {
+		    "801-2400": 5.3,
+			"2401+": 5.26,
+		},
+		"CARRETA": {
+		    "801-2400": 7.2,
+			"2401+": 7.15,
+		}
+		},
+		"DF": {
+        "TRUCK": {
+		    "801-2400": 5.3,
+			"2401+": 5.28,
+		},
+		"CARRETA": {
+		    "801-2400": 7.42,
+			"2401+": 7.37,
+		}
+		},
+		"ES": {
+        "TRUCK": {
+		    "801-2400": 4.4,
+			"2401+": 4.47,
+		},
+		"CARRETA": {
+		    "801-2400": 7.13,
+			"2401+": 7.2,
+		}
+		},
+		"GO": {
+        "TRUCK": {
+		    "801-2400": 5.28,
+			"2401+": 5.35,
+		},
+		"CARRETA": {
+		    "801-2400": 7.37,
+			"2401+": 7.4,
+		}
+		},
+		"MA": {
+        "TRUCK": {
+		    "801-2400": 5.6,
+			"2401+": 5.5,
+		},
+		"CARRETA": {
+		    "801-2400": 8.05,
+			"2401+": 8,
+		}
+		},
+		"MT": {
+        "TRUCK": {
+		    "801-2400": 5.5,
+			"2401+": 5.48,
+		},
+		"CARRETA": {
+		    "801-2400": 7.62,
+			"2401+": 7.57,
+		}
+		},
+		"PA": {
+        "TRUCK": {
+		    "801-2400": 6.42,
+			"2401+": 6.35,
+		},
+		"CARRETA": {
+		    "801-2400": 10,
+			"2401+": 9.54,
+		}
+		},
+		"PE": {
+        "TRUCK": {
+		    "801-2400": 5.8,
+			"2401+": 5.75,
+		},
+		"CARRETA": {
+		    "801-2400": 7.4,
+			"2401+": 7.35,
+		}
+		},
+		"PI": {
+        "TRUCK": {
+		    "801-2400": 5.8,
+			"2401+": 5.75,
+		},
+		"CARRETA": {
+		    "801-2400": 8.05,
+			"2401+": 8,
+		}
+		},
+		"RO": {
+        "TRUCK": {
+		    "801-2400": 6.15,
+			"2401+": 6.1,
+		},
+		"CARRETA": {
+		    "801-2400": 8.05,
+			"2401+": 8,
+		}
+		},
+		"RS": {
+        "TRUCK": {
+		    "801-2400": 3.25,
+			"2401+": 3.2,
+		},
+		"CARRETA": {
+		    "801-2400": 5.6,
+			"2401+": 5.54,
+		}
+		},
+		"SE": {
+        "TRUCK": {
+		    "801-2400": 5.8,
+			"2401+": 5.7,
+		},
+		"CARRETA": {
+		    "801-2400": 7.5,
+			"2401+": 7.33,
+		}
+		},
+		"TO": {
+        "TRUCK": {
+		    "801-2400": 7.3,
+			"2401+": 7.2,
+		},
+		"CARRETA": {
+		    "801-2400": 8.75,
+			"2401+": 8.71,
+		}
+		},
+		"MS": {
+        "TRUCK": {
+		    "401-800": 4.9,
+			"801-2400": 4.8,
+		},
+		"CARRETA": {
+		    "401-800": 7.35,
+			"801-2400": 7.27,
+		}
+		},
+		"SC": {
+        "TRUCK": {
+		    "401-800": 2.7,
+			"801-2400": 2.65,
+		},
+		"CARRETA": {
+		    "401-800": 3.65,
+			"801-2400": 3.6,
+		}
+		},
+		"SP": {
+        "TRUCK": {
+		    "0-400": 6.8,
+			"401-800": 6.5,
+			"801-2400": 6,
+		},
+		"CARRETA": {
+		    "0-400": 7,
+			"401-800": 6.95,
+			"801-2400": 6.9,
+		}
+		},
+		"MG": {
+        "TRUCK": {
+		    "0-400": 5.65,
+			"401-800": 5.55,
+			"801-2400": 5.4,
+		},
+		"CARRETA": {
+		    "0-400": 8.7,
+			"401-800": 8.62,
+			"801-2400": 8.58,
+		}
+		},
+		"PR": {
+        "TRUCK": {
+		    "0-400": 3.99,
+			"401-800": 3.92,
+			"801-2400": 3.85,
+		},
+		"CARRETA": {
+		    "0-400": 6.13,
+			"401-800": 6.1,
+			"801-2400": 6,
+		}
+		},
+		"RJ": {
+        "TRUCK": {
+		    "0-400": 5.5,
+			"401-800": 5.45,
+			"801-2400": 5.4,
+		},
+		"CARRETA": {
+		    "0-400": 13.73,
+			"401-800": 13.7,
+			"801-2400": 13.67,
+		}
+		}
+		};
+		
         var km = parseInt(document.getElementById("KM").value);
         var valorNF = parseInt(document.getElementById("VALORNF").value);
         var produtos = document.getElementById("PRODUTOS").value.toUpperCase();
@@ -189,7 +449,8 @@
         if (km >= 1500 && (produtos.includes("PGG") || produtos.includes("PGA") || produtos.includes("CRO"))) {
             refrigeradoResultado = "Sim";
         }
-        if (tipologia === "FIORINO") {
+		
+		if (tipologia === "FIORINO") {
         if (km <= 50) {
             freteResultado = "160";
         } else if (km >= 50 && km <= 100) {
@@ -244,6 +505,36 @@
             freteResultado = (km * 4.7).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
         }
+        
+		if (tabelaValores[ufDestino] && tabelaValores[ufDestino][tipologia]) {
+        var valoresEstado = tabelaValores[ufDestino][tipologia];
+        if (km >= 2401) {
+        freteResultado = (km * valoresEstado["2401+"]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+		if (km >= 801 && km <= 2400) {
+        freteResultado = (km * valoresEstado["801-2400"]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+		if (km >= 401 && km <= 800) {
+        freteResultado = (km * valoresEstado["401-800"]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+		if (km >= 150 && km <= 400) {
+        freteResultado = (km * valoresEstado["0-400"]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        } else {}
+		}
+		
+		if (refrigeradoResultado === "Sim") {
+    freteResultado = parseFloat(freteResultado.replace(/[^\d,-]/g, '').replace(',', '.')); 
+
+    if (!isNaN(freteResultado)) {
+        freteResultado *= 1.1;
+
+        freteResultado = freteResultado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    } else {
+	freteResultado = "";
+        console.log("Erro: Valor de freteResultado não é um número válido.");
+    }
+}
+		
         document.getElementById("rastreadoResultado").innerText = rastreadoResultado;
         document.getElementById("refrigeradoResultado").innerText = refrigeradoResultado;
         document.getElementById("divisoriaResultado").innerText = divisoriaResultado;
