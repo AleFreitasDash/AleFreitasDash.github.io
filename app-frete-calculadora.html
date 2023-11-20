@@ -8,6 +8,7 @@
     <title>Calcular Frete</title>
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
     <link href="./css/style.css" rel="stylesheet">
 
 </head>
@@ -98,7 +99,18 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Produtos</label>
-                        <input type="text" class="form-control" id="PRODUTOS" placeholder="PGG PGA SEC..." oninput="calcularFrete()">
+						<select class="multi-select" id="PRODUTOS" name="states[]" multiple="multiple" oninput="calcularFrete()">
+                            <option value="CRO">CRO</option>
+                            <option value="MKH">MKH</option>
+							<option value="MKT">MKT</option>
+							<option value="PGA">PGA</option>
+							<option value="PGG">PGG</option>
+							<option value="PMX">PMX</option>
+							<option value="SAC">SAC</option>
+							<option value="SEC">SEC</option>
+							<option value="SEP">SEP</option>
+							<option value="VAT">VAT</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row mb-2">
@@ -552,6 +564,8 @@
 	<script src="./js/deznav-init.js"></script>
 	<script src="./vendor/apexchart/apexchart.js"></script>
 	<script src=".js/calc.js"></script>
+	<script src="./vendor/select2/js/select2.full.min.js"></script>
+    <script src="./js/plugins-init/select2-init.js"></script>
 		
 </body>
 
