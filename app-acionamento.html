@@ -214,7 +214,32 @@
                                                         <h4 class="card-title">Espelho</h4>
 													</div>
                                                         <div class="card-body">
-														<h5>EM DESENVOLVIMENTO</h5>
+														<b>*O transporte eficiente depende da sua pontualidade. Atrasos prejudicam a operação e outros processos. Por favor, coopere e respeite o horário de embarque.*</b>
+														<br>
+														<br>
+														📄 Planilha: <b id="planilhaResultado"></b><br>
+														📬 Entregas: <b id="entregasResultado"></b><br>
+														🏭 Origem: <b id="origemResultado"></b><br>
+														🏢 Destino Final: <b id="destinofinalResultado"></b><br>
+														📦 Cidades de Entregas: <b id="cidadesentregasResultado"></b>
+														<br>
+														<br>
+														📦 Volumes: <b id="volumesResultado"></b><br>
+														⚖️ Peso: <b id="pesoResultado"></b>KG<br>
+														📆 Data e hora de embarque: <b id="datahoraembarqueResultado"></b><br>
+														📆 Data de descarga: <b id="datadescargaResultado"></b>
+														<br>
+														<br>
+														🗓️ Agendado: <b id="agendadoResultado"></b><br>
+														❄️ Refrigerada: <b id="refrigeradoResultado"></b><br>
+														🛰️ Rastreada: <b id="rastreadoResultado"></b><br>
+														❗ Divisória: <b id="divisoriaResultado"></b>
+														<br>
+														<br>
+														🛣️ KM: <b id="kmResultado"></b><br>
+														💵 Frete: <b id="freteResultado"></b>
+														<br>
+														<br>
                                                         </div>
                                                 </div>
                                             </div>
@@ -532,24 +557,49 @@
 		
         var km = parseInt(document.getElementById("KM").value);
         var valorNF = parseInt(document.getElementById("VALORNF").value);
+		var valorNF2 = parseInt(document.getElementById("VALORNF").value);
         var produtos = document.getElementById("PRODUTOS").value.toUpperCase();
         var tipologia = document.getElementById("TIPOLOGIA").value;
         var ufDestino = document.getElementById("UFDESTINO").value.toUpperCase();
+		var agendado = document.getElementById("AGENDADO").value;
+		var planilha = document.getElementById("PLANILHA").value;
+		var entregas = document.getElementById("ENTREGAS").value;
+		var origem = document.getElementById("ORIGEM").value;
+		var destinofinal = document.getElementById("DESTINOFINAL").value;
+		var cidadesentregas = document.getElementById("CIDADESENTREGAS").value;
+		var volumes = document.getElementById("VOLUMES").value;
+		var peso = document.getElementById("PESO").value;
+		var inputDate = new Date(document.getElementById("DATAEMBARQUE").value + 'T00:00:00');
+        var options = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+        var dataFormatada = inputDate.toLocaleDateString('pt-BR', options);
+		var datahoraembarque = dataFormatada + " " + document.getElementById("single-input").value;
+		var inputDate2 = new Date(document.getElementById("DATADESCARGA").value + 'T00:00:00');
+		var options2 = { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' };
+		var dataFormatada2 = inputDate2.toLocaleDateString('pt-BR', options2);
+		var datadescarga = dataFormatada2;
+		
+		
 
         var rastreadoResultado = "";
         var refrigeradoResultado = "";
         var divisoriaResultado = "";
         var freteResultado = "";
 
-        if (km >= 1500 && valorNF > 199999) {
-            rastreadoResultado = "Sim";
-        }
+        if (valorNF2 > 199999) {
+            rastreadoResultado = "*Sim*";
+        } else {
+		rastreadoResultado = "*Não*";
+		}
 		if (km >= 1500 && (produtos.includes("PGG") || produtos.includes("PGA") || produtos.includes("VAT") || produtos.includes("DNG")) && (produtos.includes("SEC") || produtos.includes("SEP") || produtos.includes("CRO") || produtos.includes("MKT"))) {
-            divisoriaResultado = "Sim";
-        }
+            divisoriaResultado = "*Sim*";
+        } else {
+		divisoriaResultado = "*Não*";
+		}
         if (km >= 1500 && (produtos.includes("PGG") || produtos.includes("PGA") || produtos.includes("CRO"))) {
-            refrigeradoResultado = "Sim";
-        }
+            refrigeradoResultado = "*Sim*";
+        } else {
+		refrigeradoResultado = "*Não*";
+		}
 		
 		if (tipologia === "FIORINO") {
         if (km <= 50) {
@@ -623,7 +673,7 @@
         } else {}
 		}
 		
-		if (refrigeradoResultado === "Sim") {
+		if (refrigeradoResultado === "*Sim*") {
     freteResultado = parseFloat(freteResultado.replace(/[^\d,-]/g, '').replace(',', '.')); 
 
     if (!isNaN(freteResultado)) {
@@ -640,6 +690,17 @@
         document.getElementById("refrigeradoResultado").innerText = refrigeradoResultado;
         document.getElementById("divisoriaResultado").innerText = divisoriaResultado;
         document.getElementById("freteResultado").innerText = freteResultado;
+		document.getElementById("kmResultado").innerText = km;
+		document.getElementById("agendadoResultado").innerText = "*" + agendado + "*";
+		document.getElementById("planilhaResultado").innerText = planilha;
+		document.getElementById("entregasResultado").innerText = entregas;
+		document.getElementById("origemResultado").innerText = origem;
+		document.getElementById("destinofinalResultado").innerText = destinofinal;
+		document.getElementById("cidadesentregasResultado").innerText = cidadesentregas;
+		document.getElementById("volumesResultado").innerText = volumes;
+		document.getElementById("pesoResultado").innerText = peso;
+		document.getElementById("datahoraembarqueResultado").innerText = datahoraembarque;
+		document.getElementById("datadescargaResultado").innerText = datadescarga;
     }
 </script>
 
