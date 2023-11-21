@@ -120,78 +120,78 @@
 														  <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label>Planilha:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="PLANILHA" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Entregas:</label>
-                                                <input type="number" class="form-control" placeholder="...">
+                                                <input type="number" id="ENTREGAS" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Origem:</label>
-                                                <select class="form-control">
+                                                <select class="form-control" id="ORIGEM" onchange="calcularFrete()">
                                                     <option selected>Vinhedo, SP</option>
                                                     <option>São José dos Pinhais, PR</option>
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label>Destino Final:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="DESTINOFINAL" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-12">
                                                 <label>Cidades de Entregas:</label>
-                                                <textarea type="text" class="form-control"></textarea>
+                                                <textarea type="text" id="CIDADESENTREGAS" class="form-control" oninput="calcularFrete()"></textarea>
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>UF Destino:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="UFDESTINO" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>Volumes:</label>
-                                                <input type="number" class="form-control" placeholder="...">
+                                                <input type="number" id="VOLUMES" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>Peso:</label>
-                                                <input type="number" class="form-control" placeholder="...">
+                                                <input type="number" id="PESO" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-row">
 											<div class="form-group col-md-6">
 											<label>Data e hora de embarque:</label>
 											<div class="form-row">
 											<div class="form-group col-md-6">
-                                                <input type="date" class="form-control" placeholder="...">
+                                                <input type="date" id="DATAEMBARQUE" class="form-control" placeholder="..." onchange="calcularFrete()">
 												</div>
 												<div class="form-group col-md-6">
-												<input class="form-control" id="single-input" value="" placeholder="hh:mm">
+												<input class="form-control" id="single-input" value="" placeholder="hh:mm" onchange="calcularFrete()">
 												</div>
                                             </div>
 											</div>
 											<div class="form-group col-md-6">
 											<label>Data de <br>descarga:</label>
-                                                <input type="date" class="form-control" placeholder="...">
+                                                <input type="date" id="DATADESCARGA" class="form-control" placeholder="..." onchange="calcularFrete()">
                                             </div>
 											</div>
 											<div class="form-group col-md-6">
-                                                <label>Tipologia:</label>
-                                                <select class="form-control">
+                                                <label>Agendado:</label>
+                                                <select class="form-control" id="AGENDADO" onchange="calcularFrete()">
                                                     <option selected>Sim</option>
 													<option>Não</option>
                                                 </select>
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>KM:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="KM" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>Valor NF:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="VALORNF" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>Produtos:</label>
-                                                <input type="text" class="form-control" placeholder="...">
+                                                <input type="text" id="PRODUTOS" class="form-control" placeholder="..." oninput="calcularFrete()">
                                             </div>
 											<div class="form-group col-md-6">
                                                 <label>Tipologia:</label>
-                                                <select class="form-control">
+                                                <select id="TIPOLOGIA" class="form-control" onchange="calcularFrete()">
                                                     <option selected>VAN</option>
                                                     <option>FIORINO</option>
 													<option>VUC</option>
