@@ -118,6 +118,17 @@
                                                     </div>
                                                         <div class="card-body">
 														  <div class="form-row">
+											<div class="form-group col-md-12">
+												<div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <button class="btn btn-primary btn-sm" type="button" onclick="buscarInformacoes()">Buscar</button>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="csvFile">
+                                                <label class="custom-file-label">Base</label>
+                                            </div>
+                                            </div>
+                                            </div>
                                             <div class="form-group col-md-6">
                                                 <label>Planilha:</label>
                                                 <input type="text" id="PLANILHA" class="form-control" placeholder="..." oninput="calcularFrete()">
@@ -158,16 +169,16 @@
 											<label>Data e hora de embarque:</label>
 											<div class="form-row">
 											<div class="form-group col-md-6">
-                                                <input type="date" id="DATAEMBARQUE" class="form-control" placeholder="..." onchange="calcularFrete()">
+                                                <input type="date" id="DATAEMBARQUE" class="form-control" placeholder="...">
 												</div>
 												<div class="form-group col-md-6">
-												<input class="form-control" id="single-input" value="" placeholder="hh:mm" onchange="calcularFrete()">
+												<input class="form-control" id="single-input" value="" placeholder="hh:mm">
 												</div>
                                             </div>
 											</div>
 											<div class="form-group col-md-6">
 											<label>Data de <br>descarga:</label>
-                                                <input type="date" id="DATADESCARGA" class="form-control" placeholder="..." onchange="calcularFrete()">
+                                                <input type="date" id="DATADESCARGA" class="form-control" placeholder="...">
                                             </div>
 											</div>
 											<div class="form-group col-md-6">
@@ -557,7 +568,6 @@
 		
         var km = parseInt(document.getElementById("KM").value);
         var valorNF = parseInt(document.getElementById("VALORNF").value);
-		var valorNF2 = parseInt(document.getElementById("VALORNF").value);
         var produtos = document.getElementById("PRODUTOS").value.toUpperCase();
         var tipologia = document.getElementById("TIPOLOGIA").value;
         var ufDestino = document.getElementById("UFDESTINO").value.toUpperCase();
@@ -585,7 +595,7 @@
         var divisoriaResultado = "";
         var freteResultado = "";
 
-        if (valorNF2 > 199999) {
+        if (valorNF > 199999) {
             rastreadoResultado = "*Sim*";
         } else {
 		rastreadoResultado = "*Não*";
@@ -704,7 +714,36 @@
     }
 </script>
 
+<script>
+        let data;
+
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            Papa.parse(e.target.files[0], {
+                complete: function(results) {
+                    data = results.data;
+                }
+            });
+        });
+
+        function buscarInformacoes() {
+            const codigo = document.getElementById('PLANILHA').value;
+            data.forEach(row => {
+			if (codigo > 0) {
+                if (row[2] === codigo) {
+                    document.getElementById("KM").value = `${row[10]}`;
+                    document.getElementById("ENTREGAS").value = `${row[11]}`;
+                    document.getElementById("PESO").value = `${row[12]}`.replace('.',',');
+                    document.getElementById("VOLUMES").value = `${row[14]}`;
+                    document.getElementById("VALORNF").value = `${row[17]}`.replace('.',',');
+                    document.getElementById("PRODUTOS").value = `${row[25]}`;
+                    document.getElementById("datadescargaResultado").value = `${row[26]}`;
+                }
+            }});
+        }
+</script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="./vendor/global/global.min.js"></script>
 	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
