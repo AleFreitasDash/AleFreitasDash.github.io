@@ -132,9 +132,9 @@
 
                     console.log(data);
 					
-                    document.getElementById("cnpj").innerText = data.cnpj;
+                    document.getElementById("cnpj").innerText = data.cnpj + " - " + data.descricao_situacao_cadastral;
                     document.getElementById("razao_social").innerText = data.razao_social;
-document.getElementById("endereco").innerText = data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
+document.getElementById("endereco").innerText = data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
                 })
                 .catch(error => {
                     console.error("Ocorreu um erro ao buscar o CEP:", error);
