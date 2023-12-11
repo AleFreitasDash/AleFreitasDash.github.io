@@ -11,8 +11,8 @@ gapi.load('client', function() {
             const chave = document.getElementById("chaveInput").value;
             
             gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: '1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k',
-                range: 'SITE!D:AM',
+                spreadsheetId: '1FGQFL04OoclymsoGV5okUp_mw_Pkjq9uHJa0Yr9l3ps',
+                range: 'VEICULO!A:DS',
             }).then(response => {
                 const values = response.result.values;
                 if (values && values.length > 0) {
