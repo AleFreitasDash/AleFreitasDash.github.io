@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Planilha para JSON</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1>Planilha para JSON</h1>
+    <input type="text" id="plateInput" placeholder="Insira a placa">
+    <button onclick="getPlateData()">Obter Dados</button>
+    <pre id="jsonData"></pre>
+  </div>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    var SPREADSHEET_ID = '1FGQFL04OoclymsoGV5okUp_mw_Pkjq9uHJa0Yr9l3ps';
+    var SHEET_ID = 'Veículo';
+    
+    function getPlateData() {
+      var plate = document.getElementById('plateInput').value;
+    
+      gapi.client.sheets.spreadsheets.values.get({
+        spreadsheetId: SPREADSHEET_ID,
+        range: SHEET_ID + '!A:B',
+        key: 'AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk'
+      }).then(function(response) {
+        var values = response.result.values;
+        var jsonData = {};
+    
+        if (values.length > 0) {
+          for (var i = 0; i < values.length; i++) {
+            if (values[i][0] === plate) {
+              jsonData = {
+                "Placa": values[i][0],
+                "Nome": values[i][1]
+              };
+              break;
+            }
+          }
+        }
+    
+        if (Object.keys(jsonData).length === 0) {
+          document.getElementById('jsonData').innerText = 'Placa não encontrada na planilha.';
+        } else {
+          document.getElementById('jsonData').innerText = JSON.stringify(jsonData, null, 2);
+        }
+      }, function(response) {
+        document.getElementById('jsonData').innerText = 'Erro ao obter dados: ' + response.result.error.message;
+      });
+    }
+  </script>
+</body>
+</html>
