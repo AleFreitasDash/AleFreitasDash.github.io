@@ -21,8 +21,8 @@ gapi.load('client', function() {
 document.getElementById("cpfmotorista").innerText = values[i][8];
 document.getElementById("nomecompletomotorista").innerText = values[i][9];
 document.getElementById("rgmotorista").innerText = values[i][10];
-document.getElementById("orgãoemissormotorista").innerText = values[i][11];
-document.getElementById("dataemissãorgmotorista").innerText = values[i][12];
+document.getElementById("orgaoemissormotorista").innerText = values[i][11];
+document.getElementById("dataemissaorgmotorista").innerText = values[i][12];
                             return; // Encerra o loop após encontrar a chave
                         }
                     }
