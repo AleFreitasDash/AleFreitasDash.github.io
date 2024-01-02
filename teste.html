@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Transcrição de Áudio</title>
+</head>
+<body>
+  <h1>Transcrição de Áudio</h1>
+  
+  <input type="file" accept="audio/*" id="audioFileInput">
+  <button onclick="transcribeAudio()">Transcrever Áudio</button>
+  <p id="transcription"></p>
+
+  <script>
+    function transcribeAudio() {
+      const audioFile = document.getElementById('audioFileInput').files[0];
+
+      if (!audioFile) {
+        alert('Por favor, selecione um arquivo de áudio.');
+        return;
+      }
+
+      const audioContext = new AudioContext();
+      const fileReader = new FileReader();
+
+      fileReader.onload = function() {
+        audioContext.decodeAudioData(fileReader.result, function(buffer) {
+          const speechRecognition = new webkitSpeechRecognition() || new SpeechRecognition();
+          speechRecognition.lang = 'pt-BR'; // Configura o idioma para o reconhecimento de fala
+
+          speechRecognition.onresult = function(event) {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('transcription').innerText = transcript;
+          };
+
+          speechRecognition.onerror = function(event) {
+            console.error('Erro ao transcrever áudio:', event.error);
+          };
+
+          speechRecognition.onend = function() {
+            console.log('Transcrição finalizada.');
+          };
+
+          const source = audioContext.createBufferSource();
+          source.buffer = buffer;
+          source.connect(audioContext.destination);
+          source.start();
+
+          speechRecognition.start();
+          speechRecognition.addEventListener('end', () => source.stop());
+        });
+      };
+
+      fileReader.readAsArrayBuffer(audioFile);
+    }
+  </script>
+</body>
+</html>
