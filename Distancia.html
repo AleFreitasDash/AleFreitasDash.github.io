@@ -1,108 +1,43 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR" class="h-100">
+
 <head>
-    <title>Exemplo de distância entre cidades</title>
-    <!-- Inclui o Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>EM BREVE</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+    
 </head>
-<body>
-    <div class="container">
-        <h1>Exemplo de distância entre cidades</h1>
-        <p>Escolha duas cidades e veja a distância entre elas.</p>
-        <form id="form-cidades">
-            <div class="form-group">
-                <label for="cidade-origem">Cidade de origem:</label>
-                <select id="cidade-origem" class="form-control">
-                    <option value="-23.550520,-46.633308">São Paulo</option>
-                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
-                    <option value="-15.794229,-47.882166">Brasília</option>
-                    <option value="-3.718394,-38.543395">Fortaleza</option>
-                    <option value="-30.034647,-51.217658">Porto Alegre</option>
-                </select>
+</head>
+
+<body class="h-100">    
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-5">
+                    <div class="form-input-content text-center error-page">
+                        <h1 class="error-text font-weight-bold">EM MANUTENÇÃO</h1>
+                        <h4><i class="fa fa-times-circle text-danger"></i> Pagina em processo de melhoria</h4>
+                        <p>Em breve uma pagina atualizada com muito mais ferramentas</p> 
+						<div>
+                            <a class="btn btn-primary" href="./index.html">Contato</a>
+                        </div>	
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="cidade-destino">Cidade de destino:</label>
-                <select id="cidade-destino" class="form-control">
-                    <option value="-23.550520,-46.633308">São Paulo</option>
-                    <option value="-22.906847,-43.172897">Rio de Janeiro</option>
-                    <option value="-15.794229,-47.882166">Brasília</option>
-                    <option value="-3.718394,-38.543395">Fortaleza</option>
-                    <option value="-30.034647,-51.217658">Porto Alegre</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Calcular distância</button>
-        </form>
-        <div id="resultado" class="alert alert-success" style="display: none;"></div>
-        <!-- Div onde o mapa será mostrado -->
-        <div id="mapa" style="width: 800px; height: 600px;"></div>
+        </div>
     </div>
-
-    <!-- Script para carregar o mapa e calcular a distância -->
-    <script>
-        var bingMapsKey = "AlqUFiLlbuRfALG8dH9Tca8eA2fnacLq9VX1ic8n29op_INF1sKPZbb3BAE5jZhs";
-        var googleSheetsKey = "AIzaSyAxGbdWe639fXoxSAnogiMC_sJBFn5uXsk";
-        var googleSheetsId = "1I4GB6KQVa_6254wcguR4BzG8FQn96slmWy0usPmxW5k";
-        var googleSheetsTab = "KM";
-
-        function loadMapScenario() {
-            var mapa = new Microsoft.Maps.Map(document.getElementById("mapa"), {
-                credentials: bingMapsKey
-            });
-
-            var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(mapa);
-
-            $("#form-cidades").submit(function(event) {
-                event.preventDefault();
-
-                var origem = $("#cidade-origem").val();
-                var destino = $("#cidade-destino").val();
-
-                var request = {
-                    travelMode: Microsoft.Maps.Directions.TravelMode.driving,
-                    origin: new Microsoft.Maps.Location(origem.split(",")[0], origem.split(",")[1]),
-                    destination: new Microsoft.Maps.Location(destino.split(",")[0], destino.split(",")[1])
-                };
-
-                directionsManager.clearAll();
-                directionsManager.addWaypoint(request.origin);
-                directionsManager.addWaypoint(request.destination);
-                directionsManager.setRenderOptions({
-                    itineraryContainer: document.getElementById("resultado")
-                });
-
-                directionsManager.calculateDirections();
-
-                var distancia = directionsManager.getCurrentRoute().routeLegs[0].summary.distance;
-
-                $("#resultado").html("A distância entre as cidades é de " + distancia + " km.");
-                $("#resultado").show();
-
-                var dados = {
-                    values: [
-                        [origem, destino, distancia]
-                    ]
-                };
-
-                $.ajax({
-                    url: "https://sheets.googleapis.com/v4/spreadsheets/" + googleSheetsId + "/values/" + googleSheetsTab + ":append?valueInputOption=USER_ENTERED&key=" + googleSheetsKey,
-                    method: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(dados),
-                    success: function(response) {
-                        alert("Planilha atualizada com sucesso!");
-                    },
-                    error: function(error) {
-                        alert("Erro ao atualizar a planilha: " + error.responseText);
-                    }
-                });
-            });
-        }
-    </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://www.bing.com/maps/sdkrelease/mapcontrol?callback=loadMapScenario&key=AlqUFiLlbuRfALG8dH9Tca8eA2fnacLq9VX1ic8n29op_INF1sKPZbb3BAE5jZhs"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
 </body>
+<!--**********************************
+	Scripts
+***********************************-->
+<!-- Required vendors -->
+<script src="./vendor/global/global.min.js"></script>
+<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script src="./js/custom.min.js"></script>
+<script src="./js/deznav-init.js"></script>
 </html>
