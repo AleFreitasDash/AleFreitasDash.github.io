@@ -1,1 +1,0 @@
-{"message":"request to https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&country=Brasil&state=PI&city=Teresina&street=Residencial%20Bosque%20Sul failed, reason: socket hang up","type":"system","errno":"ECONNRESET","code":"ECONNRESET"}
