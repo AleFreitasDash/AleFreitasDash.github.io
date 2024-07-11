@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_f8d6023915c81b75367b64c19049c10e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_f8d6023915c81b75367b64c19049c10e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_f8d6023915c81b75367b64c19049c10e = L.map(
+                "map_f8d6023915c81b75367b64c19049c10e",
+                {
+                    center: [-24.0454, -51.2277],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 7,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_b26dafb69b3a50b83f64be92cad52f51 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors", "detectRetina": false, "maxNativeZoom": 19, "maxZoom": 19, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            );
+        
+    
+            tile_layer_b26dafb69b3a50b83f64be92cad52f51.addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var marker_8b37733f2f3e754ebd5a4ef30b3cf873 = L.marker(
+                [-24.8574, -54.3366],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_118da51e6d65995dfa7e0cc8d391d975 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_8b37733f2f3e754ebd5a4ef30b3cf873.setIcon(icon_118da51e6d65995dfa7e0cc8d391d975);
+        
+    
+        var popup_74cee417904baab81f1e7ffcf81fa166 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5038a035ad999dcb53f7672b3b3d87f1 = $(`<div id="html_5038a035ad999dcb53f7672b3b3d87f1" style="width: 100.0%; height: 100.0%;">SANTA HELENA - Distância: 522.73 km</div>`)[0];
+                popup_74cee417904baab81f1e7ffcf81fa166.setContent(html_5038a035ad999dcb53f7672b3b3d87f1);
+            
+        
+
+        marker_8b37733f2f3e754ebd5a4ef30b3cf873.bindPopup(popup_74cee417904baab81f1e7ffcf81fa166)
+        ;
+
+        
+    
+    
+            var marker_a6d17a3fff81fa240114c9e52690d980 = L.marker(
+                [-25.5311, -49.2031],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_8ce89cb3fc00e9fcdd483ba7a8d3b6d2 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_a6d17a3fff81fa240114c9e52690d980.setIcon(icon_8ce89cb3fc00e9fcdd483ba7a8d3b6d2);
+        
+    
+        var popup_7d6b1719b83f8eb8340e3fcd46b1c65f = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_e4fd590f0eb749a4c64b50aa296f3a95 = $(`<div id="html_e4fd590f0eb749a4c64b50aa296f3a95" style="width: 100.0%; height: 100.0%;">SAO JOSE DOS PINHAIS (Filial)</div>`)[0];
+                popup_7d6b1719b83f8eb8340e3fcd46b1c65f.setContent(html_e4fd590f0eb749a4c64b50aa296f3a95);
+            
+        
+
+        marker_a6d17a3fff81fa240114c9e52690d980.bindPopup(popup_7d6b1719b83f8eb8340e3fcd46b1c65f)
+        ;
+
+        
+    
+    
+            var marker_cea4a2495731be7fd4959ea1a087339c = L.marker(
+                [-24.0431, -52.3784],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_16d4e3dc93606a2865436288efe27dfb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_cea4a2495731be7fd4959ea1a087339c.setIcon(icon_16d4e3dc93606a2865436288efe27dfb);
+        
+    
+        var popup_5e47204a814ff26d4fcb295cdde89de7 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_d7b474d4c7efc921c6c4a424be07844c = $(`<div id="html_d7b474d4c7efc921c6c4a424be07844c" style="width: 100.0%; height: 100.0%;">CAMPO MOURAO - Distância: 360.91 km</div>`)[0];
+                popup_5e47204a814ff26d4fcb295cdde89de7.setContent(html_d7b474d4c7efc921c6c4a424be07844c);
+            
+        
+
+        marker_cea4a2495731be7fd4959ea1a087339c.bindPopup(popup_5e47204a814ff26d4fcb295cdde89de7)
+        ;
+
+        
+    
+    
+            var marker_9c0159d4766888f6921524ca077da01c = L.marker(
+                [-23.304, -51.1691],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_f9ef29186fac45519ae763150aa51335 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_9c0159d4766888f6921524ca077da01c.setIcon(icon_f9ef29186fac45519ae763150aa51335);
+        
+    
+        var popup_41a1eaebf9c684733fffd6ab78948487 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_7088490d79b96fc755256d9cdffe367c = $(`<div id="html_7088490d79b96fc755256d9cdffe367c" style="width: 100.0%; height: 100.0%;">LONDRINA - Distância: 317.18 km</div>`)[0];
+                popup_41a1eaebf9c684733fffd6ab78948487.setContent(html_7088490d79b96fc755256d9cdffe367c);
+            
+        
+
+        marker_9c0159d4766888f6921524ca077da01c.bindPopup(popup_41a1eaebf9c684733fffd6ab78948487)
+        ;
+
+        
+    
+    
+            var marker_51072c0ab496517ad5bf2b64cb89b325 = L.marker(
+                [-23.5492, -50.5567],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_f0d32e117bc1df293de70eeb28d0c2c3 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_51072c0ab496517ad5bf2b64cb89b325.setIcon(icon_f0d32e117bc1df293de70eeb28d0c2c3);
+        
+    
+        var popup_416c7edcf238fa11f4bf9abc2115a22a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f3c2eee657b40740de151f5a58e0e3b3 = $(`<div id="html_f3c2eee657b40740de151f5a58e0e3b3" style="width: 100.0%; height: 100.0%;">CONGONHINHAS - Distância: 258.84 km</div>`)[0];
+                popup_416c7edcf238fa11f4bf9abc2115a22a.setContent(html_f3c2eee657b40740de151f5a58e0e3b3);
+            
+        
+
+        marker_51072c0ab496517ad5bf2b64cb89b325.bindPopup(popup_416c7edcf238fa11f4bf9abc2115a22a)
+        ;
+
+        
+    
+    
+            var marker_f83c5e5d8ee013758ae06759211f8da0 = L.marker(
+                [-24.5297, -53.2575],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_4d2d77b36169fbaef7b0861f92fbae96 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_f83c5e5d8ee013758ae06759211f8da0.setIcon(icon_4d2d77b36169fbaef7b0861f92fbae96);
+        
+    
+        var popup_6b7fb2bf3971ede889515a511e9205d9 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b7ac6c8d95a6bb45b66dba1fa0ead539 = $(`<div id="html_b7ac6c8d95a6bb45b66dba1fa0ead539" style="width: 100.0%; height: 100.0%;">NOVA AURORA - Distância: 423.94 km</div>`)[0];
+                popup_6b7fb2bf3971ede889515a511e9205d9.setContent(html_b7ac6c8d95a6bb45b66dba1fa0ead539);
+            
+        
+
+        marker_f83c5e5d8ee013758ae06759211f8da0.bindPopup(popup_6b7fb2bf3971ede889515a511e9205d9)
+        ;
+
+        
+    
+    
+            var marker_64d2df823b8e957a9202cc91d799ba35 = L.marker(
+                [-23.3716, -53.6158],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_14e0b8d8704b0091eb4434f8f2a3b2be = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_64d2df823b8e957a9202cc91d799ba35.setIcon(icon_14e0b8d8704b0091eb4434f8f2a3b2be);
+        
+    
+        var popup_4f3ed5b6447f59c23fffbef553ae1205 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2583f05a0b3c2358d9ea90f75229566e = $(`<div id="html_2583f05a0b3c2358d9ea90f75229566e" style="width: 100.0%; height: 100.0%;">ICARAIMA - Distância: 507.29 km</div>`)[0];
+                popup_4f3ed5b6447f59c23fffbef553ae1205.setContent(html_2583f05a0b3c2358d9ea90f75229566e);
+            
+        
+
+        marker_64d2df823b8e957a9202cc91d799ba35.bindPopup(popup_4f3ed5b6447f59c23fffbef553ae1205)
+        ;
+
+        
+    
+    
+            var marker_6cf0f70e2a94e6887aecfd3582e0f3e7 = L.marker(
+                [-25.7707, -53.5262],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_d4657d8bcee10b4422468f3c09fa818b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_6cf0f70e2a94e6887aecfd3582e0f3e7.setIcon(icon_d4657d8bcee10b4422468f3c09fa818b);
+        
+    
+        var popup_e124234377251eb675a8aae46db977ee = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_4aac14be59ddd7b194956bc9bd109972 = $(`<div id="html_4aac14be59ddd7b194956bc9bd109972" style="width: 100.0%; height: 100.0%;">REALEZA - Distância: 434.88 km</div>`)[0];
+                popup_e124234377251eb675a8aae46db977ee.setContent(html_4aac14be59ddd7b194956bc9bd109972);
+            
+        
+
+        marker_6cf0f70e2a94e6887aecfd3582e0f3e7.bindPopup(popup_e124234377251eb675a8aae46db977ee)
+        ;
+
+        
+    
+    
+            var marker_4c8e7eb27cb31575124a6a2ac849c15c = L.marker(
+                [-24.7244, -53.7411],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_bc3a92dc5613ca3b0431b32060517e21 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_4c8e7eb27cb31575124a6a2ac849c15c.setIcon(icon_bc3a92dc5613ca3b0431b32060517e21);
+        
+    
+        var popup_14d1d575c1fb45385773684f0309bd3c = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bf3fb0c62822905354f23ca75f9f2dbd = $(`<div id="html_bf3fb0c62822905354f23ca75f9f2dbd" style="width: 100.0%; height: 100.0%;">TOLEDO - Distância: 466.25 km</div>`)[0];
+                popup_14d1d575c1fb45385773684f0309bd3c.setContent(html_bf3fb0c62822905354f23ca75f9f2dbd);
+            
+        
+
+        marker_4c8e7eb27cb31575124a6a2ac849c15c.bindPopup(popup_14d1d575c1fb45385773684f0309bd3c)
+        ;
+
+        
+    
+    
+            var marker_b2ae41a7ce3fc782e4edbec653405e20 = L.marker(
+                [-26.073, -53.7254],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_5d940bd8f9e9867c3d67f420a0a0cd3b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b2ae41a7ce3fc782e4edbec653405e20.setIcon(icon_5d940bd8f9e9867c3d67f420a0a0cd3b);
+        
+    
+        var popup_b295cf004f8888c386aa81724179ebba = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_6cef619ea79a35e3c892f98083b139fb = $(`<div id="html_6cef619ea79a35e3c892f98083b139fb" style="width: 100.0%; height: 100.0%;">SANTO ANTONIO DO SUDOESTE - Distância: 457.45 km</div>`)[0];
+                popup_b295cf004f8888c386aa81724179ebba.setContent(html_6cef619ea79a35e3c892f98083b139fb);
+            
+        
+
+        marker_b2ae41a7ce3fc782e4edbec653405e20.bindPopup(popup_b295cf004f8888c386aa81724179ebba)
+        ;
+
+        
+    
+    
+            var marker_65b911279033357f4c7c75853a8baa0d = L.marker(
+                [-26.2292, -52.6706],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_cbcbca3cc69345796404a227bc7ae669 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_65b911279033357f4c7c75853a8baa0d.setIcon(icon_cbcbca3cc69345796404a227bc7ae669);
+        
+    
+        var popup_ac7abd0b4f417151ae8cbb1c386df777 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_72d4966dff2fd7ed5c5c29b18eedb30c = $(`<div id="html_72d4966dff2fd7ed5c5c29b18eedb30c" style="width: 100.0%; height: 100.0%;">PATO BRANCO - Distância: 356.00 km</div>`)[0];
+                popup_ac7abd0b4f417151ae8cbb1c386df777.setContent(html_72d4966dff2fd7ed5c5c29b18eedb30c);
+            
+        
+
+        marker_65b911279033357f4c7c75853a8baa0d.bindPopup(popup_ac7abd0b4f417151ae8cbb1c386df777)
+        ;
+
+        
+    
+    
+            var marker_81dbd05248dfbc84d1c5868aaf464f73 = L.marker(
+                [-24.7891, -50.011],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_c0a7895de07a8bd81648dc2b2d3e6f67 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_81dbd05248dfbc84d1c5868aaf464f73.setIcon(icon_c0a7895de07a8bd81648dc2b2d3e6f67);
+        
+    
+        var popup_d4215529cb7da413145a296acd8b5a41 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_cdad13d81a8dc3f5998dc800d98ca744 = $(`<div id="html_cdad13d81a8dc3f5998dc800d98ca744" style="width: 100.0%; height: 100.0%;">CASTRO - Distância: 115.72 km</div>`)[0];
+                popup_d4215529cb7da413145a296acd8b5a41.setContent(html_cdad13d81a8dc3f5998dc800d98ca744);
+            
+        
+
+        marker_81dbd05248dfbc84d1c5868aaf464f73.bindPopup(popup_d4215529cb7da413145a296acd8b5a41)
+        ;
+
+        
+    
+    
+            var marker_78c16f521d83831b79da55a0fa7e8888 = L.marker(
+                [-25.4284, -49.2733],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_08caca8293e5e4245e6e703ced47f6a6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_78c16f521d83831b79da55a0fa7e8888.setIcon(icon_08caca8293e5e4245e6e703ced47f6a6);
+        
+    
+        var popup_989755b81902fd21fd9505ebf47b9b70 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a7ee29237db5170e55826eede51a368a = $(`<div id="html_a7ee29237db5170e55826eede51a368a" style="width: 100.0%; height: 100.0%;">CURITIBA - Distância: 13.39 km</div>`)[0];
+                popup_989755b81902fd21fd9505ebf47b9b70.setContent(html_a7ee29237db5170e55826eede51a368a);
+            
+        
+
+        marker_78c16f521d83831b79da55a0fa7e8888.bindPopup(popup_989755b81902fd21fd9505ebf47b9b70)
+        ;
+
+        
+    
+    
+            var marker_fcb56d340bfadd4e7cf1cce218e1f8e9 = L.marker(
+                [-23.7067, -51.7671],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_2011ffc7801c024ae5213ad2c24ae8ff = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_fcb56d340bfadd4e7cf1cce218e1f8e9.setIcon(icon_2011ffc7801c024ae5213ad2c24ae8ff);
+        
+    
+        var popup_34f8746bad40ff15d14b3f96cc1c1188 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_aadee7950082a1d305105cf649c14035 = $(`<div id="html_aadee7950082a1d305105cf649c14035" style="width: 100.0%; height: 100.0%;">BOM SUCESSO - Distância: 328.99 km</div>`)[0];
+                popup_34f8746bad40ff15d14b3f96cc1c1188.setContent(html_aadee7950082a1d305105cf649c14035);
+            
+        
+
+        marker_fcb56d340bfadd4e7cf1cce218e1f8e9.bindPopup(popup_34f8746bad40ff15d14b3f96cc1c1188)
+        ;
+
+        
+    
+    
+            var marker_1070765a8e9ddeaab7b6bb8f6f0ded95 = L.marker(
+                [-23.1102, -51.5295],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_1da15b83cc31efcd2344b20c2a3d1b4c = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_1070765a8e9ddeaab7b6bb8f6f0ded95.setIcon(icon_1da15b83cc31efcd2344b20c2a3d1b4c);
+        
+    
+        var popup_239555cde936a5b951adc6333393ef79 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_407231d4cfd11bd29eab48a590d8b671 = $(`<div id="html_407231d4cfd11bd29eab48a590d8b671" style="width: 100.0%; height: 100.0%;">JAGUAPITA - Distância: 357.27 km</div>`)[0];
+                popup_239555cde936a5b951adc6333393ef79.setContent(html_407231d4cfd11bd29eab48a590d8b671);
+            
+        
+
+        marker_1070765a8e9ddeaab7b6bb8f6f0ded95.bindPopup(popup_239555cde936a5b951adc6333393ef79)
+        ;
+
+        
+    
+    
+            var marker_61bcb4226040acce950c165c154d0983 = L.marker(
+                [-24.2834, -53.8402],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_fac4e77133f9c3351d4384239db8d354 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_61bcb4226040acce950c165c154d0983.setIcon(icon_fac4e77133f9c3351d4384239db8d354);
+        
+    
+        var popup_c5ea08118c606da712b5849b56227fc1 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_730d7fe431d9d7a38ecb475fb8478743 = $(`<div id="html_730d7fe431d9d7a38ecb475fb8478743" style="width: 100.0%; height: 100.0%;">PALOTINA - Distância: 488.39 km</div>`)[0];
+                popup_c5ea08118c606da712b5849b56227fc1.setContent(html_730d7fe431d9d7a38ecb475fb8478743);
+            
+        
+
+        marker_61bcb4226040acce950c165c154d0983.bindPopup(popup_c5ea08118c606da712b5849b56227fc1)
+        ;
+
+        
+    
+    
+            var marker_dc002d57f93edc4472ea6c0c90a6fddc = L.marker(
+                [-25.4447, -49.1926],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_a9fef94e137838c9b1a0a10a34aae6d6 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_dc002d57f93edc4472ea6c0c90a6fddc.setIcon(icon_a9fef94e137838c9b1a0a10a34aae6d6);
+        
+    
+        var popup_5fc60afc4d1de944f07c1946acf70f41 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a9660db80bd8ce0c9b8a0e5abc57eff1 = $(`<div id="html_a9660db80bd8ce0c9b8a0e5abc57eff1" style="width: 100.0%; height: 100.0%;">PINHAIS - Distância: 9.63 km</div>`)[0];
+                popup_5fc60afc4d1de944f07c1946acf70f41.setContent(html_a9660db80bd8ce0c9b8a0e5abc57eff1);
+            
+        
+
+        marker_dc002d57f93edc4472ea6c0c90a6fddc.bindPopup(popup_5fc60afc4d1de944f07c1946acf70f41)
+        ;
+
+        
+    
+    
+            var marker_7a2abf0b49e52181befd43dabd8f558b = L.marker(
+                [-23.4205, -51.9331],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_8fce152acc47e018ad41400aeb0d9a99 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_7a2abf0b49e52181befd43dabd8f558b.setIcon(icon_8fce152acc47e018ad41400aeb0d9a99);
+        
+    
+        var popup_9b2a691d94be3a9897f1a5c0e85324aa = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_78879674d41ff6c014bb065bcec3a8b7 = $(`<div id="html_78879674d41ff6c014bb065bcec3a8b7" style="width: 100.0%; height: 100.0%;">MARINGA - Distância: 362.25 km</div>`)[0];
+                popup_9b2a691d94be3a9897f1a5c0e85324aa.setContent(html_78879674d41ff6c014bb065bcec3a8b7);
+            
+        
+
+        marker_7a2abf0b49e52181befd43dabd8f558b.bindPopup(popup_9b2a691d94be3a9897f1a5c0e85324aa)
+        ;
+
+        
+    
+    
+            var marker_9ced0fd6427075fe85a5eafe6b19ea5a = L.marker(
+                [-25.7337, -53.0575],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_afd4947159443b0ccb3c4a48db5a6913 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_9ced0fd6427075fe85a5eafe6b19ea5a.setIcon(icon_afd4947159443b0ccb3c4a48db5a6913);
+        
+    
+        var popup_ff66553817989065a6ec9c61abb21ca0 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f4a2a3f4595be16fcc12e2025f01a003 = $(`<div id="html_f4a2a3f4595be16fcc12e2025f01a003" style="width: 100.0%; height: 100.0%;">DOIS VIZINHOS - Distância: 387.72 km</div>`)[0];
+                popup_ff66553817989065a6ec9c61abb21ca0.setContent(html_f4a2a3f4595be16fcc12e2025f01a003);
+            
+        
+
+        marker_9ced0fd6427075fe85a5eafe6b19ea5a.bindPopup(popup_ff66553817989065a6ec9c61abb21ca0)
+        ;
+
+        
+    
+    
+            var marker_32c28cf4aa672255bc11b93ad61f6144 = L.marker(
+                [-23.4094, -50.3606],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_3865ea7976525137dbe64930b4d6de59 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_32c28cf4aa672255bc11b93ad61f6144.setIcon(icon_3865ea7976525137dbe64930b4d6de59);
+        
+    
+        var popup_5b2821b8607c8640abdffc8053c15e28 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bde5c85a8fbd205180aa287734f66a98 = $(`<div id="html_bde5c85a8fbd205180aa287734f66a98" style="width: 100.0%; height: 100.0%;">RIBEIRAO DO PINHAL - Distância: 262.67 km</div>`)[0];
+                popup_5b2821b8607c8640abdffc8053c15e28.setContent(html_bde5c85a8fbd205180aa287734f66a98);
+            
+        
+
+        marker_32c28cf4aa672255bc11b93ad61f6144.bindPopup(popup_5b2821b8607c8640abdffc8053c15e28)
+        ;
+
+        
+    
+    
+            var marker_3fb15ffd3c04e8c57f06d4180b50a280 = L.marker(
+                [-23.0816, -52.465],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_49348c09a5e50e8ab91d7fe0fe0253a1 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_3fb15ffd3c04e8c57f06d4180b50a280.setIcon(icon_49348c09a5e50e8ab91d7fe0fe0253a1);
+        
+    
+        var popup_ef3beded0728f83b470d224b589dd3ff = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_fe8dd31c1f935ff1892a7f7e0bf2747e = $(`<div id="html_fe8dd31c1f935ff1892a7f7e0bf2747e" style="width: 100.0%; height: 100.0%;">PARANAVAI - Distância: 428.04 km</div>`)[0];
+                popup_ef3beded0728f83b470d224b589dd3ff.setContent(html_fe8dd31c1f935ff1892a7f7e0bf2747e);
+            
+        
+
+        marker_3fb15ffd3c04e8c57f06d4180b50a280.bindPopup(popup_ef3beded0728f83b470d224b589dd3ff)
+        ;
+
+        
+    
+    
+            var marker_d40d35408aa50b853d3ef4b160552987 = L.marker(
+                [-23.2752, -51.2795],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_acd9ce8f8dc040b66f50e2cfbb7cea75 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_d40d35408aa50b853d3ef4b160552987.setIcon(icon_acd9ce8f8dc040b66f50e2cfbb7cea75);
+        
+    
+        var popup_635f74f220a82b696ec29bf6a47dfaad = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_72409a62385a7f2fa2f501ee35377648 = $(`<div id="html_72409a62385a7f2fa2f501ee35377648" style="width: 100.0%; height: 100.0%;">CAMBE - Distância: 326.78 km</div>`)[0];
+                popup_635f74f220a82b696ec29bf6a47dfaad.setContent(html_72409a62385a7f2fa2f501ee35377648);
+            
+        
+
+        marker_d40d35408aa50b853d3ef4b160552987.bindPopup(popup_635f74f220a82b696ec29bf6a47dfaad)
+        ;
+
+        
+    
+    
+            var marker_d9cfb779667791d740409518fa5f6492 = L.marker(
+                [-25.9612, -52.8148],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_6e5cbb8cb0c809d9c76fd8be29a312f5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_d9cfb779667791d740409518fa5f6492.setIcon(icon_6e5cbb8cb0c809d9c76fd8be29a312f5);
+        
+    
+        var popup_7b9758220b8bb19a6f75f913a504eaef = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_54e2ce4bb846e49c2257d37d243af85e = $(`<div id="html_54e2ce4bb846e49c2257d37d243af85e" style="width: 100.0%; height: 100.0%;">ITAPEJARA D'OESTE - Distância: 365.48 km</div>`)[0];
+                popup_7b9758220b8bb19a6f75f913a504eaef.setContent(html_54e2ce4bb846e49c2257d37d243af85e);
+            
+        
+
+        marker_d9cfb779667791d740409518fa5f6492.bindPopup(popup_7b9758220b8bb19a6f75f913a504eaef)
+        ;
+
+        
+    
+    
+            var marker_b7975cde77e749c51d8fe3547e139f27 = L.marker(
+                [-24.9739, -50.0982],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_86549c9603aa0fed16a60c531684e1a5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b7975cde77e749c51d8fe3547e139f27.setIcon(icon_86549c9603aa0fed16a60c531684e1a5);
+        
+    
+        var popup_7b143d31e68310f81fd2b66fbbfebd22 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_8f040540da7a40fc8013b0d0f6661fdc = $(`<div id="html_8f040540da7a40fc8013b0d0f6661fdc" style="width: 100.0%; height: 100.0%;">CARAMBEI - Distância: 109.28 km</div>`)[0];
+                popup_7b143d31e68310f81fd2b66fbbfebd22.setContent(html_8f040540da7a40fc8013b0d0f6661fdc);
+            
+        
+
+        marker_b7975cde77e749c51d8fe3547e139f27.bindPopup(popup_7b143d31e68310f81fd2b66fbbfebd22)
+        ;
+
+        
+    
+    
+            var marker_e21338d1fb893e0f5d5ffa357a93e5ae = L.marker(
+                [-23.7663, -53.3171],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_17898c5c8796492300cc9997cb268d11 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_e21338d1fb893e0f5d5ffa357a93e5ae.setIcon(icon_17898c5c8796492300cc9997cb268d11);
+        
+    
+        var popup_9944b835d2c0fd5de19f290111bc67bf = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c6598fd5a516f68ba791b9cd406a6f46 = $(`<div id="html_c6598fd5a516f68ba791b9cd406a6f46" style="width: 100.0%; height: 100.0%;">UMUARAMA - Distância: 460.04 km</div>`)[0];
+                popup_9944b835d2c0fd5de19f290111bc67bf.setContent(html_c6598fd5a516f68ba791b9cd406a6f46);
+            
+        
+
+        marker_e21338d1fb893e0f5d5ffa357a93e5ae.bindPopup(popup_9944b835d2c0fd5de19f290111bc67bf)
+        ;
+
+        
+    
+    
+            var marker_bc1fe00fe344053fb2568cbea39788cf = L.marker(
+                [-24.5589, -54.0563],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_fe3cac3b4ea788d0e4c7ab60fcd519b5 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_bc1fe00fe344053fb2568cbea39788cf.setIcon(icon_fe3cac3b4ea788d0e4c7ab60fcd519b5);
+        
+    
+        var popup_e54b5fcd261f6a3d8d2361b052d96094 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_3f90667f30b579892198b6c445a91fa7 = $(`<div id="html_3f90667f30b579892198b6c445a91fa7" style="width: 100.0%; height: 100.0%;">MARECHAL CANDIDO RONDON - Distância: 501.42 km</div>`)[0];
+                popup_e54b5fcd261f6a3d8d2361b052d96094.setContent(html_3f90667f30b579892198b6c445a91fa7);
+            
+        
+
+        marker_bc1fe00fe344053fb2568cbea39788cf.bindPopup(popup_e54b5fcd261f6a3d8d2361b052d96094)
+        ;
+
+        
+    
+    
+            var marker_4a6e6bd87ef84163c5bf4888cc2bb63b = L.marker(
+                [-25.2926, -49.2247],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_87f432226acd86e4a543d4b73093796b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_4a6e6bd87ef84163c5bf4888cc2bb63b.setIcon(icon_87f432226acd86e4a543d4b73093796b);
+        
+    
+        var popup_083b060d9197c73ded8f6c6ac4b0848a = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_b84a3f8e3c028fbf6f6b5624f1d52dcb = $(`<div id="html_b84a3f8e3c028fbf6f6b5624f1d52dcb" style="width: 100.0%; height: 100.0%;">COLOMBO - Distância: 26.51 km</div>`)[0];
+                popup_083b060d9197c73ded8f6c6ac4b0848a.setContent(html_b84a3f8e3c028fbf6f6b5624f1d52dcb);
+            
+        
+
+        marker_4a6e6bd87ef84163c5bf4888cc2bb63b.bindPopup(popup_083b060d9197c73ded8f6c6ac4b0848a)
+        ;
+
+        
+    
+    
+            var marker_761eb2e4e03f8b770fa08cc70fde9d5b = L.marker(
+                [-25.2958, -54.0935],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_776171bffb2c35df15e76f2f92b80da4 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_761eb2e4e03f8b770fa08cc70fde9d5b.setIcon(icon_776171bffb2c35df15e76f2f92b80da4);
+        
+    
+        var popup_d9e5e1b0cbc62f92d7d6f3b8fb42f73d = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f2c1982b2ae8f91fa10d5fd8c1b9811d = $(`<div id="html_f2c1982b2ae8f91fa10d5fd8c1b9811d" style="width: 100.0%; height: 100.0%;">MEDIANEIRA - Distância: 492.68 km</div>`)[0];
+                popup_d9e5e1b0cbc62f92d7d6f3b8fb42f73d.setContent(html_f2c1982b2ae8f91fa10d5fd8c1b9811d);
+            
+        
+
+        marker_761eb2e4e03f8b770fa08cc70fde9d5b.bindPopup(popup_d9e5e1b0cbc62f92d7d6f3b8fb42f73d)
+        ;
+
+        
+    
+    
+            var marker_b80d3985a1281341662d2e822097e202 = L.marker(
+                [-25.9764, -52.5663],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_cfe7a3b0dba054149d537a0c1c07e930 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b80d3985a1281341662d2e822097e202.setIcon(icon_cfe7a3b0dba054149d537a0c1c07e930);
+        
+    
+        var popup_b1bd64d3746c54d6e82a81deaeb01f4e = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2f9b39a16a4c82619ebc8f049a51c05d = $(`<div id="html_2f9b39a16a4c82619ebc8f049a51c05d" style="width: 100.0%; height: 100.0%;">CORONEL VIVIDA - Distância: 340.99 km</div>`)[0];
+                popup_b1bd64d3746c54d6e82a81deaeb01f4e.setContent(html_2f9b39a16a4c82619ebc8f049a51c05d);
+            
+        
+
+        marker_b80d3985a1281341662d2e822097e202.bindPopup(popup_b1bd64d3746c54d6e82a81deaeb01f4e)
+        ;
+
+        
+    
+    
+            var marker_e49814bf8a5dea9fdf54e28c27bc4232 = L.marker(
+                [-24.9573, -53.459],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_366af31d97a129675adb2ee348c7cd4d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_e49814bf8a5dea9fdf54e28c27bc4232.setIcon(icon_366af31d97a129675adb2ee348c7cd4d);
+        
+    
+        var popup_1e012cf1f4b0e36a2b845989574cd6ec = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_596a92badcb419071a8fd900f74e1bc1 = $(`<div id="html_596a92badcb419071a8fd900f74e1bc1" style="width: 100.0%; height: 100.0%;">CASCAVEL - Distância: 433.45 km</div>`)[0];
+                popup_1e012cf1f4b0e36a2b845989574cd6ec.setContent(html_596a92badcb419071a8fd900f74e1bc1);
+            
+        
+
+        marker_e49814bf8a5dea9fdf54e28c27bc4232.bindPopup(popup_1e012cf1f4b0e36a2b845989574cd6ec)
+        ;
+
+        
+    
+    
+            var marker_d5e5137275499ac948c8e42ea24cd92c = L.marker(
+                [-26.404, -52.4743],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_bf40c60165169a96de59f30a0dafba08 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_d5e5137275499ac948c8e42ea24cd92c.setIcon(icon_bf40c60165169a96de59f30a0dafba08);
+        
+    
+        var popup_26fa24345db259029d118e56a5c667cc = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_c346028afe676821f57f7cd549b0d13b = $(`<div id="html_c346028afe676821f57f7cd549b0d13b" style="width: 100.0%; height: 100.0%;">CLEVELANDIA - Distância: 341.56 km</div>`)[0];
+                popup_26fa24345db259029d118e56a5c667cc.setContent(html_c346028afe676821f57f7cd549b0d13b);
+            
+        
+
+        marker_d5e5137275499ac948c8e42ea24cd92c.bindPopup(popup_26fa24345db259029d118e56a5c667cc)
+        ;
+
+        
+    
+    
+            var marker_fd30c5a537e5a277957d77fb26ff70f1 = L.marker(
+                [-23.4692, -53.0898],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_204952dce59992d4634af80cf68129ba = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_fd30c5a537e5a277957d77fb26ff70f1.setIcon(icon_204952dce59992d4634af80cf68129ba);
+        
+    
+        var popup_2b653d88dfe2d0add51f901ae52a8959 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_2e4a4e2742912e8bd9c62b492038ad34 = $(`<div id="html_2e4a4e2742912e8bd9c62b492038ad34" style="width: 100.0%; height: 100.0%;">NOVA OLIMPIA - Distância: 455.31 km</div>`)[0];
+                popup_2b653d88dfe2d0add51f901ae52a8959.setContent(html_2e4a4e2742912e8bd9c62b492038ad34);
+            
+        
+
+        marker_fd30c5a537e5a277957d77fb26ff70f1.bindPopup(popup_2b653d88dfe2d0add51f901ae52a8959)
+        ;
+
+        
+    
+    
+            var marker_9dabe2200212934a4bc67cb03916e60e = L.marker(
+                [-25.4254, -50.0074],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_027226c7c5438d966082c863f0232d1b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_9dabe2200212934a4bc67cb03916e60e.setIcon(icon_027226c7c5438d966082c863f0232d1b);
+        
+    
+        var popup_8409635e7adc07a7e6392a402be079f4 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_a11d99a815a1fbfbf4e2facaa0d83315 = $(`<div id="html_a11d99a815a1fbfbf4e2facaa0d83315" style="width: 100.0%; height: 100.0%;">PALMEIRA - Distância: 81.72 km</div>`)[0];
+                popup_8409635e7adc07a7e6392a402be079f4.setContent(html_a11d99a815a1fbfbf4e2facaa0d83315);
+            
+        
+
+        marker_9dabe2200212934a4bc67cb03916e60e.bindPopup(popup_8409635e7adc07a7e6392a402be079f4)
+        ;
+
+        
+    
+    
+            var marker_a0723dc38fe1ef61f4e0cffc4806ef60 = L.marker(
+                [-25.8214, -52.7262],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_32ae6acc899cf376cfcdab8a465a278a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_a0723dc38fe1ef61f4e0cffc4806ef60.setIcon(icon_32ae6acc899cf376cfcdab8a465a278a);
+        
+    
+        var popup_409454d69bf07bca0d32eff05cc7fa25 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9870236e508be7d64c81e8dc7584ed6e = $(`<div id="html_9870236e508be7d64c81e8dc7584ed6e" style="width: 100.0%; height: 100.0%;">SAO JOAO - Distância: 355.13 km</div>`)[0];
+                popup_409454d69bf07bca0d32eff05cc7fa25.setContent(html_9870236e508be7d64c81e8dc7584ed6e);
+            
+        
+
+        marker_a0723dc38fe1ef61f4e0cffc4806ef60.bindPopup(popup_409454d69bf07bca0d32eff05cc7fa25)
+        ;
+
+        
+    
+    
+            var marker_99e0ad3d46513d3d53be7041198ef0c4 = L.marker(
+                [-25.3819, -54.0518],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_3b30985dec957f15d21075ee1a8a45cb = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_99e0ad3d46513d3d53be7041198ef0c4.setIcon(icon_3b30985dec957f15d21075ee1a8a45cb);
+        
+    
+        var popup_90b350bab8715a99798dc84ea9fcd5dd = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_973944b3d18aa9e49ba60f31d3239647 = $(`<div id="html_973944b3d18aa9e49ba60f31d3239647" style="width: 100.0%; height: 100.0%;">SERRANOPOLIS DO IGUACU - Distância: 487.91 km</div>`)[0];
+                popup_90b350bab8715a99798dc84ea9fcd5dd.setContent(html_973944b3d18aa9e49ba60f31d3239647);
+            
+        
+
+        marker_99e0ad3d46513d3d53be7041198ef0c4.bindPopup(popup_90b350bab8715a99798dc84ea9fcd5dd)
+        ;
+
+        
+    
+    
+            var marker_b016dd96a2dc5204d1549dd0f5028891 = L.marker(
+                [-23.5446, -51.6722],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_ad9933e8598f0a236f86c412571a7c7f = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_b016dd96a2dc5204d1549dd0f5028891.setIcon(icon_ad9933e8598f0a236f86c412571a7c7f);
+        
+    
+        var popup_1f25a50e2a9bbeab4edda5f963608b07 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_abdc8263edf23ef7fb4a20beb1c6e8d9 = $(`<div id="html_abdc8263edf23ef7fb4a20beb1c6e8d9" style="width: 100.0%; height: 100.0%;">MANDAGUARI - Distância: 333.16 km</div>`)[0];
+                popup_1f25a50e2a9bbeab4edda5f963608b07.setContent(html_abdc8263edf23ef7fb4a20beb1c6e8d9);
+            
+        
+
+        marker_b016dd96a2dc5204d1549dd0f5028891.bindPopup(popup_1f25a50e2a9bbeab4edda5f963608b07)
+        ;
+
+        
+    
+    
+            var marker_877ea7def9054e5973b8aeaf531beeaa = L.marker(
+                [-24.529, -49.9482],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_8c43b16b0c428786c0c154b1a206daed = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_877ea7def9054e5973b8aeaf531beeaa.setIcon(icon_8c43b16b0c428786c0c154b1a206daed);
+        
+    
+        var popup_5b25454663e3afb0649d80ebc8181b12 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_695e1fd1e0879d91d597a5ad05f89a32 = $(`<div id="html_695e1fd1e0879d91d597a5ad05f89a32" style="width: 100.0%; height: 100.0%;">PIRAI DO SUL - Distância: 134.08 km</div>`)[0];
+                popup_5b25454663e3afb0649d80ebc8181b12.setContent(html_695e1fd1e0879d91d597a5ad05f89a32);
+            
+        
+
+        marker_877ea7def9054e5973b8aeaf531beeaa.bindPopup(popup_5b25454663e3afb0649d80ebc8181b12)
+        ;
+
+        
+    
+    
+            var marker_85a7c2ce08df0bb93b34e2fd4ab9e839 = L.marker(
+                [-24.1544, -49.8282],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_26f1a7bb838716e5e79c3db89d308850 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_85a7c2ce08df0bb93b34e2fd4ab9e839.setIcon(icon_26f1a7bb838716e5e79c3db89d308850);
+        
+    
+        var popup_43dacdda7ea42b1e1bccf086ce66c548 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_bd06a2b11ca9c95329edccd0e5531930 = $(`<div id="html_bd06a2b11ca9c95329edccd0e5531930" style="width: 100.0%; height: 100.0%;">ARAPOTI - Distância: 165.07 km</div>`)[0];
+                popup_43dacdda7ea42b1e1bccf086ce66c548.setContent(html_bd06a2b11ca9c95329edccd0e5531930);
+            
+        
+
+        marker_85a7c2ce08df0bb93b34e2fd4ab9e839.bindPopup(popup_43dacdda7ea42b1e1bccf086ce66c548)
+        ;
+
+        
+    
+    
+            var marker_e50af03ba8b9a5aaf47be0362ff11cd2 = L.marker(
+                [-25.767, -49.7155],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_63e43c9057ac5511d44dc0537436e89e = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_e50af03ba8b9a5aaf47be0362ff11cd2.setIcon(icon_63e43c9057ac5511d44dc0537436e89e);
+        
+    
+        var popup_4d75e15f078766536b58bca965d6e85b = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_f68686d824e22dcb9ee1ba16339a29bf = $(`<div id="html_f68686d824e22dcb9ee1ba16339a29bf" style="width: 100.0%; height: 100.0%;">LAPA - Distância: 57.71 km</div>`)[0];
+                popup_4d75e15f078766536b58bca965d6e85b.setContent(html_f68686d824e22dcb9ee1ba16339a29bf);
+            
+        
+
+        marker_e50af03ba8b9a5aaf47be0362ff11cd2.bindPopup(popup_4d75e15f078766536b58bca965d6e85b)
+        ;
+
+        
+    
+    
+            var marker_56cd3a10f23f94b09dcbe6f0c5bf1a8f = L.marker(
+                [-25.3902, -51.4623],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_558332058b0d0f39e047fc57e481dade = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_56cd3a10f23f94b09dcbe6f0c5bf1a8f.setIcon(icon_558332058b0d0f39e047fc57e481dade);
+        
+    
+        var popup_e9d6a19b44de49e419d028b7b9ed90de = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_1973b0cd066b3194b8c37531d132cb98 = $(`<div id="html_1973b0cd066b3194b8c37531d132cb98" style="width: 100.0%; height: 100.0%;">GUARAPUAVA - Distância: 227.74 km</div>`)[0];
+                popup_e9d6a19b44de49e419d028b7b9ed90de.setContent(html_1973b0cd066b3194b8c37531d132cb98);
+            
+        
+
+        marker_56cd3a10f23f94b09dcbe6f0c5bf1a8f.bindPopup(popup_e9d6a19b44de49e419d028b7b9ed90de)
+        ;
+
+        
+    
+    
+            var marker_d7b640edee37ab03cb114b339729680f = L.marker(
+                [-23.2783, -52.1531],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_d3f2d6b919ed7c372424040d45f1b62a = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_d7b640edee37ab03cb114b339729680f.setIcon(icon_d3f2d6b919ed7c372424040d45f1b62a);
+        
+    
+        var popup_1d8413ae846b1da79304f26b73392441 = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_5908ce5fd56cd0499c12b54723ab0d91 = $(`<div id="html_5908ce5fd56cd0499c12b54723ab0d91" style="width: 100.0%; height: 100.0%;">PRESIDENTE CASTELO BRANCO - Distância: 389.59 km</div>`)[0];
+                popup_1d8413ae846b1da79304f26b73392441.setContent(html_5908ce5fd56cd0499c12b54723ab0d91);
+            
+        
+
+        marker_d7b640edee37ab03cb114b339729680f.bindPopup(popup_1d8413ae846b1da79304f26b73392441)
+        ;
+
+        
+    
+    
+            var marker_7fc9cae43a225e6f3df82310a0d1434f = L.marker(
+                [-26.0811, -53.0536],
+                {}
+            ).addTo(map_f8d6023915c81b75367b64c19049c10e);
+        
+    
+            var icon_f30bbf049395fffab7b37eb86c731a94 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "cloud", "iconColor": "white", "markerColor": "blue", "prefix": "glyphicon"}
+            );
+            marker_7fc9cae43a225e6f3df82310a0d1434f.setIcon(icon_f30bbf049395fffab7b37eb86c731a94);
+        
+    
+        var popup_fae7f640219b9bfa0cf9b8072ed78fde = L.popup({"maxWidth": "100%"});
+
+        
+            
+                var html_9c5535bba78e3bab2e43ca596d3da277 = $(`<div id="html_9c5535bba78e3bab2e43ca596d3da277" style="width: 100.0%; height: 100.0%;">FRANCISCO BELTRAO - Distância: 390.90 km</div>`)[0];
+                popup_fae7f640219b9bfa0cf9b8072ed78fde.setContent(html_9c5535bba78e3bab2e43ca596d3da277);
+            
+        
+
+        marker_7fc9cae43a225e6f3df82310a0d1434f.bindPopup(popup_fae7f640219b9bfa0cf9b8072ed78fde)
+        ;
+
+        
+    
+</script>
+</html>
