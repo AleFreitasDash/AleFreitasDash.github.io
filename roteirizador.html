@@ -10,6 +10,29 @@
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-calculate {
+            width: 100%;
+        }
+
+        #map {
+            margin-top: 20px;
+            height: 500px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 
 <body>
@@ -85,26 +108,24 @@
                    <div class="col-xl-12">
                         <div class="card mb-3">
                             <div class="card-header">
-                                <div class="input-group input-group-lg">
-                                    <label for="origin" class="input-group-text">Endereço de Origem:</label>
-                                    <input type="text" id="origin" class="form-control" placeholder="Ex: R. Edgar Marchiori, 255 - Vinhedo - SP" required>
-                                </div>
-							</div>
-							<div class="card-header">
-                                <div class="input-group input-group-lg mt-2">
-                                    <label for="destinations" class="input-group-text">Endereços de Destino (um por linha):</label>
-                                    <textarea id="destinations" class="form-control" placeholder="Ex: Av. Paulista, 1000 - São Paulo - SP" required></textarea>
-                                </div>
-							</div>
-							<div class="card-header">
-                                <div class="input-group input-group-lg mt-2">
-                                    <label for="num-routes" class="input-group-text">Quantidade de Rotas:</label>
-                                    <input type="number" id="num-routes" class="form-control" min="1" max="10" required>
-                                </div>
-                                <button type="submit" id="calculate-route" class="btn btn-primary mt-2">Calcular Rota</button>
+                                <form id="route-form" class="form-container">
+                                    <div class="form-group">
+                                        <label for="origin" class="form-label">Endereço de Origem:</label>
+                                        <input type="text" id="origin" class="form-control" placeholder="Ex: R. Edgar Marchiori, 255 - Vinhedo - SP" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="destinations" class="form-label">Endereços de Destino (um por linha):</label>
+                                        <textarea id="destinations" class="form-control" placeholder="Ex: Av. Paulista, 1000 - São Paulo - SP" required></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="num-routes" class="form-label">Quantidade de Rotas:</label>
+                                        <input type="number" id="num-routes" class="form-control" min="1" max="10" required>
+                                    </div>
+                                    <button type="submit" id="calculate-route" class="btn btn-primary btn-calculate">Calcular Rota</button>
+                                </form>
                             </div>
                             <div class="card-body">
-                                <div id="map" style="height: 500px; margin-top: 20px;"></div>
+                                <div id="map"></div>
                                 <table id="route-table" class="table mt-3">
                                     <thead>
                                         <tr>
