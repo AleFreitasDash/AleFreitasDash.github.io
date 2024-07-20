@@ -5,15 +5,20 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Market Place Solistica</title>
+    <title>CTe</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./vendor/nouislider/nouislider.min.css">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	
+    	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -58,7 +63,7 @@
                         <i class="flaticon-381-file-2"></i>
                         <span class="nav-text">Cte</span>
                     </a>
-                        <ul aria-expanded="false">
+					    <ul aria-expanded="false">
                             <li><a href="./cte.html">Consulta de Conhecimento</a></li>
                         </ul>
                     </li>
@@ -66,36 +71,61 @@
                         <i class="flaticon-381-folder-6"></i>
                         <span class="nav-text">Compras</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./compras_acompanhamento.html">Acompanhamento de pedidos</a></li>
+							<li><a href="./pedidos_de_compra.html">Cotações / Pedidos de Compra</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-calculator-1"></i>
                         <span class="nav-text">Financeiro</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./financeiro.html">Segunda via de boleto / Link de Pagamento</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-print-1"></i>
                         <span class="nav-text">Impressão Virtual</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./impressao.html">Download de documentos</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-search-3"></i>
                         <span class="nav-text">MDFe</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./mdfe.html">Consulta de manifestos de documentos fiscais eletrônicos</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-file-2"></i>
                         <span class="nav-text">NFe</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./nfe.html">Consulta de notas fiscais eletrônicas</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-user-9"></i>
                         <span class="nav-text">Terceiros</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./terceiros_documentos.html">Documentos</a></li>
+							<li><a href="./terceiros_irf.html">Informe de Rendimentos do Fornecedor</a></li>
+                        </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-id-card-5"></i>
                         <span class="nav-text">Transportadores</span>
                     </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./t_alteracao_frota.html">Alteração de frotas</a></li>
+							<li><a href="./t_disponibilidade.html">Disponibilidade de frota</a></li>
+							<li><a href="./t_relatorios.html">Relatórios</a></li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="add-menu-sidebar">
@@ -113,10 +143,22 @@
         <!-- Content body start -->
         <div class="content-body">
             <div class="container-fluid">
-
+            <div class="row page-titles mx-0">
+                    <div class="col-sm-6 p-md-0">
+                        <div class="welcome-text">
+                            <span>{NOME DA EMPRESA}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">MDFe</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Consulta de Conhecimento</a></li>
+                        </ol>
+                    </div>
+                </div>
                 <!-- Filtro e Tabela -->
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col-lg-12">
                         <form id="filter-form" class="form-inline mb-3">
                             <label for="de" class="mr-2">De:</label>
                             <input type="date" class="form-control mr-3" id="de">
@@ -134,7 +176,7 @@
                         <form id="filter-form3" class="form-inline mb-3">
                             <button type="submit" class="btn btn-primary">Pesquisar</button>
                         </form>
-                    </div>
+				</div>
                 </div>
                 
                 <div class="row">
