@@ -375,7 +375,7 @@
         firebase.auth().onAuthStateChanged(function(user) {
             if (user && user.displayName) {
                 document.getElementById('user-name1').innerText = user.displayName;
-				document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
+                document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
             } else {
                 window.location.href = "page-login.html";
             }
