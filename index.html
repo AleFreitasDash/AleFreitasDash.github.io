@@ -89,7 +89,7 @@
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <div class="header-info">
-                                        <span><strong id="user-name">...</strong></span>
+                                        <span><strong id="user-name1">...</strong></span>
                                     </div>
                                     <img src="images/profile/pic1.jpg" width="20" alt=""/>
                                 </a>
@@ -213,7 +213,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4 id="user-name">...</h4>
+                            <h4 id="user-name2">...</h4>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -374,7 +374,8 @@
     <script>
         firebase.auth().onAuthStateChanged(function(user) {
             if (user && user.displayName) {
-                document.getElementById('user-name').innerText = "Olá, " + user.displayName;
+                document.getElementById('user-name1').innerText = user.displayName;
+				document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
             } else {
                 window.location.href = "page-login.html";
             }
