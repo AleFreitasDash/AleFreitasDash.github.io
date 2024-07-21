@@ -8,12 +8,13 @@
     <title>Meus Dados</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
-	<script>
+    <script>
         var firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
             authDomain: "motorista-2b1dd.firebaseapp.com",
@@ -26,7 +27,6 @@
         };
         firebase.initializeApp(firebaseConfig);
     </script>
-
 </head>
 
 <body>
@@ -227,133 +227,124 @@
                                             </li>
                                             <li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Editar Meus Dados</a>
                                             </li>
-											<li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Veiculos</a>
+                                            <li class="nav-item"><a href="#vehicles" data-toggle="tab" class="nav-link">Veículos</a>
                                             </li>
-											<li class="nav-item"><a href="#profile-settings" data-toggle="tab" class="nav-link">Motoristas</a>
+                                            <li class="nav-item"><a href="#drivers" data-toggle="tab" class="nav-link">Motoristas</a>
                                             </li>
                                         </ul>
                                         <div class="tab-content">
                                             <div id="my-posts" class="tab-pane fade active show">
                                                 <div class="my-post-content pt-3">
-												<input type="text" placeholder="Digite o titulo...." class="form-control pt-1">
+                                                    <input type="text" id="post-title" placeholder="Digite o título..." class="form-control pt-1">
                                                     <div class="post-input">
-                                                        <textarea name="textarea" id="textarea" cols="30" rows="10" class="form-control bg-transparent" placeholder="Digite o aviso...."></textarea>
-														<a href="javascript:void()" class="btn btn-primary">Postar Aviso</a>
+                                                        <textarea name="textarea" id="post-content" cols="30" rows="10" class="form-control bg-transparent" placeholder="Digite o aviso..."></textarea>
+                                                        <a href="javascript:void()" id="post-button" class="btn btn-primary">Postar Aviso</a>
                                                     </div>
-                                                    <div class="profile-uoloaded-post border-bottom-1 pb-5">
-                                                        <img src="images/profile/8.jpg" alt="" class="img-fluid">
-                                                        <a class="post-title" href="javascript:void()">
-                                                            <h4>Titulo da postagem de aviso</h4>
-                                                        </a>
-                                                        <p>Contudo da postagem</p>
+                                                    <div id="posts-container" class="profile-uoloaded-post border-bottom-1 pb-5">
+                                                        <!-- Avisos postados aparecerão aqui -->
                                                     </div>
                                                 </div>
                                             </div>
                                             <div id="about-me" class="tab-pane fade">
-                                                <p class="profile-personal-info">
+                                                <div class="profile-personal-info">
                                                     <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">Nome <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">Nome <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado Nome</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-nome">...</span></div>
                                                     </div>
                                                     <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">Contato <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">Contato <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado Contato</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-contato">...</span></div>
                                                     </div>
-													<div class="row mb-2">
+                                                    <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">Endereço Residencial <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">Endereço Residencial <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado Endereço Residencial</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-endereco-residencial">...</span></div>
                                                     </div>
-													<div class="row mb-2">
+                                                    <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">Endereço Empresa <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">Endereço Empresa <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado Endereço Empresa</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-endereco-empresa">...</span></div>
                                                     </div>
-													<div class="row mb-2">
+                                                    <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">Nome Empresa <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">Nome Empresa <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado Nome Empresa</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-nome-empresa">...</span></div>
                                                     </div>
-													<div class="row mb-2">
+                                                    <div class="row mb-2">
                                                         <div class="col-3">
-                                                            <h5 class="f-w-500">CNPJ <span class="pull-right">:</span>
-                                                            </h5>
+                                                            <h5 class="f-w-500">CNPJ <span class="pull-right">:</span></h5>
                                                         </div>
-                                                        <div class="col-9"><span>Resultado CNPJ</span>
-                                                        </div>
+                                                        <div class="col-9"><span id="info-cnpj">...</span></div>
                                                     </div>
-                                                </p>
+                                                </div>
                                             </div>
                                             <div id="profile-settings" class="tab-pane fade">
                                                 <div class="pt-3">
                                                     <div class="settings-form">
-                                                        <h4 class="text-primary">Account Setting</h4>
-                                                        <form>
+                                                        <h4 class="text-primary">Alterar Password</h4>
+                                                        <form id="change-password-form">
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-6">
                                                                     <label>Email</label>
-                                                                    <input type="email" placeholder="Email" class="form-control">
+                                                                    <input type="email" id="email" placeholder="Email" class="form-control">
+                                                                </div><br>
+                                                                <div class="form-group col-md-6">
+                                                                    <label>Password Atual</label>
+                                                                    <input type="password" id="current-password" placeholder="Password" class="form-control">
                                                                 </div>
                                                                 <div class="form-group col-md-6">
-                                                                    <label>Password</label>
-                                                                    <input type="password" placeholder="Password" class="form-control">
+                                                                    <label>Password Novo</label>
+                                                                    <input type="password" id="new-password" placeholder="Password" class="form-control">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label>Address</label>
-                                                                <input type="text" placeholder="1234 Main St" class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label>Address 2</label>
-                                                                <input type="text" placeholder="Apartment, studio, or floor" class="form-control">
-                                                            </div>
+                                                            <button class="btn btn-primary" type="submit">Salvar</button>
+                                                        </form>
+                                                        <br><br>
+                                                        <form id="update-info-form">
+                                                            <h4 class="text-primary">Alterar Dados</h4>
                                                             <div class="form-row">
                                                                 <div class="form-group col-md-6">
-                                                                    <label>City</label>
-                                                                    <input type="text" class="form-control">
+                                                                    <label>Nome</label>
+                                                                    <input type="text" id="nome" placeholder="Nome..." class="form-control">
                                                                 </div>
-                                                                <div class="form-group col-md-4">
-                                                                    <label>State</label>
-                                                                    <select class="form-control" id="inputState">
-                                                                        <option selected="">Choose...</option>
-                                                                        <option>Option 1</option>
-                                                                        <option>Option 2</option>
-                                                                        <option>Option 3</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-md-2">
-                                                                    <label>Zip</label>
-                                                                    <input type="text" class="form-control">
+                                                                <div class="form-group col-md-6">
+                                                                    <label>Contato</label>
+                                                                    <input type="text" id="contato" placeholder="Contato..." class="form-control">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <div class="custom-control custom-checkbox">
-																	<input type="checkbox" class="custom-control-input" id="gridCheck">
-																	<label class="custom-control-label" for="gridCheck"> Check me out</label>
-																</div>
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Endereço Residencial</label>
+                                                                    <input type="text" id="endereco-residencial" placeholder="Endereço Residencial..." class="form-control">
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label>Endereço Empresa</label>
+                                                                    <input type="text" id="endereco-empresa" placeholder="Endereço Empresa..." class="form-control">
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label>CNPJ</label>
+                                                                    <input type="text" id="cnpj" placeholder="CNPJ..." class="form-control">
+                                                                </div>
                                                             </div>
-                                                            <button class="btn btn-primary" type="submit">Sign
-                                                                in</button>
+                                                            <button class="btn btn-primary" type="submit">Salvar</button>
                                                         </form>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div id="vehicles" class="tab-pane fade">
+                                                <!-- Placeholder para Veículos -->
+                                                <p>Conteúdo relacionado aos veículos será desenvolvido futuramente.</p>
+                                            </div>
+                                            <div id="drivers" class="tab-pane fade">
+                                                <!-- Placeholder para Motoristas -->
+                                                <p>Conteúdo relacionado aos motoristas será desenvolvido futuramente.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -389,44 +380,139 @@
            Support ticket button end
         ***********************************-->
 
-        
+
     </div>
     <!--**********************************
         Main wrapper end
     ***********************************-->
-	
-	<!--removeIf(production)-->
-        
+
+    <!--removeIf(production)-->
+
     <!--**********************************
         Scripts
     ***********************************-->
     <!-- Required vendors -->
     <script src="./vendor/global/global.min.js"></script>
-	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
     <script src="./js/custom.min.js"></script>
-	<script src="./js/deznav-init.js"></script>
-	<!-- Apex Chart -->
-	<script src="./vendor/apexchart/apexchart.js"></script>
+    <script src="./js/deznav-init.js"></script>
+    <!-- Apex Chart -->
+    <script src="./vendor/apexchart/apexchart.js"></script>
     <script>
         firebase.auth().onAuthStateChanged(function(user) {
             if (user && user.displayName) {
                 document.getElementById('user-name1').innerText = user.displayName;
-				document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
+                document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
+                loadUserData(user.uid);
+                loadUserPosts(user.uid);
             } else {
                 window.location.href = "page-login.html";
             }
         });
 
         // Logout functionality
-        document.getElementById('logout').addEventListener('click', function () {
+        document.getElementById('logout').addEventListener('click', function() {
             firebase.auth().signOut().then(() => {
                 window.location.href = "page-login.html";
             }).catch((error) => {
                 console.error('Erro ao sair:', error);
             });
         });
-    </script>	
+
+        // Function to load user data
+        function loadUserData(userId) {
+            const userRef = firebase.database().ref('users/' + userId);
+            userRef.once('value').then((snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    document.getElementById('info-nome').innerText = data.nome || '';
+                    document.getElementById('info-contato').innerText = data.contato || '';
+                    document.getElementById('info-endereco-residencial').innerText = data.enderecoResidencia || '';
+                    document.getElementById('info-endereco-empresa').innerText = data.enderecoEmpresa || '';
+                    document.getElementById('info-nome-empresa').innerText = data.nomeEmpresa || '';
+                    document.getElementById('info-cnpj').innerText = data.cnpj || '';
+                }
+            });
+        }
+
+        // Function to load user posts
+        function loadUserPosts(userId) {
+            const postsRef = firebase.database().ref('avisos/' + userId);
+            postsRef.once('value').then((snapshot) => {
+                const data = snapshot.val();
+                const postsContainer = document.getElementById('posts-container');
+                postsContainer.innerHTML = ''; // Clear current posts
+                if (data) {
+                    Object.keys(data).forEach(key => {
+                        const post = data[key];
+                        const postElement = document.createElement('div');
+                        postElement.classList.add('profile-uoloaded-post', 'border-bottom-1', 'pb-5');
+                        postElement.innerHTML = `
+                            <h4>${post.title}</h4>
+                            <p>${post.content}</p>
+                        `;
+                        postsContainer.appendChild(postElement);
+                    });
+                }
+            });
+        }
+
+        // Function to save post
+        document.getElementById('post-button').addEventListener('click', function() {
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const postTitle = document.getElementById('post-title').value;
+                const postContent = document.getElementById('post-content').value;
+                const postRef = firebase.database().ref('avisos/' + user.uid).push();
+                postRef.set({
+                    title: postTitle,
+                    content: postContent
+                }).then(() => {
+                    loadUserPosts(user.uid); // Reload posts
+                    document.getElementById('post-title').value = '';
+                    document.getElementById('post-content').value = '';
+                });
+            }
+        });
+
+        // Function to update user info
+        document.getElementById('update-info-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = firebase.auth().currentUser;
+            if (user) {
+                const nome = document.getElementById('nome').value;
+                const contato = document.getElementById('contato').value;
+                const enderecoResidencial = document.getElementById('endereco-residencial').value;
+                const enderecoEmpresa = document.getElementById('endereco-empresa').value;
+                const cnpj = document.getElementById('cnpj').value;
+                const userRef = firebase.database().ref('users/' + user.uid);
+                userRef.update({
+                    nome,
+                    contato,
+                    enderecoResidencial,
+                    enderecoEmpresa,
+                    cnpj
+                }).then(() => {
+                    loadUserData(user.uid); // Reload user data
+                });
+            }
+        });
+
+        // Function to change password
+        document.getElementById('change-password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const user = firebase.auth().currentUser;
+            const newPassword = document.getElementById('new-password').value;
+            if (user && newPassword) {
+                user.updatePassword(newPassword).then(() => {
+                    alert('Password atualizado com sucesso!');
+                }).catch((error) => {
+                    console.error('Erro ao atualizar o password:', error);
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
