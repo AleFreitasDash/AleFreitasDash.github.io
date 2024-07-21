@@ -39,44 +39,16 @@
                                     <h4 class="text-center mb-4">Cadastre sua conta</h4>
                                     <form id="register-form">
                                         <div class="form-group">
-                                            <label class="mb-1"><strong>Nome</strong></label>
-                                            <input type="text" class="form-control" id="nome" placeholder="Nome" required>
+                                            <label class="mb-1"><strong>Usuário</strong></label>
+                                            <input type="text" id="name" class="form-control" placeholder="Nome">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" class="form-control" id="email" placeholder="hello@example.com" required>
+                                            <input type="email" id="email" class="form-control" placeholder="hello@example.com">
                                         </div>
                                         <div class="form-group">
-                                            <label class="mb-1"><strong>Senha</strong></label>
-                                            <input type="password" class="form-control" id="password" placeholder="Senha" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Contato</strong></label>
-                                            <input type="text" class="form-control" id="contato" placeholder="Contato" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Endereço Residência</strong></label>
-                                            <input type="text" class="form-control" id="endereco_residencia" placeholder="Endereço Residência" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Endereço Empresa</strong></label>
-                                            <input type="text" class="form-control" id="endereco_empresa" placeholder="Endereço Empresa" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Nome da Empresa</strong></label>
-                                            <input type="text" class="form-control" id="nome_empresa" placeholder="Nome da Empresa" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>CNPJ</strong></label>
-                                            <input type="text" class="form-control" id="cnpj" placeholder="CNPJ" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Placa do Veículo</strong></label>
-                                            <input type="text" class="form-control" id="placa" placeholder="Placa" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="mb-1"><strong>Rastreador</strong></label>
-                                            <input type="text" class="form-control" id="rastreador" placeholder="Rastreador" required>
+                                            <label class="mb-1"><strong>Password</strong></label>
+                                            <input type="password" id="password" class="form-control" placeholder="Password">
                                         </div>
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
@@ -94,57 +66,37 @@
         </div>
     </div>
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
     <!-- Required vendors -->
     <script src="./vendor/global/global.min.js"></script>
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./js/custom.min.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script>
-        document.getElementById('register-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const nome = document.getElementById('nome').value;
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const contato = document.getElementById('contato').value;
-            const endereco_residencia = document.getElementById('endereco_residencia').value;
-            const endereco_empresa = document.getElementById('endereco_empresa').value;
-            const nome_empresa = document.getElementById('nome_empresa').value;
-            const cnpj = document.getElementById('cnpj').value;
-            const placa = document.getElementById('placa').value;
-            const rastreador = document.getElementById('rastreador').value;
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
 
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
-                    const user = userCredential.user;
-                    const userId = user.uid;
-
-                    const userData = {
-                        nome: nome,
-                        contato: contato,
-                        endereco_residencia: endereco_residencia,
-                        endereco_empresa: endereco_empresa,
-                        email: email,
-                        nome_empresa: nome_empresa,
-                        cnpj: cnpj,
-                        veiculo: {
-                            placa: placa,
-                            rastreador: rastreador
-                        }
-                    };
-
-                    return firebase.database().ref('users/' + userId).set(userData);
-                })
-                .then(() => {
-                    alert('Usuário registrado com sucesso!');
-                    window.location.href = 'index.html';
+                    var user = userCredential.user;
+                    user.updateProfile({
+                        displayName: name
+                    }).then(() => {
+                        var userId = user.uid;
+                        var userData = {
+                            nome: name,
+                            email: email
+                        };
+                        firebase.database().ref('users/' + userId).set(userData);
+                        window.location.href = 'index.html';
+                    });
                 })
                 .catch((error) => {
-                    console.error('Erro ao registrar usuário:', error);
-                    alert('Erro ao registrar usuário: ' + error.message);
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.error("Error: " + errorCode + " - " + errorMessage);
                 });
         });
     </script>
