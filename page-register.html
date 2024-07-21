@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Registro</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+            authDomain: "motorista-2b1dd.firebaseapp.com",
+            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+            projectId: "motorista-2b1dd",
+            storageBucket: "motorista-2b1dd.appspot.com",
+            messagingSenderId: "46949027696",
+            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+            measurementId: "G-2JC1729XZK"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+</head>
+
+<body class="h-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+                                    <h4 class="text-center mb-4">Cadastre sua conta</h4>
+                                    <form id="register-form">
+                                        <div class="form-group">
+                                            <label class="mb-1"><strong>Usuario</strong></label>
+                                            <input type="text" id="username" class="form-control" placeholder="nome" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="mb-1"><strong>Email</strong></label>
+                                            <input type="email" id="email" class="form-control" placeholder="hello@example.com" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="mb-1"><strong>Password</strong></label>
+                                            <input type="password" id="password" class="form-control" required>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+                                        </div>
+                                    </form>
+                                    <div class="new-account mt-3">
+                                        <p>Já tem uma conta? <a class="text-primary" href="page-login.html">Entrar</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+    <script src="./js/deznav-init.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var username = document.getElementById('username').value;
+
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    var user = userCredential.user;
+                    return user.updateProfile({
+                        displayName: username
+                    });
+                })
+                .then(() => {
+                    alert('Usuário cadastrado com sucesso!');
+                    window.location.href = 'index.html';
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    alert('Erro: ' + errorMessage);
+                });
+        });
+    </script>
+</body>
+
+</html>
