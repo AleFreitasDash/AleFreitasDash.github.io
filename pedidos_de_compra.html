@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Compras</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor/nouislider/nouislider.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Moment.js -->
+    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	
+    	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!-- Preloader end -->
+
+    <!-- Main wrapper start -->
+    <div id="main-wrapper">
+
+        <!-- Nav header start -->
+        <div class="nav-header">
+            <a href="index.html" class="brand-logo">
+                <img class="logo-compact logo-abbr" src="./images/logo-text.png" alt="">
+                <img class="brand-title" src="./images/logo-text.png" alt="">
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!-- Nav header end -->
+        
+        <!-- Sidebar start -->
+        <div class="deznav">
+            <div class="deznav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li><a class="ai-icon" href="index.html" aria-expanded="false">
+                        <i class="flaticon-381-home-1"></i>
+                        <span class="nav-text">Inicio</span>
+                    </a>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-file-2"></i>
+                        <span class="nav-text">Cte</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./cte.html">Consulta de Conhecimento</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-folder-6"></i>
+                        <span class="nav-text">Compras</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./compras_acompanhamento.html">Acompanhamento de pedidos</a></li>
+							<li><a href="./pedidos_de_compra.html">Cotações / Pedidos de Compra</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-calculator-1"></i>
+                        <span class="nav-text">Financeiro</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./financeiro.html">Segunda via de boleto / Link de Pagamento</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-print-1"></i>
+                        <span class="nav-text">Impressão Virtual</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./impressao.html">Download de documentos</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-search-3"></i>
+                        <span class="nav-text">MDFe</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./mdfe.html">Consulta de manifestos de documentos fiscais eletrônicos</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-file-2"></i>
+                        <span class="nav-text">NFe</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./nfe.html">Consulta de notas fiscais eletrônicas</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-user-9"></i>
+                        <span class="nav-text">Terceiros</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./terceiros_documentos.html">Documentos</a></li>
+							<li><a href="./terceiros_irf.html">Informe de Rendimentos do Fornecedor</a></li>
+                        </ul>
+                    </li>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                        <i class="flaticon-381-id-card-5"></i>
+                        <span class="nav-text">Transportadores</span>
+                    </a>
+					    <ul aria-expanded="false">
+                            <li><a href="./t_alteracao_frota.html">Alteração de frotas</a></li>
+							<li><a href="./t_disponibilidade.html">Disponibilidade de frota</a></li>
+							<li><a href="./t_relatorios.html">Relatórios</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="add-menu-sidebar">
+                    <img src="images/icon1.png" alt=""/>
+                    <p>Conversar com a Soli</p>
+                    <a href="javascript:void(0);" class="btn btn-primary btn-block light">Whatsapp</a>
+                </div>
+                <div class="copyright">
+                    <p><strong>Alexandre Freitas</strong> © 2024 All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar end -->
+
+        <!-- Content body start -->
+        <div class="content-body">
+            <div class="container-fluid">
+            <div class="row page-titles mx-0">
+                    <div class="col-sm-6 p-md-0">
+                        <div class="welcome-text">
+                            <span>{NOME DA EMPRESA}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)">Compras</a></li>
+                            <li class="breadcrumb-item active"><a href="javascript:void(0)">Cotações / Pedidos de Compra</a></li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- Filtro e Tabela -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form id="filter-form" class="form-inline mb-3">
+                            <label for="de" class="mr-2">De:</label>
+                            <input type="date" class="form-control-sm mr-3" id="de">
+                            <label for="ate" class="mr-2">Até:</label>
+                            <input type="date" class="form-control-sm mr-3" id="ate">
+                        </form>
+                        <form id="filter-form2" class="form-inline mb-3">
+                            <label for="nro" class="mr-2">Planilha:</label>
+                            <input type="text" class="form-control-sm mr-3" id="nro">
+                            <label for="nfe" class="mr-2">NF:</label>
+                            <input type="text" class="form-control-sm mr-3" id="nfe">
+                            <label for="chave" class="mr-2">Chave:</label>
+                            <input type="text" class="form-control-sm mr-3" id="chave">
+                        </form>
+                        <form id="filter-form3" class="form-inline mb-3">
+                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                        </form>
+				</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">Cotações / Pedidos de Compra</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-responsive-md" id="result-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:50px;">
+                                                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                                                        <input type="checkbox" class="custom-control-input" id="checkAll" required="">
+                                                        <label class="custom-control-label" for="checkAll"></label>
+                                                    </div>
+                                                </th>
+                                                <th><strong>PLANILHA</strong></th>
+                                                <th><strong>NFE</strong></th>
+                                                <th><strong>EMISSÃO</strong></th>
+                                                <th><strong>CNPJ</strong></th>
+                                                <th><strong>CHAVE DE ACESSO</strong></th>
+                                                <th><strong>STATUS</strong></th>
+                                                <th><strong>XML</strong></th>
+                                                <th><strong>PDF</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="table-body">
+                                            <!-- Mais linhas conforme necessário -->
+                                        </tbody>
+                                    </table>
+                                    
+                                </div>
+                                <button class="btn btn-warning">Atualizar Listagem</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fim da Tabela -->
+
+            </div>
+        </div>
+        <!-- Content body end -->
+
+    </div>
+    <!-- Main wrapper end -->
+
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+    <script src="./js/deznav-init.js"></script>
+    <!-- Apex Chart -->
+    <script src="./vendor/apexchart/apexchart.js"></script>
+    <script src="./vendor/nouislider/nouislider.min.js"></script>
+    <script src="./vendor/wnumb/wNumb.js"></script>
+    <script src="./js/plugins-init/nouislider-init.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dados da planilha simulados
+        const data = [
+            { planilha: "4019067", nfe: "12345", emissao: "2024-07-19", cnpj: "NOME EMPRESA 1<br>CNPJ 1", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" },
+            { planilha: "4019068", nfe: "67890", emissao: "2024-07-20", cnpj: "NOME EMPRESA 2<br>CNPJ 3", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" }
+        ];
+
+        function renderTable(filteredData) {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = "";
+
+            filteredData.forEach(row => {
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                    <td>
+                        <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                            <input type="checkbox" class="custom-control-input" id="customCheckBox${row.planilha}" required="">
+                            <label class="custom-control-label" for="customCheckBox${row.planilha}"></label>
+                        </div>
+                    </td>
+                    <td><strong>${row.planilha}</strong></td>
+                    <td>${row.nfe}</td>
+                    <td>${moment(row.emissao).format('DD/MM/YYYY')}</td>
+                    <td>${row.cnpj}</td>
+                    <td>${row.chave}</td>
+                    <td><span class="badge badge-success">${row.status}</span></td>
+                    <td><button class="btn btn-outline-primary btn-sm">XML</button></td>
+                    <td><button class="btn btn-outline-primary btn-sm">PDF</button></td>
+                `;
+
+                tableBody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('filter-form3').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const de = document.getElementById('de').value;
+            const ate = document.getElementById('ate').value;
+            const nro = document.getElementById('nro').value;
+            const nfe = document.getElementById('nfe').value;
+            const chave = document.getElementById('chave').value;
+
+            const filteredData = data.filter(row => {
+                const emissaoDate = moment(row.emissao);
+                const fromDate = de ? moment(de) : null;
+                const toDate = ate ? moment(ate) : null;
+
+                return (!fromDate || emissaoDate.isSameOrAfter(fromDate, 'day')) &&
+                    (!toDate || emissaoDate.isSameOrBefore(toDate, 'day')) &&
+                    (!nro || row.planilha.includes(nro)) &&
+                    (!nfe || row.nfe.includes(nfe)) &&
+                    (!chave || row.chave.includes(chave));
+            });
+
+            renderTable(filteredData);
+        });
+
+        // Render initial table
+        renderTable(data);
+    </script>
+</body>
+
+</html>
