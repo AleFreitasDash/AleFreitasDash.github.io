@@ -9,10 +9,12 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link rel="stylesheet" href="./vendor/nouislider/nouislider.min.css">
-	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-	<script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script>
         var firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
             authDomain: "motorista-2b1dd.firebaseapp.com",
@@ -69,7 +71,7 @@
                         <i class="flaticon-381-file-2"></i>
                         <span class="nav-text">Cte</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./cte.html">Consulta de Conhecimento</a></li>
                         </ul>
                     </li>
@@ -77,16 +79,16 @@
                         <i class="flaticon-381-folder-6"></i>
                         <span class="nav-text">Compras</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./compras_acompanhamento.html">Acompanhamento de pedidos</a></li>
-							<li><a href="./pedidos_de_compra.html">Cotações / Pedidos de Compra</a></li>
+                            <li><a href="./pedidos_de_compra.html">Cotações / Pedidos de Compra</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-calculator-1"></i>
                         <span class="nav-text">Financeiro</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./financeiro.html">Segunda via de boleto / Link de Pagamento</a></li>
                         </ul>
                     </li>
@@ -94,7 +96,7 @@
                         <i class="flaticon-381-print-1"></i>
                         <span class="nav-text">Impressão Virtual</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./impressao.html">Download de documentos</a></li>
                         </ul>
                     </li>
@@ -102,7 +104,7 @@
                         <i class="flaticon-381-search-3"></i>
                         <span class="nav-text">MDFe</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./mdfe.html">Consulta de manifestos de documentos fiscais eletrônicos</a></li>
                         </ul>
                     </li>
@@ -110,7 +112,7 @@
                         <i class="flaticon-381-file-2"></i>
                         <span class="nav-text">NFe</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./nfe.html">Consulta de notas fiscais eletrônicas</a></li>
                         </ul>
                     </li>
@@ -118,19 +120,19 @@
                         <i class="flaticon-381-user-9"></i>
                         <span class="nav-text">Terceiros</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./terceiros_documentos.html">Documentos</a></li>
-							<li><a href="./terceiros_irf.html">Informe de Rendimentos do Fornecedor</a></li>
+                            <li><a href="./terceiros_irf.html">Informe de Rendimentos do Fornecedor</a></li>
                         </ul>
                     </li>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
                         <i class="flaticon-381-id-card-5"></i>
                         <span class="nav-text">Transportadores</span>
                     </a>
-					    <ul aria-expanded="false">
+                        <ul aria-expanded="false">
                             <li><a href="./t_alteracao_frota.html">Alteração de frotas</a></li>
-							<li><a href="./t_disponibilidade.html">Disponibilidade de frota</a></li>
-							<li><a href="./t_relatorios.html">Relatórios</a></li>
+                            <li><a href="./t_disponibilidade.html">Disponibilidade de frota</a></li>
+                            <li><a href="./t_relatorios.html">Relatórios</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -152,7 +154,7 @@
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>{NOME TRANSPORTADORA}</h4>
+                            <h4 id="user-name">{NOME TRANSPORTADORA}</h4>
                         </div>
                     </div>
                     <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -163,129 +165,129 @@
                     </div>
                 </div>
                 <div class="row">
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-file-2"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">CTe</p>
-										<a href="./cte.html" class="btn btn-primary btn-block light">Consulta de conhecimentos de transporte eletrônicos</a>
-									</div>
-								</div>
-							</div>
-						</div>
-                    </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-folder-6"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">Compras</p>
-										<a href="./compras_acompanhamento.html" class="btn btn-primary btn-block light">Acompanhamento de pedidos</a>
-										<a href="./pedidos_de_compra.html" class="btn btn-primary btn-block light">Cotações / Pedidos de Compra</a>
-									</div>
-								</div>
-							</div>
-						</div>
-                    </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-calculator-1"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">Financeiro</p>
-										<a href="javascript:void(0);" class="btn btn-primary btn-block light">Segunda via de boleto / Link de Pagamento</a>
-									</div>
-								</div>
-							</div>
-						</div>
-                    </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-print-1"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">Impressão Virtual</p>
-										<a href="./impressao.html" class="btn btn-primary btn-block light">Download de documentos</a>
-									</div>
-								</div>
-							</div>
-						</div>
-                    </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-search-3"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">MDFe</p>
-										<a href="./mdfe.html" class="btn btn-primary btn-block light">Consulta de manifestos de documentos fiscais eletrônicos</a>
-									</div>
-								</div>
-							</div>
-						</div>
-                    </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-file-2"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">NFe</p>
-										<a href="./nfe.html" class="btn btn-primary btn-block light">Consulta de notas fiscais eletrônicas</a>
-									</div>
-								</div>
-							</div>
-						</div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-file-2"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">CTe</p>
+                                        <a href="./cte.html" class="btn btn-primary btn-block light">Consulta de conhecimentos de transporte eletrônicos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-user-9"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">Terceiros</p>
-										<a href="./terceiros_documentos.html" class="btn btn-primary btn-block light">Documentos</a>
-										<a href="./terceiros_irf.html" class="btn btn-primary btn-block light">Informe de Rendimentos do Fornecedor</a>
-									</div>
-								</div>
-							</div>
-						</div>
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-folder-6"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">Compras</p>
+                                        <a href="./compras_acompanhamento.html" class="btn btn-primary btn-block light">Acompanhamento de pedidos</a>
+                                        <a href="./pedidos_de_compra.html" class="btn btn-primary btn-block light">Cotações / Pedidos de Compra</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-					<div class="col-md-6 col-lg-4 mb-4">
-						<div class="widget-stat card">
-							<div class="card-body p-2">
-								<div class="media ai-icon">
-									<span class="mr-3 bgl-primary text-primary">
-										<i class="flaticon-381-id-card-5"></i>
-									</span>
-									<div class="card-body">
-										<p class="card-title">Transportadores</p>
-										<a href="./t_alteracao_frota.html" class="btn btn-primary btn-block light">Alteração de frotas</a>
-										<a href="./t_disponibilidade.html" class="btn btn-primary btn-block light">Disponibilidade de frota</a>
-										<a href="./t_relatorios.html" class="btn btn-primary btn-block light">Relatórios</a>
-									</div>
-								</div>
-							</div>
-						</div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-calculator-1"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">Financeiro</p>
+                                        <a href="javascript:void(0);" class="btn btn-primary btn-block light">Segunda via de boleto / Link de Pagamento</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-print-1"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">Impressão Virtual</p>
+                                        <a href="./impressao.html" class="btn btn-primary btn-block light">Download de documentos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-search-3"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">MDFe</p>
+                                        <a href="./mdfe.html" class="btn btn-primary btn-block light">Consulta de manifestos de documentos fiscais eletrônicos</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-file-2"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">NFe</p>
+                                        <a href="./nfe.html" class="btn btn-primary btn-block light">Consulta de notas fiscais eletrônicas</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-user-9"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">Terceiros</p>
+                                        <a href="./terceiros_documentos.html" class="btn btn-primary btn-block light">Documentos</a>
+                                        <a href="./terceiros_irf.html" class="btn btn-primary btn-block light">Informe de Rendimentos do Fornecedor</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="widget-stat card">
+                            <div class="card-body p-2">
+                                <div class="media ai-icon">
+                                    <span class="mr-3 bgl-primary text-primary">
+                                        <i class="flaticon-381-id-card-5"></i>
+                                    </span>
+                                    <div class="card-body">
+                                        <p class="card-title">Transportadores</p>
+                                        <a href="./t_alteracao_frota.html" class="btn btn-primary btn-block light">Alteração de frotas</a>
+                                        <a href="./t_disponibilidade.html" class="btn btn-primary btn-block light">Disponibilidade de frota</a>
+                                        <a href="./t_relatorios.html" class="btn btn-primary btn-block light">Relatórios</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -306,14 +308,16 @@
     <script src="./vendor/nouislider/nouislider.min.js"></script>
     <script src="./vendor/wnumb/wNumb.js"></script>
     <script src="./js/plugins-init/nouislider-init.js"></script>
-	<script src="./js/plugins-init/widgets-script-init.js"></script>
-	<script src="./vendor/peity/jquery.peity.min.js"></script>
-	<script src="./js/plugins-init/piety-init.js"></script>
-	<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
-	<script>
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                window.location.href = 'page-login.html';
+    <script src="./js/plugins-init/widgets-script-init.js"></script>
+    <script src="./vendor/peity/jquery.peity.min.js"></script>
+    <script src="./js/plugins-init/piety-init.js"></script>
+    <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script>
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user && user.displayName) {
+                document.getElementById('user-name').innerText = "Olá, "+user.displayName;
+            } else {
+                window.location.href = "page-login.html";
             }
         });
     </script>
