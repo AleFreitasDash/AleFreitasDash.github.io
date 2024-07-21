@@ -14,6 +14,7 @@
     <link href="./css/style.css" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
     <script>
         var firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
@@ -58,15 +59,17 @@
         </div>
         <!-- Nav header end -->
 
-        <!-- Header start -->
+        <!--**********************************
+            Header start
+        ***********************************-->
         <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
-                            <form id="filter-form" class="form-inline">
-                                <input class="form-control mr-sm-2" id="filter-input" type="search" placeholder="Filtrar" aria-label="Filtrar">
-                                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Filtrar</button>
+                            <form id="filter-form" class="d-flex">
+                                <input class="form-control" id="filter-input" type="search" placeholder="Procurar programa" aria-label="Search">
+                                <button type="submit" class="btn btn-primary">Filtrar</button>
                             </form>
                         </div>
 
@@ -104,7 +107,9 @@
                 </nav>
             </div>
         </div>
-        <!-- Header end -->
+        <!--**********************************
+            Header end
+        ***********************************-->
 
         <!-- Sidebar start -->
         <div class="deznav">
@@ -212,7 +217,7 @@
                         </ol>
                     </div>
                 </div>
-                <div id="content-items" class="row">
+                <div class="row">
                     <div class="col-md-6 col-lg-4 mb-4 content-item">
                         <div class="widget-stat card">
                             <div class="card-body p-2">
@@ -370,15 +375,18 @@
             }
         });
 
-        // Filter functionality
         document.getElementById('filter-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const query = document.getElementById('filter-input').value.toLowerCase();
             const contentItems = document.querySelectorAll('.content-item');
-
-            contentItems.forEach(function(item) {
-                const title = item.querySelector('.card-title').innerText.toLowerCase();
-                if (title.includes(query)) {
+            contentItems.forEach(item => {
+                const cardTitle = item.querySelector('.card-title').innerText.toLowerCase();
+                const cardLinks = item.querySelectorAll('a');
+                let textContent = cardTitle;
+                cardLinks.forEach(link => {
+                    textContent += ' ' + link.innerText.toLowerCase();
+                });
+                if (textContent.includes(query)) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
@@ -386,7 +394,6 @@
             });
         });
 
-        // Logout functionality
         document.getElementById('logout').addEventListener('click', function () {
             firebase.auth().signOut().then(() => {
                 window.location.href = "page-login.html";
