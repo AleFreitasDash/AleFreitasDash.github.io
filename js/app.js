@@ -1,60 +1,58 @@
-// Função para carregar avisos
-function loadNotifications(userId, containerId) {
-    const notificationsRef = firebase.database().ref('avisos/' + userId);
-    notificationsRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const notificationsContainer = document.getElementById(containerId);
-        if (notificationsContainer) {
-            notificationsContainer.innerHTML = ''; // Limpar notificações existentes
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    const notification = data[key];
-                    const notificationElement = document.createElement('li');
-                    notificationElement.innerHTML = `
-                        <div class="timeline-panel">
-                            <div class="media-body">
-                                <h6 class="mb-1">${notification.title}</h6>
-                                <small class="d-block">${notification.content}</small>
-                            </div>
-                        </div>
-                    `;
-                    notificationsContainer.appendChild(notificationElement);
-                });
-            }
-        }
-    });
-}
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user && user.displayName) {
+        document.getElementById('user-name1').innerText = user.displayName;
+        document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
+        loadUserData(user.uid);
+        loadUserPosts(user.uid, 'posts-container');
+        loadNotifications(user.uid, 'notification-container');
+    } else {
+        window.location.href = "page-login.html";
+    }
+});
 
-// Função para carregar dados do usuário
+// Logout functionality
+document.getElementById('logout').addEventListener('click', function() {
+    firebase.auth().signOut().then(() => {
+        window.location.href = "page-login.html";
+    }).catch((error) => {
+        console.error('Erro ao sair:', error);
+    });
+});
+
+// Function to load user data
 function loadUserData(userId) {
     const userRef = firebase.database().ref('users/' + userId);
     userRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         if (data) {
-            document.getElementById('user-name1').innerText = data.nome || '';
-            document.getElementById('user-name2').innerText = "Olá, " + data.nome || '';
+            document.getElementById('info-nome').innerText = data.nome || '';
+            document.getElementById('info-contato').innerText = data.contato || '';
+            document.getElementById('info-endereco-residencial').innerText = data.enderecoResidencia || '';
+            document.getElementById('info-endereco-empresa').innerText = data.enderecoEmpresa || '';
+            document.getElementById('info-nome-empresa').innerText = data.nomeEmpresa || '';
+            document.getElementById('info-cnpj').innerText = data.cnpj || '';
         }
     });
 }
 
-// Função para carregar postagens do usuário
+// Function to load user posts
 function loadUserPosts(userId, containerId) {
     const postsRef = firebase.database().ref('avisos/' + userId);
     postsRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         const postsContainer = document.getElementById(containerId);
         if (postsContainer) {
-            postsContainer.innerHTML = ''; // Limpar postagens existentes
+            postsContainer.innerHTML = ''; // Clear current posts
             if (data) {
                 Object.keys(data).forEach(key => {
                     const post = data[key];
                     const postElement = document.createElement('div');
                     postElement.classList.add('profile-uoloaded-post', 'border-bottom-1', 'pb-5');
-                    postElement.innerHTML = `
+                    postElement.innerHTML = 
                         <h4>${post.title}</h4>
                         <p>${post.content}</p>
-                        <button class="btn btn-danger" onclick="deletePost('${userId}', '${key}', '${containerId}')">Excluir</button>
-                    `;
+                        <button class="btn btn-danger" onclick="deletePost('${userId}', '${key}')">Excluir</button>
+                    ;
                     postsContainer.appendChild(postElement);
                 });
             }
@@ -62,18 +60,18 @@ function loadUserPosts(userId, containerId) {
     });
 }
 
-// Função para excluir postagem
-function deletePost(userId, postId, containerId) {
+// Function to delete post
+function deletePost(userId, postId) {
     const postRef = firebase.database().ref('avisos/' + userId + '/' + postId);
     postRef.remove().then(() => {
-        loadUserPosts(userId, containerId); // Recarregar postagens
-        loadNotifications(userId, 'notification-container'); // Recarregar notificações
+        loadUserPosts(userId, 'posts-container'); // Reload posts
+        loadNotifications(userId, 'notification-container'); // Reload notifications
     }).catch((error) => {
         console.error('Erro ao excluir o post:', error);
     });
 }
 
-// Função para salvar postagem
+// Function to save post
 document.getElementById('post-button').addEventListener('click', function() {
     const user = firebase.auth().currentUser;
     if (user) {
@@ -84,15 +82,42 @@ document.getElementById('post-button').addEventListener('click', function() {
             title: postTitle,
             content: postContent
         }).then(() => {
-            loadUserPosts(user.uid, 'posts-container'); // Recarregar postagens
-            loadNotifications(user.uid, 'notification-container'); // Recarregar notificações
+            loadUserPosts(user.uid, 'posts-container'); // Reload posts
+            loadNotifications(user.uid, 'notification-container'); // Reload notifications
             document.getElementById('post-title').value = '';
             document.getElementById('post-content').value = '';
         });
     }
 });
 
-// Função para atualizar informações do usuário
+// Function to load notifications
+function loadNotifications(userId, containerId) {
+    const notificationsRef = firebase.database().ref('avisos/' + userId);
+    notificationsRef.once('value').then((snapshot) => {
+        const data = snapshot.val();
+        const notificationsContainer = document.getElementById(containerId);
+        if (notificationsContainer) {
+            notificationsContainer.innerHTML = ''; // Clear current notifications
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const notification = data[key];
+                    const notificationElement = document.createElement('li');
+                    notificationElement.innerHTML = 
+                        <div class="timeline-panel">
+                            <div class="media-body">
+                                <h6 class="mb-1">${notification.title}</h6>
+                                <small class="d-block">${notification.content}</small>
+                            </div>
+                        </div>
+                    ;
+                    notificationsContainer.appendChild(notificationElement);
+                });
+            }
+        }
+    });
+}
+
+// Function to update user info
 document.getElementById('update-info-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const user = firebase.auth().currentUser;
@@ -110,12 +135,12 @@ document.getElementById('update-info-form').addEventListener('submit', function(
             enderecoEmpresa,
             cnpj
         }).then(() => {
-            loadUserData(user.uid); // Recarregar dados do usuário
+            loadUserData(user.uid); // Reload user data
         });
     }
 });
 
-// Função para alterar a senha
+// Function to change password
 document.getElementById('change-password-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const user = firebase.auth().currentUser;
@@ -134,15 +159,4 @@ document.getElementById('change-password-form').addEventListener('submit', funct
     }).catch((error) => {
         console.error('Erro ao reautenticar o usuário:', error);
     });
-});
-
-// Verificação de autenticação
-firebase.auth().onAuthStateChanged(function(user) {
-    if (user) {
-        loadUserData(user.uid);
-        loadUserPosts(user.uid, 'posts-container');
-        loadNotifications(user.uid, 'notification-container');
-    } else {
-        window.location.href = "page-login.html";
-    }
 });
