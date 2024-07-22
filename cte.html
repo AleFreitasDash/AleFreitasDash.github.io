@@ -304,121 +304,122 @@
     <script src="./js/plugins-init/piety-init.js"></script>
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
     <script>
-        // Função para carregar avisos
-        function loadNotifications() {
-            const notificationsRef = firebase.database().ref('avisos');
-            notificationsRef.once('value').then((snapshot) => {
-                const data = snapshot.val();
-                const notificationContainer = document.getElementById('notification-container');
-                notificationContainer.innerHTML = ''; // Limpar notificações existentes
-                if (data) {
-                    Object.keys(data).forEach(key => {
-                        const notification = data[key];
-                        const li = document.createElement('li');
-                        li.classList.add('timeline-item');
-                        li.innerHTML = `
-                            <div class="timeline-panel">
-                                <div class="media-body">
-                                    <h6 class="mb-1">${notification.title}</h6>
-                                    <small class="d-block">${notification.content}</small>
-                                </div>
+    // Função para carregar avisos
+    function loadNotifications() {
+        const notificationsRef = firebase.database().ref('avisos');
+        notificationsRef.once('value').then((snapshot) => {
+            const data = snapshot.val();
+            const notificationContainer = document.getElementById('notification-container');
+            notificationContainer.innerHTML = ''; // Limpar notificações existentes
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const notification = data[key];
+                    const li = document.createElement('li');
+                    li.classList.add('timeline-item');
+                    li.innerHTML = `
+                        <div class="timeline-panel">
+                            <div class="media-body">
+                                <h6 class="mb-1">${notification.title}</h6>
+                                <small class="d-block">${notification.content}</small>
                             </div>
-                        `;
-                        notificationContainer.appendChild(li);
-                    });
-                }
-            });
-        }
-
-        // Função para carregar dados do usuário
-        function loadUserData(userId) {
-            const userRef = firebase.database().ref('users/' + userId);
-            userRef.once('value').then((snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    document.getElementById('user-name1').innerText = data.nome || '';
-                }
-            });
-        }
-
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user && user.displayName) {
-                loadUserData(user.uid);
-                loadNotifications();
-            } else {
-                window.location.href = "page-login.html";
+                        </div>
+                    `;
+                    notificationContainer.appendChild(li);
+                });
             }
         });
+    }
 
-        document.getElementById('logout').addEventListener('click', function() {
-            firebase.auth().signOut().then(() => {
-                window.location.href = "page-login.html";
-            }).catch((error) => {
-                console.error('Erro ao sair:', error);
-            });
+    // Função para carregar dados do usuário
+    function loadUserData(userId) {
+        const userRef = firebase.database().ref('users/' + userId);
+        userRef.once('value').then((snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('user-name1').innerText = data.nome || '';
+            }
         });
+    }
 
-        // Dados da planilha simulados
-        const data = [
-            { planilha: "4019067", nfe: "12345", emissao: "2024-07-19", cnpj: "NOME EMPRESA 1<br>CNPJ 1", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" },
-            { planilha: "4019068", nfe: "67890", emissao: "2024-07-20", cnpj: "NOME EMPRESA 2<br>CNPJ 3", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" }
-        ];
-
-        function renderTable(filteredData) {
-            const tableBody = document.getElementById('table-body');
-            tableBody.innerHTML = "";
-
-            filteredData.forEach(row => {
-                const tr = document.createElement('tr');
-
-                tr.innerHTML = `
-                    <td>
-                        <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
-                            <input type="checkbox" class="custom-control-input" id="customCheckBox${row.planilha}" required="">
-                            <label class="custom-control-label" for="customCheckBox${row.planilha}"></label>
-                        </div>
-                    </td>
-                    <td><strong>${row.planilha}</strong></td>
-                    <td>${row.nfe}</td>
-                    <td>${moment(row.emissao).format('DD/MM/YYYY')}</td>
-                    <td>${row.cnpj}</td>
-                    <td>${row.chave}</td>
-                    <td><span class="badge badge-success">${row.status}</span></td>
-                    <td><button class="btn btn-outline-primary btn-sm">XML</button></td>
-                    <td><button class="btn btn-outline-primary btn-sm">PDF</button></td>
-                `;
-
-                tableBody.appendChild(tr);
-            });
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            loadUserData(user.uid);
+            loadNotifications();
+        } else {
+            window.location.href = "page-login.html";
         }
+    });
 
-        document.getElementById('filter-form3').addEventListener('submit', function (e) {
-            e.preventDefault();
+    document.getElementById('logout').addEventListener('click', function() {
+        firebase.auth().signOut().then(() => {
+            window.location.href = "page-login.html";
+        }).catch((error) => {
+            console.error('Erro ao sair:', error);
+        });
+    });
 
-            const de = document.getElementById('de').value;
-            const ate = document.getElementById('ate').value;
-            const nro = document.getElementById('nro').value;
-            const nfe = document.getElementById('nfe').value;
-            const chave = document.getElementById('chave').value;
+    // Dados da planilha simulados
+    const data = [
+        { planilha: "4019067", nfe: "12345", emissao: "2024-07-19", cnpj: "NOME EMPRESA 1<br>CNPJ 1", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" },
+        { planilha: "4019068", nfe: "67890", emissao: "2024-07-20", cnpj: "NOME EMPRESA 2<br>CNPJ 3", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" }
+    ];
 
-            const filteredData = data.filter(row => {
-                const emissaoDate = moment(row.emissao);
-                const fromDate = de ? moment(de) : null;
-                const toDate = ate ? moment(ate) : null;
+    function renderTable(filteredData) {
+        const tableBody = document.getElementById('table-body');
+        tableBody.innerHTML = "";
 
-                return (!fromDate || emissaoDate.isSameOrAfter(fromDate, 'day')) &&
-                    (!toDate || emissaoDate.isSameOrBefore(toDate, 'day')) &&
-                    (!nro || row.planilha.includes(nro)) &&
-                    (!nfe || row.nfe.includes(nfe)) &&
-                    (!chave || row.chave.includes(chave));
-            });
+        filteredData.forEach(row => {
+            const tr = document.createElement('tr');
 
-            renderTable(filteredData);
+            tr.innerHTML = `
+                <td>
+                    <div class="custom-control custom-checkbox checkbox-success check-lg mr-3">
+                        <input type="checkbox" class="custom-control-input" id="customCheckBox${row.planilha}" required="">
+                        <label class="custom-control-label" for="customCheckBox${row.planilha}"></label>
+                    </div>
+                </td>
+                <td><strong>${row.planilha}</strong></td>
+                <td>${row.nfe}</td>
+                <td>${moment(row.emissao).format('DD/MM/YYYY')}</td>
+                <td>${row.cnpj}</td>
+                <td>${row.chave}</td>
+                <td><span class="badge badge-success">${row.status}</span></td>
+                <td><button class="btn btn-outline-primary btn-sm">XML</button></td>
+                <td><button class="btn btn-outline-primary btn-sm">PDF</button></td>
+            `;
+
+            tableBody.appendChild(tr);
+        });
+    }
+
+    document.getElementById('filter-form3').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const de = document.getElementById('de').value;
+        const ate = document.getElementById('ate').value;
+        const nro = document.getElementById('nro').value;
+        const nfe = document.getElementById('nfe').value;
+        const chave = document.getElementById('chave').value;
+
+        const filteredData = data.filter(row => {
+            const emissaoDate = moment(row.emissao);
+            const fromDate = de ? moment(de) : null;
+            const toDate = ate ? moment(ate) : null;
+
+            return (!fromDate || emissaoDate.isSameOrAfter(fromDate, 'day')) &&
+                (!toDate || emissaoDate.isSameOrBefore(toDate, 'day')) &&
+                (!nro || row.planilha.includes(nro)) &&
+                (!nfe || row.nfe.includes(nfe)) &&
+                (!chave || row.chave.includes(chave));
         });
 
-        // Render initial table
-        renderTable(data);
-    </script>
+        renderTable(filteredData);
+    });
+
+    // Render initial table
+    renderTable(data);
+</script>
+
 </body>
 
 </html>
