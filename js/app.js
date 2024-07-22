@@ -4,6 +4,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
         loadUserData(user.uid);
         loadUserPosts(user.uid);
+        loadNotifications(user.uid);
     } else {
         window.location.href = "page-login.html";
     }
@@ -128,3 +129,28 @@ document.getElementById('change-password-form').addEventListener('submit', funct
         console.error('Erro ao reautenticar o usuário:', error);
     });
 });
+
+// Function to load notifications
+function loadNotifications(userId) {
+    const notificationsRef = firebase.database().ref('avisos/' + userId);
+    notificationsRef.once('value').then((snapshot) => {
+        const data = snapshot.val();
+        const notificationsContainer = document.getElementById('notification-container');
+        notificationsContainer.innerHTML = ''; // Clear current notifications
+        if (data) {
+            Object.keys(data).forEach(key => {
+                const notification = data[key];
+                const notificationElement = document.createElement('li');
+                notificationElement.innerHTML = `
+                    <div class="timeline-panel">
+                        <div class="media-body">
+                            <h6 class="mb-1">${notification.title}</h6>
+                            <small class="d-block">${notification.content}</small>
+                        </div>
+                    </div>
+                `;
+                notificationsContainer.appendChild(notificationElement);
+            });
+        }
+    });
+}
