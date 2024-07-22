@@ -4,7 +4,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         document.getElementById('user-name2').innerText = "Olá, " + user.displayName;
         loadUserData(user.uid);
         loadUserPosts(user.uid);
-        loadUserNotifications(user.uid);
     } else {
         window.location.href = "page-login.html";
     }
@@ -50,33 +49,9 @@ function loadUserPosts(userId) {
                 postElement.innerHTML = `
                     <h4>${post.title}</h4>
                     <p>${post.content}</p>
+                    <button class="btn btn-danger" onclick="deletePost('${userId}', '${key}')">Excluir</button>
                 `;
                 postsContainer.appendChild(postElement);
-            });
-        }
-    });
-}
-
-// Function to load user notifications
-function loadUserNotifications(userId) {
-    const notificationsRef = firebase.database().ref('avisos/' + userId);
-    notificationsRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const notificationContainer = document.getElementById('notification-container');
-        notificationContainer.innerHTML = ''; // Clear current notifications
-        if (data) {
-            Object.keys(data).forEach(key => {
-                const notification = data[key];
-                const notificationElement = document.createElement('li');
-                notificationElement.innerHTML = `
-                    <div class="timeline-panel">
-                        <div class="media-body">
-                            <h6 class="mb-1">${notification.title}</h6>
-                            <small class="d-block">${notification.content}</small>
-                        </div>
-                    </div>
-                `;
-                notificationContainer.appendChild(notificationElement);
             });
         }
     });
@@ -94,12 +69,21 @@ document.getElementById('post-button').addEventListener('click', function() {
             content: postContent
         }).then(() => {
             loadUserPosts(user.uid); // Reload posts
-            loadUserNotifications(user.uid); // Reload notifications
             document.getElementById('post-title').value = '';
             document.getElementById('post-content').value = '';
         });
     }
 });
+
+// Function to delete post
+function deletePost(userId, postId) {
+    const postRef = firebase.database().ref('avisos/' + userId + '/' + postId);
+    postRef.remove().then(() => {
+        loadUserPosts(userId); // Reload posts
+    }).catch((error) => {
+        console.error('Erro ao excluir o post:', error);
+    });
+}
 
 // Function to update user info
 document.getElementById('update-info-form').addEventListener('submit', function(e) {
@@ -128,12 +112,19 @@ document.getElementById('update-info-form').addEventListener('submit', function(
 document.getElementById('change-password-form').addEventListener('submit', function(e) {
     e.preventDefault();
     const user = firebase.auth().currentUser;
+    const email = document.getElementById('email').value;
+    const currentPassword = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
-    if (user && newPassword) {
+
+    const credential = firebase.auth.EmailAuthProvider.credential(email, currentPassword);
+
+    user.reauthenticateWithCredential(credential).then(() => {
         user.updatePassword(newPassword).then(() => {
             alert('Password atualizado com sucesso!');
         }).catch((error) => {
             console.error('Erro ao atualizar o password:', error);
         });
-    }
+    }).catch((error) => {
+        console.error('Erro ao reautenticar o usuário:', error);
+    });
 });
