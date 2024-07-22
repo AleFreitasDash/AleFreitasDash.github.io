@@ -303,79 +303,8 @@
     <script src="./vendor/peity/jquery.peity.min.js"></script>
     <script src="./js/plugins-init/piety-init.js"></script>
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+<script src="./js/app.js"></script>
     <script>
-    firebase.auth().onAuthStateChanged(function(user) {
-    if (user && user.displayName) {
-        document.getElementById('user-name1').innerText = user.displayName;
-        loadUserData(user.uid);
-        loadUserPosts(user.uid, 'posts-container');
-        loadNotifications(user.uid, 'notification-container');
-    } else {
-        window.location.href = "page-login.html";
-    }
-});
-
-// Logout functionality
-document.getElementById('logout').addEventListener('click', function() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = "page-login.html";
-    }).catch((error) => {
-        console.error('Erro ao sair:', error);
-    });
-});
-
-// Function to load user posts
-function loadUserPosts(userId, containerId) {
-    const postsRef = firebase.database().ref('avisos/' + userId);
-    postsRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const postsContainer = document.getElementById(containerId);
-        if (postsContainer) {
-            postsContainer.innerHTML = ''; // Clear current posts
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    const post = data[key];
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('profile-uoloaded-post', 'border-bottom-1', 'pb-5');
-                    postElement.innerHTML = `
-                        <h4>${post.title}</h4>
-                        <p>${post.content}</p>
-                        <button class="btn btn-danger" onclick="deletePost('${userId}', '${key}')">Excluir</button>
-                    `;
-                    postsContainer.appendChild(postElement);
-                });
-            }
-        }
-    });
-}
-
-
-// Function to load notifications
-function loadNotifications(userId, containerId) {
-    const notificationsRef = firebase.database().ref('avisos/' + userId);
-    notificationsRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const notificationsContainer = document.getElementById(containerId);
-        if (notificationsContainer) {
-            notificationsContainer.innerHTML = ''; // Clear current notifications
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    const notification = data[key];
-                    const notificationElement = document.createElement('li');
-                    notificationElement.innerHTML = `
-                        <div class="timeline-panel">
-                            <div class="media-body">
-                                <h6 class="mb-1">${notification.title}</h6>
-                                <small class="d-block">${notification.content}</small>
-                            </div>
-                        </div>
-                    `;
-                    notificationsContainer.appendChild(notificationElement);
-                });
-            }
-        }
-    });
-}
     const data = [
         { planilha: "4019067", nfe: "12345", emissao: "2024-07-19", cnpj: "NOME EMPRESA 1<br>CNPJ 1", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" },
         { planilha: "4019068", nfe: "67890", emissao: "2024-07-20", cnpj: "NOME EMPRESA 2<br>CNPJ 3", chave: "CHAVE COM 44 NUMEROS", status: "STATUS" }
