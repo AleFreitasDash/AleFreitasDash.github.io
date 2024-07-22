@@ -335,7 +335,9 @@
     <script src="./vendor/wnumb/wNumb.js"></script>
     <script src="./js/plugins-init/nouislider-init.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="./js/ap.js"></script>
+    <script src="./js/display.js"></script>
+<script src="./js/app-profile-loadpost.js"></script>
+<script src="./js/app-profile-out.js"></script>
 	<script>
         // Dados da planilha simulados
         const data = [
@@ -398,15 +400,6 @@
         // Render initial table
         renderTable(data);
     </script>
-<script>
-document.getElementById('logout').addEventListener('click', function() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = "page-login.html";
-    }).catch((error) => {
-        console.error('Erro ao fazer logout:', error);
-    });
-});
-</script>
 </body>
 
 </html>
