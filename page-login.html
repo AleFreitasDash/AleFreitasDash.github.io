@@ -9,37 +9,6 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        function loginUser() {
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Login bem-sucedido
-                    window.location.href = "index.html";
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    alert("Erro: " + errorMessage);
-                });
-        }
-    </script>
 </head>
 
 <body class="h-100">
@@ -96,6 +65,45 @@
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./js/custom.min.js"></script>
     <script src="./js/deznav-init.js"></script>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script>
+        // Configuração do Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+            authDomain: "motorista-2b1dd.firebaseapp.com",
+            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+            projectId: "motorista-2b1dd",
+            storageBucket: "motorista-2b1dd.appspot.com",
+            messagingSenderId: "46949027696",
+            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+            measurementId: "G-2JC1729XZK"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Função para login de usuário
+        function loginUser() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Login bem-sucedido
+                    var user = userCredential.user;
+                    console.log("Login successful:", user);
+                    // Redirecionar para index.html
+                    window.location.href = "index.html";
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.error("Error during login:", errorCode, errorMessage);
+                    alert("Login failed: " + errorMessage);
+                });
+        }
+    </script>
 </body>
 
 </html>
