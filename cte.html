@@ -28,6 +28,17 @@
             measurementId: "G-2JC1729XZK"
         };
         firebase.initializeApp(firebaseConfig);
+
+        import { loadNotifications } from './js/notifications.js';
+
+        // Carregar notificações ao autenticar usuário
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                loadNotifications(user.uid, 'notification-container');
+            } else {
+                window.location.href = "page-login.html";
+            }
+        });
     </script>
 </head>
 <body>
