@@ -12,12 +12,14 @@
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
 	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
-    <script>
+    <script type="module" src="./js/auth.js"></script>
+    <script type="module" src="./js/notifications.js"></script>
+	<script>
         var firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
             authDomain: "motorista-2b1dd.firebaseapp.com",
@@ -335,10 +337,6 @@
     <script src="./vendor/wnumb/wNumb.js"></script>
     <script src="./js/plugins-init/nouislider-init.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="./js/display.js"></script>
-<script src="./js/app-profile-loadpost.js"></script>
-<script src="./js/app-profile-viewpost.js"></script>
-<script src="./js/app-profile-out.js"></script>
 	<script>
         // Dados da planilha simulados
         const data = [
