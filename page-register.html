@@ -12,19 +12,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-    <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
-        firebase.initializeApp(firebaseConfig);
-    </script>
 </head>
 
 <body class="h-100">
@@ -37,18 +24,18 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Cadastre sua conta</h4>
-                                    <form id="register-form">
+                                    <form id="register-form" onsubmit="registerUser(); return false;">
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Usuário</strong></label>
-                                            <input type="text" id="name" class="form-control" placeholder="Nome">
+                                            <input type="text" id="name" class="form-control" placeholder="Nome" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
-                                            <input type="email" id="email" class="form-control" placeholder="hello@example.com">
+                                            <input type="email" id="email" class="form-control" placeholder="hello@example.com" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" id="password" class="form-control" placeholder="Password">
+                                            <input type="password" id="password" class="form-control" placeholder="Password" required>
                                         </div>
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
@@ -71,34 +58,41 @@
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./js/custom.min.js"></script>
     <script src="./js/deznav-init.js"></script>
+
     <script>
-        document.getElementById('register-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
+        // Configuração do Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+            authDomain: "motorista-2b1dd.firebaseapp.com",
+            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+            projectId: "motorista-2b1dd",
+            storageBucket: "motorista-2b1dd.appspot.com",
+            messagingSenderId: "46949027696",
+            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+            measurementId: "G-2JC1729XZK"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        // Função para registro de usuário
+        function registerUser() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
 
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
+                    // Registro bem-sucedido
                     var user = userCredential.user;
-                    user.updateProfile({
-                        displayName: name
-                    }).then(() => {
-                        var userId = user.uid;
-                        var userData = {
-                            nome: name,
-                            email: email
-                        };
-                        firebase.database().ref('users/' + userId).set(userData);
-                        window.location.href = 'index.html';
-                    });
+                    console.log("Registration successful:", user);
+                    // Redirecionar para page-login.html
+                    window.location.href = "page-login.html";
                 })
                 .catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                    console.error("Error: " + errorCode + " - " + errorMessage);
+                    console.error("Error during registration:", errorCode, errorMessage);
+                    alert("Registration failed: " + errorMessage);
                 });
-        });
+        }
     </script>
 </body>
 
