@@ -17,68 +17,56 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-analytics.js"></script>
-    <script>
-        // Código de configuração do Firebase aqui
-        var firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+        authDomain: "motorista-2b1dd.firebaseapp.com",
+        databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+        projectId: "motorista-2b1dd",
+        storageBucket: "motorista-2b1dd.appspot.com",
+        messagingSenderId: "46949027696",
+        appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+        measurementId: "G-2JC1729XZK"
+    };
+    firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // Usuário está logado, exibir informações
+            document.getElementById('user-name1').innerText = user.displayName;
+            document.getElementById('user-name2').innerText = user.displayName;
 
-        // Função para exibir informações do usuário
-        function displayUserInfo() {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // Exibir o nome do usuário
-                    document.getElementById('user-name1').innerText = user.displayName || 'Nome não disponível';
-                    document.getElementById('user-name2').innerText = user.displayName || 'Nome não disponível';
-
-                    // Exibir informações de aviso
-                    const userId = user.uid;
-                    db.ref('notifications/' + userId).once('value').then((snapshot) => {
-                        const notifications = snapshot.val();
-                        const notificationContainer = document.getElementById('notification-container');
-                        notificationContainer.innerHTML = '';
-                        if (notifications) {
-                            for (const id in notifications) {
-                                const notification = notifications[id];
-                                const div = document.createElement('div');
-                                div.innerText = notification.message;
-                                notificationContainer.appendChild(div);
-                            }
-                        } else {
-                            notificationContainer.innerText = 'Nenhuma notificação';
-                        }
-                    });
-                } else {
-                    // Redirecionar para login se não estiver autenticado
-                    window.location.href = 'page-login.html';
+            // Carregar notificações do banco de dados do Firebase
+            var userId = user.uid;
+            var notificationsRef = firebase.database().ref('notifications/' + userId);
+            notificationsRef.on('value', function(snapshot) {
+                var notifications = snapshot.val();
+                var notificationContainer = document.getElementById('notification-container');
+                notificationContainer.innerHTML = '';
+                for (var key in notifications) {
+                    var li = document.createElement('li');
+                    li.innerText = notifications[key];
+                    notificationContainer.appendChild(li);
                 }
             });
+        } else {
+            // Usuário não está logado, redirecionar para a página de login
+            window.location.href = 'page-login.html';
         }
+    });
 
-        // Função para realizar o logout
-        function logout() {
-            auth.signOut().then(() => {
-                window.location.href = 'page-login.html';
-            }).catch((error) => {
-                console.error('Erro ao fazer logout:', error);
-            });
-        }
+    document.getElementById('logout').addEventListener('click', function() {
+        firebase.auth().signOut().then(function() {
+            window.location.href = 'page-login.html';
+        }).catch(function(error) {
+            console.error('Erro ao realizar logout:', error);
+        });
+    });
+</script>
 
-        // Inicializar informações do usuário ao carregar
-        window.onload = function() {
-            displayUserInfo();
-        }
-    </script>
+
 </head>
 
 <body>
