@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Solistica</title>
+    <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link rel="stylesheet" href="./vendor/nouislider/nouislider.min.css">
     <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-    <script type="module" src="./js/auth.js"></script>
-    <script type="module" src="./js/notifications.js"></script>
-	<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-analytics.js"></script>
+    <script>
+        // Código de configuração do Firebase aqui
         var firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
             authDomain: "motorista-2b1dd.firebaseapp.com",
@@ -27,6 +30,54 @@
             measurementId: "G-2JC1729XZK"
         };
         firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        // Função para exibir informações do usuário
+        function displayUserInfo() {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    // Exibir o nome do usuário
+                    document.getElementById('user-name1').innerText = user.displayName || 'Nome não disponível';
+                    document.getElementById('user-name2').innerText = user.displayName || 'Nome não disponível';
+
+                    // Exibir informações de aviso
+                    const userId = user.uid;
+                    db.ref('notifications/' + userId).once('value').then((snapshot) => {
+                        const notifications = snapshot.val();
+                        const notificationContainer = document.getElementById('notification-container');
+                        notificationContainer.innerHTML = '';
+                        if (notifications) {
+                            for (const id in notifications) {
+                                const notification = notifications[id];
+                                const div = document.createElement('div');
+                                div.innerText = notification.message;
+                                notificationContainer.appendChild(div);
+                            }
+                        } else {
+                            notificationContainer.innerText = 'Nenhuma notificação';
+                        }
+                    });
+                } else {
+                    // Redirecionar para login se não estiver autenticado
+                    window.location.href = 'page-login.html';
+                }
+            });
+        }
+
+        // Função para realizar o logout
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = 'page-login.html';
+            }).catch((error) => {
+                console.error('Erro ao fazer logout:', error);
+            });
+        }
+
+        // Inicializar informações do usuário ao carregar
+        window.onload = function() {
+            displayUserInfo();
+        }
     </script>
 </head>
 
@@ -82,7 +133,6 @@
 <div class="dropdown-menu dropdown-menu-right">
     <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
         <ul id="notification-container" class="timeline">
-            <!-- Notificações aparecerão aqui -->
         </ul>
     </div>
 </div>
