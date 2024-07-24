@@ -90,7 +90,7 @@
                 .then((userCredential) => {
                     // Login bem-sucedido
                     var user = userCredential.user;
-                    console.log("Login successful:", user);
+                    console.log("Login bem-sucedido:", user);
                     // Redirecionar para index.html
                     window.location.href = "index.html";
                 })
@@ -101,6 +101,12 @@
                     alert("Falha no login: " + errorMessage);
                 });
         }
+
+        // Adicionando evento de escuta para garantir que a função de login seja chamada
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            loginUser();
+        });
     </script>
 </body>
 
