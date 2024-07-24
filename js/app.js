@@ -38,7 +38,7 @@ function loadUserData(userId) {
 
 // Função para carregar posts do usuário
 function loadUserPosts(userId, containerId) {
-    const postsRef = firebase.database().ref('avisos/' + userId);
+    const postsRef = firebase.database().ref('notifications/' + userId);
     postsRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         const postsContainer = document.getElementById(containerId);
@@ -74,7 +74,7 @@ function deletePost(userId, postId) {
 
 // Função para carregar notificações
 function loadNotifications(userId, containerId) {
-    const notificationsRef = firebase.database().ref('avisos/' + userId);
+    const notificationsRef = firebase.database().ref('notifications/' + userId);
     notificationsRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         const notificationsContainer = document.getElementById(containerId);
@@ -105,7 +105,7 @@ document.getElementById('post-button').addEventListener('click', function() {
     if (user) {
         const postTitle = document.getElementById('post-title').value;
         const postContent = document.getElementById('post-content').value;
-        const postRef = firebase.database().ref('avisos/' + user.uid).push();
+        const postRef = firebase.database().ref('notifications/' + user.uid).push();
         postRef.set({
             title: postTitle,
             content: postContent
