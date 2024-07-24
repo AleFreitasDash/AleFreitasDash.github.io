@@ -14,12 +14,12 @@
     <link href="./css/style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
 <script type="module">
-        // Importando os módulos necessários do Firebase
+        // Importando as funções necessárias do SDK
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
         import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-
+        
         // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
@@ -38,13 +38,12 @@
         const auth = getAuth(app);
         const database = getDatabase(app);
 
-        // Verificar estado de autenticação do usuário
+        // Verificação de autenticação do usuário
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // Usuário está logado, exibir informações
-                const displayName = user.displayName || "Usuário";
-                document.getElementById('user-name1').innerText = displayName;
-                document.getElementById('user-name2').innerText = displayName;
+                document.getElementById('user-name1').innerText = user.displayName || "Usuário";
+                document.getElementById('user-name2').innerText = user.displayName || "Usuário";
 
                 // Carregar notificações do banco de dados do Firebase
                 const userId = user.uid;
@@ -54,13 +53,11 @@
                     const notificationContainer = document.getElementById('notification-container');
                     notificationContainer.innerHTML = '';
                     if (notifications) {
-                        for (const key in notifications) {
+                        for (let key in notifications) {
                             const li = document.createElement('li');
                             li.innerText = notifications[key];
                             notificationContainer.appendChild(li);
                         }
-                    } else {
-                        notificationContainer.innerHTML = '<li>Nenhuma notificação</li>';
                     }
                 });
             } else {
@@ -70,13 +67,13 @@
         });
 
         // Função de logout
-        document.getElementById('logout').addEventListener('click', () => {
+        window.logoutUser = () => {
             signOut(auth).then(() => {
                 window.location.href = 'page-login.html';
             }).catch((error) => {
                 console.error('Erro ao realizar logout:', error);
             });
-        });
+        };
     </script>
 
 
