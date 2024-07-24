@@ -9,52 +9,41 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
-    <!-- Importando bibliotecas do Firebase -->
     <script type="module">
-        // Importando as funções necessárias do SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+        authDomain: "motorista-2b1dd.firebaseapp.com",
+        databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+        projectId: "motorista-2b1dd",
+        storageBucket: "motorista-2b1dd.appspot.com",
+        messagingSenderId: "46949027696",
+        appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+        measurementId: "G-2JC1729XZK"
+    };
 
-        // Inicializando o Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        // Função para login de usuário
-        window.loginUser = async function() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-            console.log("Tentando login com:", email);
-
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                // Login bem-sucedido
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
                 const user = userCredential.user;
-                console.log("Login bem-sucedido:", user);
-                // Redirecionar para index.html
                 window.location.href = "index.html";
-            } catch (error) {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error("Erro ao tentar login:", errorCode, errorMessage);
-                alert("Falha no login: " + errorMessage);
-            }
-        };
-    </script>
+            })
+            .catch((error) => {
+                console.error("Error logging in:", error);
+                alert("Error logging in: " + error.message);
+            });
+    });
+</script>
+
 </head>
 
 <body class="h-100">
