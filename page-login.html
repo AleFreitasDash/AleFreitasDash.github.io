@@ -9,6 +9,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
+    <!-- Importando bibliotecas do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
 </head>
@@ -23,7 +24,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Solistica</h4>
-                                    <form onsubmit="loginUser(); return false;">
+                                    <form id="login-form" onsubmit="loginUser(); return false;">
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Email</strong></label>
                                             <input type="email" class="form-control" id="email" placeholder="nome@example.com" required>
@@ -77,6 +78,8 @@
             appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
             measurementId: "G-2JC1729XZK"
         };
+
+        // Inicializando o Firebase
         firebase.initializeApp(firebaseConfig);
 
         // Função para login de usuário
@@ -101,12 +104,6 @@
                     alert("Falha no login: " + errorMessage);
                 });
         }
-
-        // Adicionando evento de escuta para garantir que a função de login seja chamada
-        document.getElementById("login-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            loginUser();
-        });
     </script>
 </body>
 
