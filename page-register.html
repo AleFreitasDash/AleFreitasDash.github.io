@@ -9,9 +9,56 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+        authDomain: "motorista-2b1dd.firebaseapp.com",
+        databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+        projectId: "motorista-2b1dd",
+        storageBucket: "motorista-2b1dd.appspot.com",
+        messagingSenderId: "46949027696",
+        appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+        measurementId: "G-2JC1729XZK"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
+
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                return updateProfile(user, {
+                    displayName: name
+                }).then(() => {
+                    const userId = user.uid;
+                    set(ref(database, 'UserProfile/' + userId), {
+                        Nome: name,
+                        Email: email,
+                        Senha: password
+                    });
+                });
+            })
+            .then(() => {
+                window.location.href = "index.html";
+            })
+            .catch((error) => {
+                console.error("Error registering user:", error);
+                alert("Error registering user: " + error.message);
+            });
+    });
+</script>
+
 </head>
 
 <body class="h-100">
@@ -58,42 +105,6 @@
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./js/custom.min.js"></script>
     <script src="./js/deznav-init.js"></script>
-
-    <script>
-        // Configuração do Firebase
-        var firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
-        firebase.initializeApp(firebaseConfig);
-
-        // Função para registro de usuário
-        function registerUser() {
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-
-            firebase.auth().createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Registro bem-sucedido
-                    var user = userCredential.user;
-                    console.log("Registration successful:", user);
-                    // Redirecionar para page-login.html
-                    window.location.href = "page-login.html";
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.error("Error during registration:", errorCode, errorMessage);
-                    alert("Registration failed: " + errorMessage);
-                });
-        }
-    </script>
 </body>
 
 </html>
