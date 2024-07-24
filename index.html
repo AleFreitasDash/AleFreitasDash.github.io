@@ -14,68 +14,63 @@
     <link href="./css/style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
 <script type="module">
-        // Importando as funções necessárias do SDK
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-        
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+    
+    const firebaseConfig = {
+        apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+        authDomain: "motorista-2b1dd.firebaseapp.com",
+        databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+        projectId: "motorista-2b1dd",
+        storageBucket: "motorista-2b1dd.appspot.com",
+        messagingSenderId: "46949027696",
+        appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+        measurementId: "G-2JC1729XZK"
+    };
 
-        // Inicializando o Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const database = getDatabase(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const database = getDatabase(app);
 
-        // Verificação de autenticação do usuário
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // Verifica se o usuário tem um displayName, se não, usa um fallback
-                const displayName = user.displayName || "Usuário";
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            const userId = user.uid;
+            const userProfileRef = ref(database, 'UserProfile/' + userId);
+            onValue(userProfileRef, (snapshot) => {
+                const userProfile = snapshot.val();
+                const displayName = userProfile ? userProfile.Nome : "Usuário";
                 document.getElementById('user-name1').innerText = displayName;
                 document.getElementById('user-name2').innerText = displayName;
-
-                // Carregar notificações do banco de dados do Firebase
-                const userId = user.uid;
-                const notificationsRef = ref(database, 'notifications/' + userId);
-                onValue(notificationsRef, (snapshot) => {
-                    const notifications = snapshot.val();
-                    const notificationContainer = document.getElementById('notification-container');
-                    notificationContainer.innerHTML = '';
-                    if (notifications) {
-                        for (let key in notifications) {
-                            const li = document.createElement('li');
-                            li.innerText = notifications[key];
-                            notificationContainer.appendChild(li);
-                        }
-                    }
-                });
-            } else {
-                // Usuário não está logado, redirecionar para a página de login
-                window.location.href = 'page-login.html';
-            }
-        });
-
-        // Função de logout
-        window.logoutUser = () => {
-            signOut(auth).then(() => {
-                window.location.href = 'page-login.html';
-            }).catch((error) => {
-                console.error('Erro ao realizar logout:', error);
             });
-        };
-    </script>
+
+            const notificationsRef = ref(database, 'notifications/' + userId);
+            onValue(notificationsRef, (snapshot) => {
+                const notifications = snapshot.val();
+                const notificationContainer = document.getElementById('notification-container');
+                notificationContainer.innerHTML = '';
+                if (notifications) {
+                    for (let key in notifications) {
+                        const li = document.createElement('li');
+                        li.innerText = notifications[key];
+                        notificationContainer.appendChild(li);
+                    }
+                }
+            });
+        } else {
+            window.location.href = 'page-login.html';
+        }
+    });
+
+    document.getElementById('logout').addEventListener('click', () => {
+        signOut(auth).then(() => {
+            window.location.href = 'page-login.html';
+        }).catch((error) => {
+            console.error('Erro ao realizar logout:', error);
+        });
+    });
+</script>
+
 
 
 </head>
