@@ -41,9 +41,10 @@
         // Verificação de autenticação do usuário
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Usuário está logado, exibir informações
-                document.getElementById('user-name1').innerText = user.displayName || "Usuário";
-                document.getElementById('user-name2').innerText = user.displayName || "Usuário";
+                // Verifica se o usuário tem um displayName, se não, usa um fallback
+                const displayName = user.displayName || "Usuário";
+                document.getElementById('user-name1').innerText = displayName;
+                document.getElementById('user-name2').innerText = displayName;
 
                 // Carregar notificações do banco de dados do Firebase
                 const userId = user.uid;
