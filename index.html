@@ -37,16 +37,10 @@
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-            const userId = user.uid;
-            const userProfileRef = ref(database, 'UserProfile/' + userId);
-            
-            // Exibir o nome do usuário
-            onValue(userProfileRef, (snapshot) => {
-                const userProfile = snapshot.val();
-                const displayName = userProfile ? userProfile.Nome : "Usuário";
+                // Verifica se o usuário tem um displayName, se não, usa um fallback
+                const displayName = user.displayName || "Usuário";
                 document.getElementById('user-name1').innerText = displayName;
-                document.getElementById('user-name2').innerText = displayName;
-            });
+                document.getElementById('user-name2').innerText = "Olá, "+displayName;
 
             // Carregar notificações do banco de dados do Firebase
             const notificationsRef = ref(database, 'notifications/' + userId);
