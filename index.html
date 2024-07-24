@@ -46,26 +46,25 @@
                 document.getElementById('user-name1').innerText = displayName;
                 document.getElementById('user-name2').innerText = displayName;
 
-                // Carregar notificações do banco de dados do Firebase
-                const userId = user.uid;
-                const notificationsRef = ref(database, 'notifications/' + userId);
-                onValue(notificationsRef, (snapshot) => {
-                    const notifications = snapshot.val();
-                    const notificationContainer = document.getElementById('notification-container');
-                    notificationContainer.innerHTML = '';
-                    if (notifications) {
-                        for (let key in notifications) {
-                            const li = document.createElement('li');
-                            li.innerText = notifications[key];
-                            notificationContainer.appendChild(li);
-                        }
+               // Carregar notificações do banco de dados do Firebase
+            const notificationsRef = ref(database, 'notifications/' + userId);
+            onValue(notificationsRef, (snapshot) => {
+                const notifications = snapshot.val();
+                const notificationContainer = document.getElementById('notification-container');
+                notificationContainer.innerHTML = '';
+                if (notifications) {
+                    for (let key in notifications) {
+                        const notification = notifications[key];
+                        const li = document.createElement('li');
+                        li.innerHTML = `<strong>${notification.title}</strong>: ${notification.content}`;
+                        notificationContainer.appendChild(li);
                     }
-                });
-            } else {
-                // Usuário não está logado, redirecionar para a página de login
-                window.location.href = 'page-login.html';
-            }
-        });
+                }
+            });
+        } else {
+            window.location.href = 'page-login.html';
+        }
+    });
 
        document.getElementById('logout').addEventListener('click', () => {
         signOut(auth).then(() => {
