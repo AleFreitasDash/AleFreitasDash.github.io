@@ -12,6 +12,23 @@
     <!-- Importando bibliotecas do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <!-- Certifique-se de que as bibliotecas do Firebase são carregadas antes de usar -->
+    <script>
+        // Configuração do Firebase
+        var firebaseConfig = {
+            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
+            authDomain: "motorista-2b1dd.firebaseapp.com",
+            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
+            projectId: "motorista-2b1dd",
+            storageBucket: "motorista-2b1dd.appspot.com",
+            messagingSenderId: "46949027696",
+            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
+            measurementId: "G-2JC1729XZK"
+        };
+
+        // Inicializando o Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
 </head>
 
 <body class="h-100">
@@ -67,21 +84,6 @@
     <script src="./js/deznav-init.js"></script>
 
     <script>
-        // Configuração do Firebase
-        var firebaseConfig = {
-            apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-            authDomain: "motorista-2b1dd.firebaseapp.com",
-            databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-            projectId: "motorista-2b1dd",
-            storageBucket: "motorista-2b1dd.appspot.com",
-            messagingSenderId: "46949027696",
-            appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-            measurementId: "G-2JC1729XZK"
-        };
-
-        // Inicializando o Firebase
-        firebase.initializeApp(firebaseConfig);
-
         // Função para login de usuário
         function loginUser() {
             var email = document.getElementById("email").value;
