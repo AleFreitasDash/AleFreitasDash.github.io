@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Link - Google Sheets</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Gerador de Link de Exportação do Google Sheets</h1>
+        <form id="linkForm">
+            <div class="form-group">
+                <label for="sheetUrl">URL da Planilha do Google:</label>
+                <input type="text" class="form-control" id="sheetUrl" placeholder="Insira a URL da sua planilha" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Gerar Link de Exportação</button>
+        </form>
+        <div class="mt-4">
+            <h3>Link de Exportação:</h3>
+            <p id="exportLink" class="text-break"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('linkForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const urlInput = document.getElementById('sheetUrl').value;
+            const keyPattern = /\/d\/([a-zA-Z0-9-_]+)\//;
+            const match = urlInput.match(keyPattern);
+            if (match && match[1]) {
+                const key = match[1];
+                const exportLink = `https://docs.google.com/spreadsheets/d/${key}/export?format=xlsx`;
+                document.getElementById('exportLink').innerText = exportLink;
+                document.getElementById('exportLink').href = exportLink;
+            } else {
+                alert('URL inválida. Por favor, insira uma URL válida da planilha do Google.');
+            }
+        });
+    </script>
+</body>
+</html>
