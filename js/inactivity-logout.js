@@ -14,7 +14,7 @@ let inactivityTimeout;
 
 const resetInactivityTimeout = () => {
     clearTimeout(inactivityTimeout);
-    inactivityTimeout = setTimeout(logoutUser, 1 * 1 * 1000); // 1 hora
+    inactivityTimeout = setTimeout(logoutUser, 1 * 60 * 1000); // 1 hora
 };
 
 const initializeInactivityHandler = () => {
