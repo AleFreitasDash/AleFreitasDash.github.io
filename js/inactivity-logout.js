@@ -1,9 +1,7 @@
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-
-const auth = getAuth();
 let inactivityTime = function () {
     let time;
-    let logoutTimeout = 60000; // 1 minute
+    const logoutTimeout = 60000; // 1 minute
+    const logoutButton = document.getElementById('logout');
 
     // Reset the timer on any of the following events
     window.onload = resetTimer;
@@ -16,11 +14,9 @@ let inactivityTime = function () {
     window.addEventListener('scroll', resetTimer, true); // improved; see comments
 
     function logout() {
-        signOut(auth).then(() => {
-            window.location.href = 'page-login.html';
-        }).catch((error) => {
-            console.error('Erro ao realizar logout:', error);
-        });
+        if (logoutButton) {
+            logoutButton.click();
+        }
     }
 
     function resetTimer() {
