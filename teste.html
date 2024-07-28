@@ -1,42 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-100">
-
+<html lang="pt-br">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>EM BREVE</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link href="./css/style.css" rel="stylesheet">
-    
+    <meta charset="UTF-8">
+    <title>Upload de Arquivo XLSX</title>
 </head>
-</head>
+<body>
+    <form id="uploadForm">
+        <label for="fileInput">Escolha um arquivo XLSX:</label>
+        <input type="file" id="fileInput" name="file" accept=".xlsx">
+        <button type="submit">Upload</button>
+    </form>
 
-<body class="h-100">    
-    <div class="authincation h-100">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100 align-items-center">
-                <div class="col-md-5">
-                    <div class="form-input-content text-center error-page">
-                        <h1 class="error-text font-weight-bold">ATENÇÃO</h1>
-                        <h4><i class="fa fa-times-circle text-danger"></i> Pagina em processo de melhoria</h4>
-                        <p>Em breve uma pagina atualizada com muito mais ferramentas</p> 
-						<div>
-                            <a class="btn btn-primary" href="https://wa.me/5511972808837">Contato</a>
-                        </div>	
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = e.target.result;
+
+                // Obter o nome da aba do usuário (você precisará definir a lógica para obter esse nome)
+                const sheetName = prompt("Digite o nome da aba para armazenar os dados:");
+
+                fetch('https://script.google.com/macros/s/AKfycbz3GMTGVi_raILCRXp05SBK7VifiRJ7xNvvQiswfgDNio1AVgBqfYbrvlLUIHcOgR6c/exec', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        file: data,
+                        sheetName: sheetName
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }).then(response => response.text())
+                  .then(result => alert(result))
+                  .catch(error => console.error('Error:', error));
+            };
+            reader.readAsText(file);
+        });
+    </script>
 </body>
-<!--**********************************
-	Scripts
-***********************************-->
-<!-- Required vendors -->
-<script src="./vendor/global/global.min.js"></script>
-<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script src="./js/custom.min.js"></script>
-<script src="./js/deznav-init.js"></script>
 </html>
