@@ -17,15 +17,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-document.querySelector('form').addEventListener('submit', (e) => {
+document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.querySelector('input[placeholder="Nome"]').value;
-    const phone = document.querySelector('input[placeholder="Telefone"]').value;
-    const email = document.querySelector('input[placeholder="email@exemplo.com"]').value;
-    const cpf = document.querySelector('input[placeholder="cpf"]').value;
-    const cnpj = document.querySelector('input[placeholder="cnpj"]').value;
-    const razaoSocial = document.querySelector('input[placeholder="Razão Social"]').value;
-    const nomeFantasia = document.querySelector('input[placeholder="Nome Fantasia"]').value;
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+    const email = document.getElementById('email').value;
+    const cpf = document.getElementById('cpf').value;
+    const cnpj = document.getElementById('cnpj').value;
+    const razaoSocial = document.getElementById('razaoSocial').value;
+    const nomeFantasia = document.getElementById('nomeFantasia').value;
     const password = document.getElementById('password').value;
 
     createUserWithEmailAndPassword(auth, email, password)
@@ -42,8 +42,7 @@ document.querySelector('form').addEventListener('submit', (e) => {
                     CPF: cpf,
                     CNPJ: cnpj,
                     RazaoSocial: razaoSocial,
-                    NomeFantasia: nomeFantasia,
-                    Senha: password
+                    NomeFantasia: nomeFantasia
                 });
             });
         })
