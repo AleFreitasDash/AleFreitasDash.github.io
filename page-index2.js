@@ -45,6 +45,13 @@ onAuthStateChanged(auth, (user) => {
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
                 document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
 
+                // Carregar foto de perfil
+                if (userData.photoURL) {
+                    document.getElementById('profile-picture').src = userData.photoURL;
+                    document.getElementById('profile-picture-edit').src = userData.photoURL;
+                }
+
+                // Carregar documentos
                 if (userData.documents) {
                     Object.keys(userData.documents).forEach(docType => {
                         const docElement = document.getElementById(`${docType}-file-name`);
@@ -119,6 +126,7 @@ onAuthStateChanged(auth, (user) => {
                         updateProfile(user, { photoURL: url }).then(() => {
                             document.getElementById('profile-picture').src = url;
                             document.getElementById('profile-picture-edit').src = url;
+                            update(ref(database, 'UserProfile/' + userId), { photoURL: url });
                             alert('Foto de perfil atualizada com sucesso!');
                         });
                     });
