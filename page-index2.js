@@ -27,6 +27,11 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById('user-name1').innerText = displayName;
         document.getElementById('user-name2').innerText = "Olá, " + displayName;
 
+        if (user.photoURL) {
+            document.getElementById('profile-picture').src = user.photoURL;
+            document.getElementById('profile-picture-edit').src = user.photoURL;
+        }
+
         const userId = user.uid;
         const userRef = ref(database, 'UserProfile/' + userId);
         onValue(userRef, (snapshot) => {
@@ -45,21 +50,15 @@ onAuthStateChanged(auth, (user) => {
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
                 document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
 
-                // Carregar foto de perfil
-                if (userData.photoURL) {
-                    document.getElementById('profile-picture').src = userData.photoURL;
-                    document.getElementById('profile-picture-edit').src = userData.photoURL;
-                }
-
-                // Carregar documentos
-                if (userData.documents) {
-                    Object.keys(userData.documents).forEach(docType => {
-                        const docElement = document.getElementById(`${docType}-file-name`);
-                        if (docElement) {
-                            docElement.innerText = userData.documents[docType].fileName;
-                        }
-                    });
-                }
+                const documents = userData.documents || {};
+                ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
+                    const docElement = document.getElementById(`${docType}-file-name`);
+                    if (documents[docType]) {
+                        docElement.innerText = "Enviado";
+                    } else {
+                        docElement.innerText = "Pendente";
+                    }
+                });
             }
         });
 
@@ -126,7 +125,6 @@ onAuthStateChanged(auth, (user) => {
                         updateProfile(user, { photoURL: url }).then(() => {
                             document.getElementById('profile-picture').src = url;
                             document.getElementById('profile-picture-edit').src = url;
-                            update(ref(database, 'UserProfile/' + userId), { photoURL: url });
                             alert('Foto de perfil atualizada com sucesso!');
                         });
                     });
@@ -159,7 +157,7 @@ onAuthStateChanged(auth, (user) => {
                             update(ref(database, `UserProfile/${userId}/documents`), {
                                 [docType]: documentData
                             }).then(() => {
-                                document.getElementById(`${docType}-file-name`).innerText = file.name;
+                                document.getElementById(`${docType}-file-name`).innerText = "Enviado";
                                 alert('Documento enviado com sucesso!');
                             });
                         });

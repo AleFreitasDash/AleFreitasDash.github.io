@@ -16,7 +16,7 @@
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="page-index2.js" type="module"></script>
+    <script src="page-index.js" type="module"></script>
     <script src="./js/inactivity-logout.js" type="module"></script>
 </head>
 <body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="black" data-headerbg="color_1">
@@ -334,40 +334,38 @@
                                                     <div class="d-flex sales-data">
                                                         <div class="ms-2">
                                                             <h4 class="mb-0">Documentos:</h4>
-                                                            <div id="document-list">
-                                                                		<div class="table-responsive">
-			<table class="table table-bordered verticle-middle table-responsive-sm">
-				<thead>
-					<tr>
-						<th scope="col">Tipo</th>
-						<th scope="col">Nome Arquivo</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>CNH:</td>
-						<td><span id="cnh-file-name">Nenhum arquivo</span></td>
-						<td><input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button></td>
-					</tr>
-					<tr>
-						<td>Comprovante de Endereço:</td>
-						<td><span id="comprovante-file-name">Nenhum arquivo</span></td>
-						<td><input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button></td>
-					</tr>
-					<tr>
-						<td>Documento ANTT:</td>
-						<td><span id="antt-file-name">Nenhum arquivo</span></td>
-						<td><input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button></td>
-					</tr>
-					<tr>
-						<td>Foto Frente Veículo:</td>
-						<td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
-						<td><input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered verticle-middle table-responsive-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Tipo</th>
+                                                                            <th scope="col">Nome Arquivo</th>
+                                                                            <th scope="col">Ação</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>CNH:</td>
+                                                                            <td><span id="cnh-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Comprovante de Endereço:</td>
+                                                                            <td><span id="comprovante-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Documento ANTT:</td>
+                                                                            <td><span id="antt-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Foto Frente Veículo:</td>
+                                                                            <td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -414,18 +412,6 @@
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
-	<script src="./js/highlight.min.js"></script>
-	<script>hljs.highlightAll();
-	hljs.configure({ ignoreUnescapedHTML: true })
-		
-	</script>
-
-	<script>
-		document.addEventListener('DOMContentLoaded', (event) => {
-			document.querySelectorAll('pre code').forEach((el) => {
-				hljs.highlightElement(el);
-			});
-			});
-	</script>
+    <script src="./js/styleSwitcher.js"></script>
 </body>
 </html>
