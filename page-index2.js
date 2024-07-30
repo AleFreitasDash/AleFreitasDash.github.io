@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+import Cropper from "https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
@@ -20,6 +21,8 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
+
+let cropper;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -96,7 +99,7 @@ onAuthStateChanged(auth, (user) => {
             });
         });
 
-        // Upload profile picture
+        // Upload profile picture with cropping
         document.getElementById('upload-profile-picture').addEventListener('click', () => {
             document.getElementById('edit-profile-picture').click();
         });
@@ -104,36 +107,61 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById('edit-profile-picture').addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('cropper-container').style.display = 'block';
+                    const image = document.getElementById('cropper-image');
+                    image.src = e.target.result;
+                    cropper = new Cropper(image, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('cropper-save').addEventListener('click', () => {
+            cropper.getCroppedCanvas().toBlob((blob) => {
                 const profilePicRef = storageRef(storage, `profilePictures/${userId}`);
-                uploadBytes(profilePicRef, file).then((snapshot) => {
+                uploadBytes(profilePicRef, blob).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
                         updateProfile(user, { photoURL: url }).then(() => {
                             document.getElementById('profile-picture').src = url;
                             document.getElementById('profile-picture-edit').src = url;
                             alert('Foto de perfil atualizada com sucesso!');
+                            document.getElementById('cropper-container').style.display = 'none';
                         });
                     });
                 }).catch((error) => {
                     console.error('Erro ao fazer upload da foto de perfil:', error);
                 });
-            }
+            });
         });
 
         // Upload documents
         document.getElementById('upload-documents').addEventListener('change', (event) => {
             const files = event.target.files;
             const documentPromises = [];
+            const documentList = document.getElementById('document-list');
+            documentList.innerHTML = '';
+
             for (const file of files) {
                 const docRef = storageRef(storage, `documents/${userId}/${file.name}`);
-                documentPromises.push(uploadBytes(docRef, file));
+                documentPromises.push(uploadBytes(docRef, file).then((snapshot) => {
+                    return getDownloadURL(snapshot.ref).then((url) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = file.name;
+                        listItem.innerHTML = `<a href="${url}" target="_blank">${file.name}</a>`;
+                        documentList.appendChild(listItem);
+                        return { name: file.name, url: url };
+                    });
+                }));
             }
 
-            Promise.all(documentPromises).then((snapshots) => {
-                const urlPromises = snapshots.map((snapshot) => getDownloadURL(snapshot.ref));
-                return Promise.all(urlPromises);
-            }).then((urls) => {
+            Promise.all(documentPromises).then((documents) => {
                 const userDocumentsRef = ref(database, `UserProfile/${userId}/documents`);
-                update(userDocumentsRef, { urls }).then(() => {
+                update(userDocumentsRef, { documents }).then(() => {
                     alert('Documentos enviados com sucesso!');
                 });
             }).catch((error) => {

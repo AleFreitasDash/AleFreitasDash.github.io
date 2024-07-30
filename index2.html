@@ -16,8 +16,10 @@
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="page-index2.js" type="module"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+    <script src="page-index.js" type="module"></script>
     <script src="./js/inactivity-logout.js" type="module"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 </head>
 <body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="black" data-headerbg="color_1">
 
@@ -98,6 +100,10 @@
                                                 <span class="badge border-0 rounded">Status Cadastro</span>
                                             </div>
                                             <input type="file" id="edit-profile-picture" accept="image/*" style="display:none;">
+                                            <div id="cropper-container" style="display:none;">
+                                            <img id="cropper-image" style="max-width: 100%;">
+                                            <button id="cropper-save" class="btn btn-primary">Salvar Foto</button>
+                                            </div>
                                             <button id="upload-profile-picture" class="btn btn-primary">Alterar Foto</button>
                                         </div>
                                         <div class="account-setting">
