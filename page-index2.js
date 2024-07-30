@@ -3,7 +3,6 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-import Cropper from "https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
@@ -21,8 +20,6 @@ const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
-
-let cropper;
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -47,6 +44,15 @@ onAuthStateChanged(auth, (user) => {
                 document.getElementById('edit-razao-social').value = userData.RazaoSocial;
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
                 document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
+
+                if (userData.documents) {
+                    Object.keys(userData.documents).forEach(docType => {
+                        const docElement = document.getElementById(`${docType}-file-name`);
+                        if (docElement) {
+                            docElement.innerText = userData.documents[docType].fileName;
+                        }
+                    });
+                }
             }
         });
 
@@ -99,7 +105,7 @@ onAuthStateChanged(auth, (user) => {
             });
         });
 
-        // Upload profile picture with cropping
+        // Upload profile picture
         document.getElementById('upload-profile-picture').addEventListener('click', () => {
             document.getElementById('edit-profile-picture').click();
         });
@@ -107,65 +113,52 @@ onAuthStateChanged(auth, (user) => {
         document.getElementById('edit-profile-picture').addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    document.getElementById('cropper-container').style.display = 'block';
-                    const image = document.getElementById('cropper-image');
-                    image.src = e.target.result;
-                    cropper = new Cropper(image, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        document.getElementById('cropper-save').addEventListener('click', () => {
-            cropper.getCroppedCanvas().toBlob((blob) => {
                 const profilePicRef = storageRef(storage, `profilePictures/${userId}`);
-                uploadBytes(profilePicRef, blob).then((snapshot) => {
+                uploadBytes(profilePicRef, file).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
                         updateProfile(user, { photoURL: url }).then(() => {
                             document.getElementById('profile-picture').src = url;
                             document.getElementById('profile-picture-edit').src = url;
                             alert('Foto de perfil atualizada com sucesso!');
-                            document.getElementById('cropper-container').style.display = 'none';
                         });
                     });
                 }).catch((error) => {
                     console.error('Erro ao fazer upload da foto de perfil:', error);
                 });
-            });
+            }
         });
 
         // Upload documents
-        document.getElementById('upload-documents').addEventListener('change', (event) => {
-            const files = event.target.files;
-            const documentPromises = [];
-            const documentList = document.getElementById('document-list');
-            documentList.innerHTML = '';
+        document.querySelectorAll('.upload-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const inputId = button.getAttribute('data-input-id');
+                document.getElementById(inputId).click();
+            });
+        });
 
-            for (const file of files) {
-                const docRef = storageRef(storage, `documents/${userId}/${file.name}`);
-                documentPromises.push(uploadBytes(docRef, file).then((snapshot) => {
-                    return getDownloadURL(snapshot.ref).then((url) => {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = file.name;
-                        listItem.innerHTML = `<a href="${url}" target="_blank">${file.name}</a>`;
-                        documentList.appendChild(listItem);
-                        return { name: file.name, url: url };
+        document.querySelectorAll('.upload-document').forEach(input => {
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const docType = event.target.getAttribute('data-doc-type');
+                if (file) {
+                    const docRef = storageRef(storage, `documents/${userId}/${docType}`);
+                    uploadBytes(docRef, file).then((snapshot) => {
+                        getDownloadURL(snapshot.ref).then((url) => {
+                            const documentData = {
+                                fileName: file.name,
+                                url: url
+                            };
+                            update(ref(database, `UserProfile/${userId}/documents`), {
+                                [docType]: documentData
+                            }).then(() => {
+                                document.getElementById(`${docType}-file-name`).innerText = file.name;
+                                alert('Documento enviado com sucesso!');
+                            });
+                        });
+                    }).catch((error) => {
+                        console.error('Erro ao fazer upload do documento:', error);
                     });
-                }));
-            }
-
-            Promise.all(documentPromises).then((documents) => {
-                const userDocumentsRef = ref(database, `UserProfile/${userId}/documents`);
-                update(userDocumentsRef, { documents }).then(() => {
-                    alert('Documentos enviados com sucesso!');
-                });
-            }).catch((error) => {
-                console.error('Erro ao fazer upload dos documentos:', error);
+                }
             });
         });
     } else {
