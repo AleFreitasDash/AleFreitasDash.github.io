@@ -16,10 +16,8 @@
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
     <script src="page-index2.js" type="module"></script>
     <script src="./js/inactivity-logout.js" type="module"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
 </head>
 <body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="black" data-headerbg="color_1">
 
@@ -100,10 +98,6 @@
                                                 <span class="badge border-0 rounded">Status Cadastro</span>
                                             </div>
                                             <input type="file" id="edit-profile-picture" accept="image/*" style="display:none;">
-                                            <div id="cropper-container" style="display:none;">
-                                            <img id="cropper-image" style="max-width: 100%;">
-                                            <button id="cropper-save" class="btn btn-primary">Salvar Foto</button>
-                                            </div>
                                             <button id="upload-profile-picture" class="btn btn-primary">Alterar Foto</button>
                                         </div>
                                         <div class="account-setting">
@@ -340,7 +334,28 @@
                                                     <div class="d-flex sales-data">
                                                         <div class="ms-2">
                                                             <h4 class="mb-0">Documentos:</h4>
-                                                            <input type="file" id="upload-documents" multiple accept="image/*,.pdf">
+                                                            <div id="document-list">
+                                                                <div class="document-item">
+                                                                    <label for="upload-cnh">CNH: <span id="cnh-file-name">Nenhum arquivo</span></label>
+                                                                    <input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;">
+                                                                    <button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button>
+                                                                </div>
+                                                                <div class="document-item">
+                                                                    <label for="upload-comprovante">Comprovante de Endereço: <span id="comprovante-file-name">Nenhum arquivo</span></label>
+                                                                    <input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;">
+                                                                    <button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button>
+                                                                </div>
+                                                                <div class="document-item">
+                                                                    <label for="upload-foto-frente">Foto Frente Veículo: <span id="foto-frente-file-name">Nenhum arquivo</span></label>
+                                                                    <input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;">
+                                                                    <button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button>
+                                                                </div>
+                                                                <div class="document-item">
+                                                                    <label for="upload-antt">Documento ANTT: <span id="antt-file-name">Nenhum arquivo</span></label>
+                                                                    <input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;">
+                                                                    <button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -386,5 +401,6 @@
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
+    <script src="./js/styleSwitcher.js"></script>
 </body>
 </html>
