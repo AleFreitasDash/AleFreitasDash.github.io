@@ -510,7 +510,7 @@ option {
   cursor: pointer;
 }
 
-/*  PLAY BUTTON  */
+/*  Botao Play  */
 .circle {
   grid-column: 2 / 3;
   grid-row: 4 / 6;
@@ -594,7 +594,7 @@ option {
           animation-play-state: paused;
 }
 
-/*  FORM  */
+/*  Formulario  */
 .form__input {
   width: 20.4rem;
   height: 4rem;
@@ -628,7 +628,7 @@ option {
   background: #e6e7ee;
 }
 
-/*  SEARCH  */
+/*  Procurar  */
 .search {
     position: relative;
     display: flex;
@@ -718,7 +718,7 @@ option {
   color: var(--primary);
 }
 
-/*  RANGE-SLIDER  */
+/*  Tamanho Slide  */
 .slider {
   grid-column: 3 / 4;
   grid-row: 5 / 6;
