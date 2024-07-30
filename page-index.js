@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
 
 const firebaseConfig = {
@@ -31,11 +31,17 @@ onAuthStateChanged(auth, (user) => {
             const userData = snapshot.val();
             if (userData) {
                 document.getElementById('user-name').innerText = userData.Nome;
+                document.getElementById('edit-name').value = userData.Nome;
                 document.getElementById('user-phone').innerText = userData.Telefone;
+                document.getElementById('edit-phone').value = userData.Telefone;
                 document.getElementById('user-email').innerText = userData.Email;
+                document.getElementById('edit-email').value = userData.Email;
                 document.getElementById('user-cpf-cnpj').innerText = userData.CPF + ' / ' + userData.CNPJ;
+                document.getElementById('edit-cpf-cnpj').value = userData.CPF + ' / ' + userData.CNPJ;
                 document.getElementById('user-razao-social').innerText = userData.RazaoSocial;
+                document.getElementById('edit-razao-social').value = userData.RazaoSocial;
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
+                document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
             }
         });
 
@@ -52,6 +58,40 @@ onAuthStateChanged(auth, (user) => {
                     notificationContainer.appendChild(li);
                 }
             }
+        });
+
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const field = button.getAttribute('data-field');
+                document.getElementById(`user-${field}`).style.display = 'none';
+                document.getElementById(`edit-${field}`).style.display = 'block';
+                document.getElementById('save-changes').style.display = 'block';
+            });
+        });
+
+        document.getElementById('save-changes').addEventListener('click', () => {
+            const updatedData = {
+                Nome: document.getElementById('edit-name').value,
+                Telefone: document.getElementById('edit-phone').value,
+                Email: document.getElementById('edit-email').value,
+                CPF: document.getElementById('edit-cpf-cnpj').value.split(' / ')[0],
+                CNPJ: document.getElementById('edit-cpf-cnpj').value.split(' / ')[1],
+                RazaoSocial: document.getElementById('edit-razao-social').value,
+                NomeFantasia: document.getElementById('edit-nome-fantasia').value
+            };
+
+            update(ref(database, 'UserProfile/' + userId), updatedData).then(() => {
+                document.getElementById('save-changes').style.display = 'none';
+                document.querySelectorAll('input').forEach(input => {
+                    input.style.display = 'none';
+                });
+                document.querySelectorAll('p[id^="user-"]').forEach(p => {
+                    p.style.display = 'block';
+                });
+            }).catch((error) => {
+                console.error('Erro ao atualizar dados:', error);
+            });
         });
     } else {
         window.location.href = 'page-login.html';
