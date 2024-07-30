@@ -21,12 +21,10 @@ const database = getDatabase(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // Verifica se o usuário tem um displayName, se não, usa um fallback
         const displayName = user.displayName || "Usuário";
         document.getElementById('user-name1').innerText = displayName;
         document.getElementById('user-name2').innerText = "Olá, " + displayName;
 
-        // Carregar dados do usuário do banco de dados do Firebase
         const userId = user.uid;
         const userRef = ref(database, 'UserProfile/' + userId);
         onValue(userRef, (snapshot) => {
@@ -41,7 +39,6 @@ onAuthStateChanged(auth, (user) => {
             }
         });
 
-        // Carregar notificações do banco de dados do Firebase
         const notificationsRef = ref(database, 'notifications/' + userId);
         onValue(notificationsRef, (snapshot) => {
             const notifications = snapshot.val();
