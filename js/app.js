@@ -38,7 +38,7 @@ function loadUserData(userId) {
 
 // Função para carregar posts do usuário
 function loadUserPosts(userId, containerId) {
-    const postsRef = firebase.database().ref('notifications/' + userId);
+    const postsRef = firebase.database().ref('avisos/' + userId);
     postsRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         const postsContainer = document.getElementById(containerId);
@@ -63,7 +63,7 @@ function loadUserPosts(userId, containerId) {
 
 // Função para excluir post
 function deletePost(userId, postId) {
-    const postRef = firebase.database().ref('notifications/' + userId + '/' + postId);
+    const postRef = firebase.database().ref('avisos/' + userId + '/' + postId);
     postRef.remove().then(() => {
         loadUserPosts(userId, 'posts-container'); // Recarregar posts
         loadNotifications(userId, 'notification-container'); // Recarregar notificações
@@ -74,7 +74,7 @@ function deletePost(userId, postId) {
 
 // Função para carregar notificações
 function loadNotifications(userId, containerId) {
-    const notificationsRef = firebase.database().ref('notifications/' + userId);
+    const notificationsRef = firebase.database().ref('avisos/' + userId);
     notificationsRef.once('value').then((snapshot) => {
         const data = snapshot.val();
         const notificationsContainer = document.getElementById(containerId);
@@ -105,7 +105,7 @@ document.getElementById('post-button').addEventListener('click', function() {
     if (user) {
         const postTitle = document.getElementById('post-title').value;
         const postContent = document.getElementById('post-content').value;
-        const postRef = firebase.database().ref('notifications/' + user.uid).push();
+        const postRef = firebase.database().ref('avisos/' + user.uid).push();
         postRef.set({
             title: postTitle,
             content: postContent
@@ -159,14 +159,5 @@ document.getElementById('change-password-form').addEventListener('submit', funct
         });
     }).catch((error) => {
         console.error('Erro ao reautenticar o usuário:', error);
-    });
-});
-
-// Função de logout
-document.getElementById('logout').addEventListener('click', function() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = "page-login.html";
-    }).catch((error) => {
-        console.error('Erro ao fazer logout:', error);
     });
 });

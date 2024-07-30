@@ -1,26 +1,14 @@
-// notifications.js
-export function loadNotifications(userId, containerId) {
-    const notificationsRef = firebase.database().ref('avisos/' + userId);
-    notificationsRef.once('value').then((snapshot) => {
-        const data = snapshot.val();
-        const notificationsContainer = document.getElementById(containerId);
-        if (notificationsContainer) {
-            notificationsContainer.innerHTML = ''; // Limpar notificações atuais
-            if (data) {
-                Object.keys(data).forEach(key => {
-                    const notification = data[key];
-                    const notificationElement = document.createElement('li');
-                    notificationElement.innerHTML = `
-                        <div class="timeline-panel">
-                            <div class="media-body">
-                                <h6 class="mb-1">${notification.title}</h6>
-                                <small class="d-block">${notification.content}</small>
-                            </div>
-                        </div>
-                    `;
-                    notificationsContainer.appendChild(notificationElement);
-                });
-            }
-        }
-    });
-}
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user && user.displayName) {
+        const userName1 = document.getElementById('user-name1');
+        const userName2 = document.getElementById('user-name2');
+        if (userName1) userName1.innerText = user.displayName;
+        if (userName2) userName2.innerText = "Olá, " + user.displayName;
+
+        loadUserData(user.uid);
+        loadUserPosts(user.uid, 'posts-container');
+        loadNotifications(user.uid, 'notification-container');
+    } else {
+        window.location.href = "page-login.html";
+    }
+});

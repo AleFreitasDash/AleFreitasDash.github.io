@@ -1,29 +1,28 @@
-let inactivityTime = function () {
-    let time;
-    const logoutTimeout = 60000; // 1 minute
-    const logoutButton = document.getElementById('logout');
+// inactivity-logout.js
+import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 
-    // Reset the timer on any of the following events
-    window.onload = resetTimer;
-    window.onmousemove = resetTimer;
-    window.onmousedown = resetTimer; // catches touchscreen presses
-    window.ontouchstart = resetTimer;
-    window.ontouchmove = resetTimer;
-    window.onclick = resetTimer;     // catches touchpad clicks
-    window.onkeydown = resetTimer;
-    window.addEventListener('scroll', resetTimer, true); // improved; see comments
-
-    function logout() {
-        if (logoutButton) {
-            logoutButton.click();
-        }
-    }
-
-    function resetTimer() {
-        clearTimeout(time);
-        time = setTimeout(logout, logoutTimeout);
-    }
+const logoutUser = () => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+        window.location.href = 'page-login.html';
+    }).catch((error) => {
+        console.error('Erro ao realizar logout:', error);
+    });
 };
 
-// Initialize inactivityTime
-inactivityTime();
+let inactivityTimeout;
+
+const resetInactivityTimeout = () => {
+    clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(logoutUser, 1 * 1 * 1000); // 1 hora
+};
+
+const initializeInactivityHandler = () => {
+    window.onload = resetInactivityTimeout;
+    document.onmousemove = resetInactivityTimeout;
+    document.onkeydown = resetInactivityTimeout;
+    document.onscroll = resetInactivityTimeout;
+    document.onclick = resetInactivityTimeout;
+};
+
+export { initializeInactivityHandler, logoutUser };

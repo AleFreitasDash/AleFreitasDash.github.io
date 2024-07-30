@@ -66,41 +66,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const mainWrapper = document.getElementById("main-wrapper");
     const sidebar = document.querySelector(".deznav");
     const hamburger = document.querySelector(".nav-control .hamburger");
-    const logoAbbr = document.querySelector(".logo-abbr");
-    const brandTitle = document.querySelector(".brand-title");
 
     // Inicialmente, defina o estilo da sidebar como "mini"
     mainWrapper.setAttribute("data-sidebar-style", "mini");
-
-    // Exibir logo-abbr e ocultar brand-title inicialmente
-    logoAbbr.style.display = "block";
-    brandTitle.style.display = "none";
 
     // Alternar entre mini e full ao clicar no hamburger
     hamburger.addEventListener("click", function() {
         if (mainWrapper.getAttribute("data-sidebar-style") === "mini") {
             mainWrapper.setAttribute("data-sidebar-style", "full");
-            logoAbbr.style.display = "none";
-            brandTitle.style.display = "block";
         } else {
             mainWrapper.setAttribute("data-sidebar-style", "mini");
-            logoAbbr.style.display = "block";
-            brandTitle.style.display = "none";
         }
     });
 
     // Expandir sidebar ao passar o mouse
     sidebar.addEventListener("mouseover", function() {
         mainWrapper.setAttribute("data-sidebar-style", "full");
-        logoAbbr.style.display = "none";
-        brandTitle.style.display = "block";
     });
 
     // Recolher sidebar ao tirar o mouse
     sidebar.addEventListener("mouseout", function() {
         mainWrapper.setAttribute("data-sidebar-style", "mini");
-        logoAbbr.style.display = "block";
-        brandTitle.style.display = "none";
     });
 });
-
