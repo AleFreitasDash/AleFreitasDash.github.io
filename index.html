@@ -81,7 +81,7 @@
                                     <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <div class="header-info2 d-flex align-items-center">
                                             <div class="header-media">
-                                                <img src="images/user.jpg" class="avatar avatar-lg" alt="">
+                                                <img src="images/user.jpg" class="avatar avatar-lg" id="profile-picture" alt="">
                                             </div>
                                             <div class="header-info">
                                                 <h6 id="user-name2">Usuario</h6>
@@ -91,12 +91,14 @@
                                     <div class="profile-box">
                                         <div class="products">
                                             <div class="border-img">
-                                                <img src="images/user.jpg" class="avatar " alt="">
+                                                <img src="images/user.jpg" class="avatar" id="profile-picture-edit" alt="">
                                             </div>    
                                             <div class="ms-3">
                                                 <h6 class="mb-0" id="user-name1">Usuario</h6>
                                                 <span class="badge border-0 rounded">Status Cadastro</span>
-                                            </div>    
+                                            </div>
+                                            <input type="file" id="edit-profile-picture" accept="image/*" style="display:none;">
+                                            <button id="upload-profile-picture" class="btn btn-primary">Alterar Foto</button>
                                         </div>
                                         <div class="account-setting">
                                             <a href="app-profile-2.html" class="ai-icon">
@@ -317,13 +319,55 @@
                                                 <div class="card-body d-flex justify-content-between align-items-center">
                                                     <div class="d-flex sales-data">
                                                         <div class="ms-2">
-                                                            <h4 class="mb-0">Nome Fantasia:</h4>
+                                                            <h4 class="mb0">Nome Fantasia:</h4>
                                                             <p class="mb-0" id="user-nome-fantasia">Nome Fantasia Usuario</p>
                                                             <input type="text" id="edit-nome-fantasia" class="form-control" style="display:none;">
                                                         </div>
                                                     </div>
                                                     <div class="d-flex">
                                                         <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="nome-fantasia"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <div class="card-body d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex sales-data">
+                                                        <div class="ms-2">
+                                                            <h4 class="mb-0">Documentos:</h4>
+                                                            <div class="table-responsive">
+                                                                <table class="table table-bordered verticle-middle table-responsive-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Tipo</th>
+                                                                            <th scope="col">Nome Arquivo</th>
+                                                                            <th scope="col">Ação</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td>CNH:</td>
+                                                                            <td><span id="cnh-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Comprovante de Endereço:</td>
+                                                                            <td><span id="comprovante-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Documento ANTT:</td>
+                                                                            <td><span id="antt-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>Foto Frente Veículo:</td>
+                                                                            <td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
+                                                                            <td><input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
