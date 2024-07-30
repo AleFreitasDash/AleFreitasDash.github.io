@@ -1,423 +1,405 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Solistica</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <link rel="stylesheet" href="./vendor/nouislider/nouislider.min.css">
-    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
-    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+     <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="keywords" content="Solistica, Alexandre Freitas">
+	<meta name="author" content="Alexandre Freitas">
+	<meta name="robots" content="Solistica, Alexandre Freitas">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Solistica">
+	<meta property="og:title" content="Solistica">
+	<meta property="og:description" content="Solistica">
+	<meta property="og:image" content="https://alefreitasdash.github.io/images/logo-text.png">
+	<meta name="format-detection" content="telephone=no">
+	<title>Solistica</title>
+	<link rel="shortcut icon" type="image/png" href="images/favicon.png">
+	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.js"></script>
-<script type="module" src="./js/inactivity-logout.js"></script>
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-    
-    const firebaseConfig = {
-        apiKey: "AIzaSyCjkrAB_X57m8wOLqzWxS6CBB-yc3onHNQ",
-        authDomain: "motorista-2b1dd.firebaseapp.com",
-        databaseURL: "https://motorista-2b1dd-default-rtdb.firebaseio.com",
-        projectId: "motorista-2b1dd",
-        storageBucket: "motorista-2b1dd.appspot.com",
-        messagingSenderId: "46949027696",
-        appId: "1:46949027696:web:66dc7d505fc9c766f8c9b5",
-        measurementId: "G-2JC1729XZK"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-    const database = getDatabase(app);
-
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            // Verifica se o usuário tem um displayName, se não, usa um fallback
-            const displayName = user.displayName || "Usuário";
-            document.getElementById('user-name1').innerText = displayName;
-            document.getElementById('user-name2').innerText = "Olá, " + displayName;
-
-            // Carregar notificações do banco de dados do Firebase
-            const userId = user.uid;
-            const notificationsRef = ref(database, 'notifications/' + userId);
-            onValue(notificationsRef, (snapshot) => {
-                const notifications = snapshot.val();
-                const notificationContainer = document.getElementById('notification-container');
-                notificationContainer.innerHTML = '';
-                if (notifications) {
-                    for (let key in notifications) {
-                        const notification = notifications[key];
-                        const li = document.createElement('li');
-                        li.innerHTML = `<strong>${notification.title}</strong>: ${notification.content}`;
-                        notificationContainer.appendChild(li);
-                    }
-                }
-            });
-        } else {
-            window.location.href = 'page-login.html';
-        }
-    });
-
-    document.getElementById('logout').addEventListener('click', () => {
-        signOut(auth).then(() => {
-            window.location.href = 'page-login.html';
-        }).catch((error) => {
-            console.error('Erro ao realizar logout:', error);
-        });
-    });
-</script>
-
+	<script src="page-index.js" type="module"></script>
+	<script src="./js/inactivity-logout.js" type="module"></script>
+	
 </head>
+<body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="black" data-headerbg="color_1">
 
-<body>
-    <!-- Preloader start -->
+    <!--*******************
+        Preloader start
+    ********************-->
     <div id="preloader">
-        <div class="sk-three-bounce">
-            <div class="sk-child sk-bounce1"></div>
-            <div class="sk-child sk-bounce2"></div>
-            <div class="sk-child sk-bounce3"></div>
-        </div>
+		<div class="dz-ripple">
+			<div></div>
+			<div></div>
+		</div>
     </div>
-    <!-- Preloader end -->
+    <!--*******************
+        Preloader end
+    ********************-->
 
-    <!-- Main wrapper start -->
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
     <div id="main-wrapper">
-
-        <!-- Nav header start -->
+        <!--**********************************
+            Nav header start
+        ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-compact logo-abbr" src="./images/logo-text.png" alt="">
-                <img class="brand-title" src="./images/logo-text.png" alt="">
+                <img class="logo-abbr" width="51" height="51" src="./images/logo-text.png" alt="">
+				<img class="brand-title" width="80" height="80" src="./images/logo-light.svg" alt="">
             </a>
 
-            <div class="nav-control">
+            <div class="nav-control" style="display: none;">
                 <div class="hamburger">
-                    <span class="line"></span><span class="line"></span><span class="line"></span>
                 </div>
             </div>
         </div>
-        <!-- Nav header end -->
-
         <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<!--**********************************
             Header start
         ***********************************-->
-        <div class="header">
+		<div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-                            <form id="filter-form" class="d-flex">
-                                <input class="form-control" id="filter-input" type="search" placeholder="Procurar programa" aria-label="Search">
-                                <button type="submit" class="btn btn-primary">Filtrar</button>
-                            </form>
+                       <div class="header-left">
                         </div>
-
                         <ul class="navbar-nav header-right">
-                            <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link  ai-icon warning" href="#" role="button" data-toggle="dropdown">
-                                    <svg width="24" height="24" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.75 14.8385V12.0463C21.7471 9.88552 20.9385 7.80353 19.4821 6.20735C18.0258 4.61116 16.0264 3.61555 13.875 3.41516V1.625C13.875 1.39294 13.7828 1.17038 13.6187 1.00628C13.4546 0.842187 13.2321 0.75 13 0.75C12.7679 0.75 12.5454 0.842187 12.3813 1.00628C12.2172 1.17038 12.125 1.39294 12.125 1.625V3.41534C9.97361 3.61572 7.97429 4.61131 6.51794 6.20746C5.06159 7.80361 4.25291 9.88555 4.25 12.0463V14.8383C3.26257 15.0412 2.37529 15.5784 1.73774 16.3593C1.10019 17.1401 0.751339 18.1169 0.75 19.125C0.750764 19.821 1.02757 20.4882 1.51969 20.9803C2.01181 21.4724 2.67904 21.7492 3.375 21.75H8.71346C8.91521 22.738 9.45205 23.6259 10.2331 24.2636C11.0142 24.9013 11.9916 25.2497 13 25.2497C14.0084 25.2497 14.9858 24.9013 15.7669 24.2636C16.548 23.6259 17.0848 22.738 17.2865 21.75H22.625C23.321 21.7492 23.9882 21.4724 24.4803 20.9803C24.9724 20.4882 25.2492 19.821 25.25 19.125C25.2486 18.117 24.8998 17.1402 24.2622 16.3594C23.6247 15.5786 22.7374 15.0414 21.75 14.8385ZM6 12.0463C6.00232 10.2113 6.73226 8.45223 8.02974 7.15474C9.32723 5.85726 11.0863 5.12732 12.9212 5.125H13.0788C14.9137 5.12732 16.6728 5.85726 17.9703 7.15474C19.2677 8.45223 19.9977 10.2113 20 12.0463V14.75H6V12.0463ZM13 23.5C12.4589 23.4983 11.9316 23.3292 11.4905 23.0159C11.0493 22.7026 10.716 22.2604 10.5363 21.75H15.4637C15.284 22.2604 14.9507 22.7026 14.5095 23.0159C14.0684 23.3292 13.5411 23.4983 13 23.5ZM22.625 20H3.375C3.14298 19.9999 2.9205 19.9076 2.75644 19.7436C2.59237 19.5795 2.50014 19.357 2.5 19.125C2.50076 18.429 2.77757 17.7618 3.26969 17.2697C3.76181 16.7776 4.42904 16.5008 5.125 16.5H20.875C21.571 16.5008 22.2382 16.7776 22.7303 17.2697C23.2224 17.7618 23.4992 18.429 23.5 19.125C23.4999 19.357 23.4076 19.5795 23.2436 19.7436C23.0795 19.9076 22.857 19.9999 22.625 20Z" fill="#000"/></svg>
-                                    <div class="pulse-css"></div>
-                                </a>
-<div class="dropdown-menu dropdown-menu-right">
-    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
-        <ul id="notification-container" class="timeline">
-        </ul>
-    </div>
-</div>
-
-                            </li>
-                            <li class="nav-item dropdown header-profile">
-                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                                    <div class="header-info">
-                                        <span><strong id="user-name1">...</strong></span>
-                                    </div>
-                                    <img src="images/profile/pic1.jpg" width="20" alt=""/>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="./app-profile.html" class="dropdown-item ai-icon">
-                                        <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        <span class="ml-2">Meus Dados</span>
-                                    </a>
-                                    <a href="./avisos.html" class="dropdown-item ai-icon">
-                                        <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                        <span class="ml-2">Avisos</span>
-                                    </a>
-                                    <a href="#" id="logout" class="dropdown-item ai-icon">
-                                        <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                        <span class="ml-2">Sair</span>
-                                    </a>
-                                </div>
-                            </li>
+							
+							<li class="nav-item dropdown notification_dropdown">
+								<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+									<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M18 8.5C18 6.9087 17.3679 5.38258 16.2426 4.25736C15.1174 3.13214 13.5913 2.5 12 2.5C10.4087 2.5 8.88258 3.13214 7.75736 4.25736C6.63214 5.38258 6 6.9087 6 8.5C6 15.5 3 17.5 3 17.5H21C21 17.5 18 15.5 18 8.5Z" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+										<path d="M13.73 21.5C13.5542 21.8031 13.3019 22.0547 12.9982 22.2295C12.6946 22.4044 12.3504 22.4965 12 22.4965C11.6496 22.4965 11.3054 22.4044 11.0018 22.2295C10.6982 22.0547 10.4458 21.8031 10.27 21.5" stroke="#111828" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+									</svg>
+								</a>
+								<div class="dropdown-menu dropdown-menu-end">
+									<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
+										<ul class="timeline">
+											<li>
+												<div class="timeline-panel">
+													<div class="media-body" id="notification-container">
+														<h6 class="mb-1">Titulo</h6>
+														<small class="d-block">Texto</small>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<a class="all-notification" href="javascript:void(0);">Exibir mais <i class="ti-arrow-end"></i></a>
+								</div>
+							</li>
+							
+							<li class="nav-item align-items-center header-border"><a href="relatorio.html" class="btn btn-primary">Relatorio</a></li>
+							<li class="nav-item ps-3">
+								<div class="header-profile2">
+									<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<div class="header-info2 d-flex align-items-center">
+											<div class="header-media">
+												<img src="images/user.jpg" class="avatar avatar-lg" alt="">
+											</div>
+											<div class="header-info">
+												<h6 id="user-name2">Usuario</h6>
+											</div>
+											
+										</div>
+									</a>
+									<div class=" profile-box">
+										<div class="products">
+											<div class="border-img">
+												<img src="images/user.jpg" class="avatar " alt="">
+											</div>	
+											<div class="ms-3">
+												<h6 class="mb-0" id="user-name1">Usuario</h6>
+												<span class="badge border-0 rounded">Status Cadastro</span>
+											</div>	
+										</div>
+										<div class="account-setting">
+											<a href="app-profile-2.html" class="ai-icon">
+												<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M16.6666 17.5V15.8333C16.6666 14.9493 16.3154 14.1014 15.6903 13.4763C15.0652 12.8512 14.2173 12.5 13.3333 12.5H6.66658C5.78253 12.5 4.93468 12.8512 4.30956 13.4763C3.68444 14.1014 3.33325 14.9493 3.33325 15.8333V17.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+													<path d="M10.0001 9.16667C11.841 9.16667 13.3334 7.67428 13.3334 5.83333C13.3334 3.99238 11.841 2.5 10.0001 2.5C8.15913 2.5 6.66675 3.99238 6.66675 5.83333C6.66675 7.67428 8.15913 9.16667 10.0001 9.16667Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+												<span class="ms-2">Configurações de Conta</span>
+											</a>
+											<a href="app-profile-1.html" class="ai-icon ">
+												<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M3.33341 3.33301H16.6667C17.5834 3.33301 18.3334 4.08301 18.3334 4.99967V14.9997C18.3334 15.9163 17.5834 16.6663 16.6667 16.6663H3.33341C2.41675 16.6663 1.66675 15.9163 1.66675 14.9997V4.99967C1.66675 4.08301 2.41675 3.33301 3.33341 3.33301Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+													<path d="M18.3334 5L10.0001 10.8333L1.66675 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+												<span class="ms-2">Atualizações</span>
+											</a>
+											<div class="d-flex align-items-center">
+												<a href="javascript:void(0);" class="dropdown-item ai-icon ">
+													<div>
+													<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+														<path d="M17.4999 10.6583C17.3688 12.0768 16.8365 13.4287 15.9651 14.5557C15.0938 15.6826 13.9195 16.5382 12.5797 17.0221C11.2398 17.5061 9.7899 17.5984 8.3995 17.2884C7.0091 16.9784 5.73575 16.2788 4.72844 15.2715C3.72113 14.2642 3.02153 12.9908 2.71151 11.6004C2.40148 10.21 2.49385 8.76007 2.9778 7.42025C3.46175 6.08042 4.31728 4.90614 5.44426 4.03479C6.57125 3.16345 7.92308 2.63109 9.34158 2.5C8.51109 3.62356 8.11146 5.00787 8.21536 6.40118C8.31926 7.79448 8.9198 9.10421 9.90775 10.0922C10.8957 11.0801 12.2054 11.6807 13.5987 11.7846C14.992 11.8885 16.3764 11.4888 17.4999 10.6583Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+													</svg>
+													<span class="ms-2">Modo Escuro</span>
+													</div>
+												</a>
+												<div class="dz-layout">
+													<i class="fas fa-sun sun"></i>
+													<i class="fas fa-moon moon"></i>
+												</div>	
+											</div>
+											<a href="page-login.html" class="ai-icon">
+												<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+													<path d="M7.5 17.5H4.16667C3.72464 17.5 3.30072 17.3244 2.98816 17.0118C2.67559 16.6993 2.5 16.2754 2.5 15.8333V4.16667C2.5 3.72464 2.67559 3.30072 2.98816 2.98816C3.30072 2.67559 3.72464 2.5 4.16667 2.5H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+													<path d="M13.3333 14.1663L17.4999 9.99967L13.3333 5.83301" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+													<path d="M17.5 10H7.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+												</svg>
+												<span class="ms-2">Sair </span>
+											</a>											
+										</div>
+									</div>
+								</div>
+							</li>
                         </ul>
                     </div>
-                </nav>
-            </div>
-        </div>
+				</nav>
+			</div>
+		</div>
         <!--**********************************
-            Header end
+            Header end ti-comment-alt
         ***********************************-->
 
-        <!-- Sidebar start -->
-        <div class="deznav">
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+       <div class="deznav">
             <div class="deznav-scroll">
-                <ul class="metismenu" id="menu">
-                    <li><a class="ai-icon" href="index.html" aria-expanded="false">
-                        <i class="flaticon-381-home-1"></i>
-                        <span class="nav-text">Inicio</span>
-                    </a>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-file-2"></i>
-                        <span class="nav-text">Cte</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./cte.html">Consulta de Conhecimento</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-folder-6"></i>
-                        <span class="nav-text">Compras</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./compras_acompanhamento.html">Acompanhamento de pedidos</a></li>
-                            <li><a href="./pedidos_de_compra.html">Cotações / Pedidos de Compra</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-calculator-1"></i>
-                        <span class="nav-text">Financeiro</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./financeiro.html">Segunda via de boleto / Link de Pagamento</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-print-1"></i>
-                        <span class="nav-text">Impressão Virtual</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./impressao.html">Download de documentos</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-search-3"></i>
-                        <span class="nav-text">MDFe</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./mdfe.html">Consulta de manifestos de documentos fiscais eletrônicos</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-file-2"></i>
-                        <span class="nav-text">NFe</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./nfe.html">Consulta de notas fiscais eletrônicas</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-user-9"></i>
-                        <span class="nav-text">Terceiros</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./terceiros_documentos.html">Documentos</a></li>
-                            <li><a href="./terceiros_irf.html">Informe de Rendimentos do Fornecedor</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-id-card-5"></i>
-                        <span class="nav-text">Transportadores</span>
-                    </a>
-                        <ul aria-expanded="false">
-                            <li><a href="./t_alteracao_frota.html">Alteração de frotas</a></li>
-                            <li><a href="./t_disponibilidade.html">Disponibilidade de frota</a></li>
-                            <li><a href="./t_relatorios.html">Relatórios</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="add-menu-sidebar">
-                    <img src="images/icon1.png" alt=""/>
-                    <p>Conversar com a Soli</p>
-                    <a href="javascript:void(0);" class="btn btn-primary btn-block light">Whatsapp</a>
-                </div>
-                <div class="copyright">
-                    <p><strong>Alexandre Freitas</strong> © 2024 All Rights Reserved</p>
-                </div>
-            </div>
+				<ul class="metismenu" id="menu">
+				    <li><a href="index.html" class="" aria-expanded="false">
+						<div class="menu-icon">
+							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M3.29077 9L12.2908 2L21.2908 9V20C21.2908 20.5304 21.0801 21.0391 20.705 21.4142C20.3299 21.7893 19.8212 22 19.2908 22H5.29077C4.76034 22 4.25163 21.7893 3.87656 21.4142C3.50149 21.0391 3.29077 20.5304 3.29077 20V9Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+								<path d="M9.29077 22V12H15.2908V22" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>	
+							<span class="nav-text">Inicio</span>
+						</a>
+					</li>
+					<li><a href="contacts.html" class="" aria-expanded="false">
+						<div class="menu-icon">
+							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M18.148 20.417C20.021 20.417 21.54 18.899 21.541 17.026V17.024V14.324C20.304 14.324 19.302 13.322 19.301 12.085C19.301 10.849 20.303 9.846 21.54 9.846H21.541V7.146C21.543 5.272 20.026 3.752 18.153 3.75H18.147H6.43502C4.56102 3.75 3.04202 5.268 3.04102 7.142V7.143V9.933C4.23502 9.891 5.23602 10.825 5.27802 12.019C5.27902 12.041 5.28002 12.063 5.28002 12.085C5.28102 13.32 4.28202 14.322 3.04702 14.324H3.04102V17.024C3.04002 18.897 4.55902 20.417 6.43202 20.417H6.43302H18.148Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M12.6621 9.06303L13.2781 10.31C13.3381 10.432 13.4541 10.517 13.5891 10.537L14.9661 10.738C15.3071 10.788 15.4421 11.206 15.1961 11.445L14.2001 12.415C14.1021 12.51 14.0581 12.647 14.0801 12.782L14.3151 14.152C14.3731 14.491 14.0181 14.749 13.7141 14.589L12.4831 13.942C12.3621 13.878 12.2181 13.878 12.0971 13.942L10.8671 14.589C10.5621 14.749 10.2071 14.491 10.2651 14.152L10.5001 12.782C10.5231 12.647 10.4781 12.51 10.3801 12.415L9.38511 11.445C9.13911 11.206 9.27411 10.788 9.61411 10.738L10.9911 10.537C11.1261 10.517 11.2431 10.432 11.3031 10.31L11.9181 9.06303C12.0701 8.75503 12.5101 8.75503 12.6621 9.06303Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>	
+							<span class="nav-text">Meus Fretes</span>
+						</a>
+					</li>
+					<li><a href="blog.html" class="" aria-expanded="false">
+						<div class="menu-icon">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76181H8.08493C6.00493 2.75381 4.29993 4.41181 4.25093 6.49081V17.2038C4.20493 19.3168 5.87993 21.0678 7.99293 21.1148C8.02393 21.1148 8.05393 21.1158 8.08493 21.1148H16.0739C18.1679 21.0298 19.8179 19.2998 19.8029 17.2038V8.03781L14.7379 2.76181Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M14.4751 2.75V5.659C14.4751 7.079 15.6231 8.23 17.0431 8.234H19.7981" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M14.2882 15.3585H8.88818" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M12.2432 11.606H8.88721" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+							
+						</div>
+						<span class="nav-text">Buscar Fretes</span>
+						</a>
+					</li>
+					<li class="menu-title">Outras Ferramentas</li>
+					<li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+						<div class="menu-icon">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76181H8.08493C6.00493 2.75381 4.29993 4.41181 4.25093 6.49081V17.2038C4.20493 19.3168 5.87993 21.0678 7.99293 21.1148C8.02393 21.1148 8.05393 21.1158 8.08493 21.1148H16.0739C18.1679 21.0298 19.8179 19.2998 19.8029 17.2038V8.03781L14.7379 2.76181Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M14.4751 2.75V5.659C14.4751 7.079 15.6231 8.23 17.0431 8.234H19.7981" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M14.2882 15.3585H8.88818" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M12.2432 11.606H8.88721" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>
+						<span class="nav-text">Cadastro</span>
+						</a>
+						<ul aria-expanded="false">
+							<li class="mini-dashboard">...</li>
+							<li><a href="./chat.html">Meus Dados</a></li>
+							<li><a href="./chat.html">Motoristas</a></li>
+							<li><a href="./chat.html">Veiculos</a></li>
+						</ul>
+					</li>
+					<li><a href="disponibilidade.html" class="" aria-expanded="false">
+						<div class="menu-icon">
+							<svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" clip-rule="evenodd" d="M13.395 4.17701L15.2224 7.82776C15.4015 8.18616 15.7472 8.43467 16.1481 8.49218L20.2361 9.08062C21.2461 9.22644 21.6481 10.4505 20.9171 11.1519L17.961 13.9924C17.6704 14.2718 17.5382 14.6733 17.6069 15.0676L18.3046 19.0778C18.4764 20.0698 17.4205 20.8267 16.5178 20.3574L12.864 18.4627C12.5058 18.2768 12.0768 18.2768 11.7176 18.4627L8.06378 20.3574C7.161 20.8267 6.10517 20.0698 6.27801 19.0778L6.97462 15.0676C7.04334 14.6733 6.9111 14.2718 6.62059 13.9924L3.66445 11.1519C2.93349 10.4505 3.33541 9.22644 4.34544 9.08062L8.43342 8.49218C8.83431 8.43467 9.18105 8.18616 9.36014 7.82776L11.1865 4.17701C11.6384 3.27433 12.9431 3.27433 13.395 4.17701Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+							</svg>
+						</div>	
+							<span class="nav-text">Disponibilidade</span>
+						</a>
+					</li>
+				</ul>
+				<div class="switch-btn">
+					<a href="page-login.html">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M18.36 6.63965C19.6184 7.89844 20.4753 9.50209 20.8223 11.2478C21.1693 12.9936 20.9909 14.803 20.3096 16.4474C19.6284 18.0918 18.4748 19.4972 16.9948 20.486C15.5148 21.4748 13.7749 22.0026 11.995 22.0026C10.2151 22.0026 8.47515 21.4748 6.99517 20.486C5.51519 19.4972 4.36164 18.0918 3.68036 16.4474C2.99909 14.803 2.82069 12.9936 3.16772 11.2478C3.51475 9.50209 4.37162 7.89844 5.63 6.63965" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+							<path d="M12 2V12" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+						</svg>
+						<span>Sair</span>
+					</a>
+				</div>
+			</div>
         </div>
-        <!-- Sidebar end -->
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+		
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="outer-body">  
+			<div class="inner-body">
+				<div class="content-body">
+					<div class="container-fluid">
+						<h3 class="head-title">Meus Dados</h3>
+						<div class="row">
+							<div class="col-xl-6" >
+								<div class="card overflow-hidden">
+									<div class="card-body" style="background-color: #ededed;">
+										<div class="col-xl-12 col-sm-6">
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">Nome:</h4>
+														<p class="mb-0">Nome Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">Telefone:</h4>
+														<p class="mb-0">Telefone Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">Email:</h4>
+														<p class="mb-0">Email Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							<div class="col-xl-6">
+								<div class="card overflow-hidden">
+									<div class="card-body" style="background-color: #ededed;">
+										<div class="col-xl-12 col-sm-6">
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">CPF / CNPJ:</h4>
+														<p class="mb-0">CPF / CNPJ Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">Razão Social:</h4>
+														<p class="mb-0">Razão Social Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card">
+											<div class="card-body d-flex justify-content-between align-items-center">
+												<div class="d-flex sales-data">
+													<div class="ms-2">
+														<h4 class="mb-0">Nome Fantasia:</h4>
+														<p class="mb-0">Nome Fantasia Usuario</p>
+													</div>
+												</div>
+											</div>
+										</div>
+										</div>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="footer">
+					<div class="copyright">
+					   <p>Copyright © Developed by Alexandre Freitas 2024</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <!--**********************************
+            Content body end
+        ***********************************-->
+		
+		
+        <!--**********************************
+            Footer start
+        ***********************************-->
+		
+        <!--**********************************
+            Footer end
+        ***********************************-->
 
-        <!-- Content body start -->
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col-sm-6 p-md-0">
-                        <div class="welcome-text">
-                            <h4 id="user-name2">...</h4>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="javascript:void(0)">Inicio</a></li>
-                            <li class="breadcrumb-item active"><a href="javascript:void(0)"></a></li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-file-2"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">CTe</p>
-                                        <a href="./cte.html" class="btn btn-primary btn-block light">Consulta de conhecimentos de transporte eletrônicos</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-folder-6"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">Compras</p>
-                                        <a href="./compras_acompanhamento.html" class="btn btn-primary btn-block light">Acompanhamento de pedidos</a>
-                                        <a href="./pedidos_de_compra.html" class="btn btn-primary btn-block light">Cotações / Pedidos de Compra</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-calculator-1"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">Financeiro</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary btn-block light">Segunda via de boleto / Link de Pagamento</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-print-1"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">Impressão Virtual</p>
-                                        <a href="./impressao.html" class="btn btn-primary btn-block light">Download de documentos</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-search-3"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">MDFe</p>
-                                        <a href="./mdfe.html" class="btn btn-primary btn-block light">Consulta de manifestos de documentos fiscais eletrônicos</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-file-2"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">NFe</p>
-                                        <a href="./nfe.html" class="btn btn-primary btn-block light">Consulta de notas fiscais eletrônicas</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-user-9"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">Terceiros</p>
-                                        <a href="./terceiros_documentos.html" class="btn btn-primary btn-block light">Documentos</a>
-                                        <a href="./terceiros_irf.html" class="btn btn-primary btn-block light">Informe de Rendimentos do Fornecedor</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 mb-4 content-item">
-                        <div class="widget-stat card">
-                            <div class="card-body p-2">
-                                <div class="media ai-icon">
-                                    <span class="mr-3 bgl-primary text-primary">
-                                        <i class="flaticon-381-id-card-5"></i>
-                                    </span>
-                                    <div class="card-body">
-                                        <p class="card-title">Transportadores</p>
-                                        <a href="./t_alteracao_frota.html" class="btn btn-primary btn-block light">Alteração de frotas</a>
-                                        <a href="./t_disponibilidade.html" class="btn btn-primary btn-block light">Disponibilidade de frota</a>
-                                        <a href="./t_relatorios.html" class="btn btn-primary btn-block light">Relatórios</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Content body end -->
+		<!--**********************************
+           Support ticket button start
+        ***********************************-->
+		
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
 
-    </div>
-    <!-- Main wrapper end -->
 
+	</div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
     <!-- Required vendors -->
-<script src="./vendor/global/global.min.js"></script>
-<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
-<script src="./js/custom.min.js"></script>
-<script src="./js/deznav-init.js"></script>
-<!-- Apex Chart -->
-<script src="./vendor/apexchart/apexchart.js"></script>
-<script src="./vendor/nouislider/nouislider.min.js"></script>
-<script src="./vendor/wnumb/wNumb.js"></script>
-<script src="./js/plugins-init/nouislider-init.js"></script>
-<script src="./js/plugins-init/widgets-script-init.js"></script>
-<script src="./vendor/peity/jquery.peity.min.js"></script>
-<script src="./js/plugins-init/piety-init.js"></script>
-<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="./vendor/apexchart/apexchart.js"></script>
+	
+	<!-- Dashboard 1 -->
+	<script src="./js/dashboard/analytics.js"></script>
+	
+	
+	
+	<!-- tagify -->
+	
+	
+   
+	<!-- Apex Chart -->
+	
+	
 
+	<!-- Vectormap -->
+    <script src="./js/custom.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	<script src="./js/demo.js"></script>
+    <script src="./js/styleSwitcher.js"></script>
 </body>
-
 </html>
