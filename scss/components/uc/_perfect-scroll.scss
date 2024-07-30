@@ -12,11 +12,11 @@
 //     .ps__rail-y:focus > .ps__thumb-y,
 //     .ps__rail-y.ps--clicking .ps__thumb-y {
 //         background-color: #f00;
-//         width: 4px;
+//         width: 0.25rem;
 //     }
 //     .ps__thumb-y {
 //         background-color: #f00;
-//         width: 4px;
+//         width: 0.25rem;
 //     }
 // }
 .ps__rail-x:hover,
@@ -33,42 +33,41 @@
 .ps__rail-y:focus>.ps__thumb-y,
 .ps__rail-y.ps--clicking .ps__thumb-y {
     background-color: #DAE2F3;
-    width: 4px;
+    width: 0.25rem;
 }
 
 .ps__thumb-y {
     background-color: #DAE2F3;
-    width: 4px;
+    width: 0.25rem;
 }
 
 .total-average {
     position: relative;
-    height: 300px;
+    height: 18.75rem;
 }
 
 .widget-chat {
     position: relative;
-    height: 250px;
+    height: 15.625rem;
 }
 
 .widget-todo {
     position: relative;
-    height: 210px;
+    height: 13.125rem;
 }
 
 .widget-team {
     position: relative;
-    height: 285px;
+    height: 17.8125rem;
 }
 
 .widget-timeline {
     position: relative;
-    height: 290px;
 }
 
 .widget-comments {
     position: relative;
-    height: 400px;
+    height: 25rem;
 }
 
 .sidebar-right-inner {

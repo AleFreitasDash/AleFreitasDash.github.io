@@ -1,10 +1,10 @@
 
 #visitor_graph {
-    height: 253px !important;
+    height: 15.8125rem !important;
 }
 
 #user_rating_graph {
-    height: 280px !important;
+    height: 17.5rem !important;
 }
 
 #radar_chart, 
@@ -13,77 +13,82 @@
 #polar_chart {
     // height: 10.875rem!important;
 }
+
+#activity {
+    height: 16.875rem !important;
+}
+
 #visitorOnline{
-    height: 72px !important;
+    height: 4.5rem !important;
 }
 #trendMeter{
-    height: 72px !important;
+    height: 4.5rem !important;
 }
 #widget-revenue1,
 #widget-revenue2,
 #widget-revenue3{
-    height: 117px !important;
+    height: 7.3125rem !important;
 }
 #widget-profit1,
 #widget-profit2,
 #widget-profit3{
-    height: 160px !important;
+    height: 10rem !important;
 }
 
 #comparison-rate{
-    height: 230px!important;
+    height: 14.375rem;
 }
 #session_day{
-    height: 175px!important;
+    height: 10.9375rem;
     width: auto!important;
     margin: 0 auto;
 }
 
 #walet-status {
-    height: 140px!important;
+    height: 8.75rem;
 }
 #bar1 {
-    height: 150px!important;
+    height: 9.375rem;
 }
 #sold-product {
-    height: 230px!important;
+    height: 14.375rem;
 }
 
 
 #chart-venue-expenses,
 #chart-online-sale,
 #chart-gross-sale{
-    height: 150px !important;
+    height: 9.375rem !important;
 }
 
 
 #areaChart_3{
-    height: 295px !important;
+    height: 18.4375rem !important;
 }
 .chart-point{
 	display:flex;
 	align-items: center;
 	
 	.check-point-area{
-		width:100px;
-		height: 100px;
-		margin-top: -10px;
-		margin-left: -10px;
+		width:6.25rem;
+		height: 6.25rem;
+		margin-top: -0.625rem;
+		margin-left: -0.625rem;
 	}
 	.chart-point-list{
 		margin:0;
-		padding-left: 5px;
+		padding-left: 0.3125rem;
 			
 		li{
 			list-style:none;
-			font-size: 13px;
-			padding: 2px 0;
+			font-size: 0.8125rem;
+			padding: 0.125rem 0;
 			
 			i{
-				margin-right: 5px;
-				font-size: 11px;
+				margin-right: 0.3125rem;
+				font-size: 0.6875rem;
 				position: relative;
-				top: -1px;
+				top: -0.0625rem;
 			}
 		}
 	}

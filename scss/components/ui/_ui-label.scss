@@ -3,6 +3,7 @@
     text-align: center;
     font-size: 0.75rem;
     padding: .2rem .8rem;
+	border-radius:0.5rem;
 
     &-fixed {
         width: 7.5rem;
@@ -47,7 +48,7 @@
 }
 
 .label-primary{
-    background: $primary;
+    background:var(--primary);
     color: $white;
 }
 
@@ -92,8 +93,8 @@
 
 code{
     word-break: break-word;
-    padding: 2px 5px;
-    border-radius: 3px;
+    padding: 0.125rem 0.3125rem;
+    border-radius: 0.1875rem;
 	background: lighten($danger, 33%);
     color: $danger;
 	@at-root [data-theme-version="dark"] & {
@@ -110,7 +111,7 @@ code{
 
     h1{
         .label{
-            font-size: 18px;
+            font-size: 1.125rem;
             font-weight: normal;
             padding: .4rem .9rem;
         }
@@ -118,7 +119,7 @@ code{
 
     h2{
         .label{
-            font-size: 16px;
+            font-size: 1rem;
             font-weight: normal;
             padding: 0.3rem .9rem;
         }
@@ -126,28 +127,28 @@ code{
 
     h3{
         .label{
-            font-size: 14px;
+            font-size: 0.875rem;
             font-weight: normal;
         }
     }
 
     h4{
         .label{
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: normal;
         }
     }
 
     h5{
         .label{
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: normal;
         }
     }
 
     h6{
         .label{
-            font-size: 12px;
+            font-size: 0.75rem;
             font-weight: normal;
         }
     }

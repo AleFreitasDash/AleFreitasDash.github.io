@@ -1,26 +1,40 @@
-
-.welcome-text{
-	span,
-	p{
-		display:none;
+.breadcrumb{
+	font-size: 13px;
+	.breadcrumb-item{
+        a{
+            svg{
+               margin-bottom: 3px;
+			   margin-right: 4px;
+            }
+        }    
+		&.active{
+			a{
+				color:$black;
+			}
+		}
 	}
-}
+}	
 .page-titles {
-    margin-bottom: 30px;
-    display: block;
-	
-	[class*="col-"]{
-		display: block !important;
-		max-width: 100%;
-		width: 100%;
-		margin: 0;
-	}
+	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 1.95rem 0.6rem;
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
+	border-bottom:1px solid $border;
+	flex-flow:wrap;
+    @at-root [data-theme-version="dark"] & {
+        background: $dark-card;
+    }
 
+    @include respond('tab-land') {
+		margin-top: 0;
+	}
     @include respond('phone-land') {
-        margin-left: -15px;
-        margin-right: -15px;
-        margin-bottom: 15px;
-        padding: 15px 0;
+		// margin-left: -1.25rem;
+		// margin-right: -1.25rem;
+		margin-bottom: 0rem;
     }
 
     .justify-content-sm-end{
@@ -28,44 +42,49 @@
     }
 
     h4 {
-        margin-bottom: 10px;
-		margin-top: 0;
-		color: #000;
-		font-size: 1.75rem;
-		font-weight: 600;
-		
+        margin-bottom: 0;
+        margin-top: 0;
+        color: var(--primary);
+        font-size: 1.25rem;
         span {
-            font-size: 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 400;
         }
     }
     .breadcrumb {
         margin-bottom: 0;
         padding: 0;
         background: transparent;
+		align-items:center;
         // font-size: 0.875rem;
         li {
             margin-top: 0;
             margin-bottom: 0;
-			font-size: 18px;
-			@include respond('phone-land') {
-				font-size: 15px;
-			}
+
             a{
-               color: $primary; 
+               color: $l-ctl; 
+			   font-size: 13px;
+			  
 
             }
 
-            &.active a{
-                color: $body-color;
+            &.active{
+                color:var(--primary);
+				font-weight: 500;
+				a{
+					color:var(--primary)!important;
+				}
             }
         }
         
         .breadcrumb-item + .breadcrumb-item {
             &:before {
-                content: "\e606";
-                font-family: 'simple-line-icons';
-                // font-weight: 4;
-                font-size: 10px;
+                //content: "\e606";
+                /* font-family: 'simple-line-icons';
+                font-weight: 400;
+				position:absolute;
+                font-size: 10px; */
+				color:var(--primary);
             }
         }
 
@@ -78,20 +97,15 @@
             }
         }
     }
-
-    .breadcrumb-widget{
-        .border-dark{
-            border-color: $gray-300!important;
-        }
-        h4{
-            color: $strong;
-            font-weight: 600;
-        }
-        @include respond('phone') {
-            text-align: left!important;
-            margin-bottom: 0.9375rem;
-        }
-    }
+	
+	.bc-title{
+		margin:0;
+		font-size:17px;
+		margin-right: 2rem;
+		color:var(--secondary);
+		@include respond ('phone'){
+			font-size:15px;
+		}
+	}
     
 }
-

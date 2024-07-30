@@ -1,10 +1,13 @@
  // Variable.scss
  .progress-bar {
-    background-color: $primary;
+    background-color: var(--primary);
  }
  
  .progress-bar-primary {
-     background-color: $primary;
+     background-color: var(--primary);
+ }
+  .progress-bar-secondary {
+     background-color: var(--secondary);
  }
  
  .progress-bar-success {
@@ -28,7 +31,8 @@
  }
  
 .progress {
-    height: 6px;
+	height: 14px;
+	background-color:#f6f6f6;
     overflow: hidden;
     // box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.13);
 	@at-root [data-theme-version="dark"] & {
@@ -36,7 +40,7 @@
 	}
     &-bar{
         // outline: 1px solid #fff;
-        border-radius: 4px;
+        border-radius: $radius;
     }
 }
  

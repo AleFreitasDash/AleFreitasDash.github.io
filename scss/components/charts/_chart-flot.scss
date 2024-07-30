@@ -18,13 +18,17 @@
   .legendLabel {
     font-size: 0.825rem;
     padding-left: .5rem; 
-    color: $white;
+    color: #000;
+	@at-root [data-theme-version="dark"] & {
+		color:$white;
+	}
   }
     
 .flotTip {
   background: $black;
-  border: 1px solid $black;
+  border: 0.0625rem solid $black;
   color: $white;
+  
 }
 
 .legend > div{
@@ -32,5 +36,5 @@
 }
 
 #balance_graph {
-  height: 260px;
+  height: 16.25rem;
 }

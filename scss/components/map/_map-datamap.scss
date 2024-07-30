@@ -7,21 +7,21 @@
     padding: 0.3125rem;
     border-radius: 0.3125rem;
     font-family: 'Roboto' !important;
-    color: $primary;
-    border: 1px solid rgba($primary, .3);
+    color: var(--primary);
+    border: 0.0625rem solid var(--rgba-primary-3);
 }
 
 .world_map_card {
     ul.list-group {
-        @include custommq($max: 1440px) {
+        @include custommq($max: 90rem) {
             display: flex;
             flex-wrap: wrap;
             flex-direction: row;
-            margin-top: 35px;
+            margin-top: 2.1875rem;
         }
 
         // li {
-        //     @include custommq($min: 1200px, $max: 1440px) {
+        //     @include custommq($min: 75rem, $max: 90rem) {
         //         flex: 1;
         //     }
         // }

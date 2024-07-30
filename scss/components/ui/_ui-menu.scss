@@ -20,20 +20,20 @@
             background: $danger;
 
             &:after {
-                border-top: 10px solid $danger;
+                border-top: 0.625rem solid $danger;
             }
 
             .ribbon-curve {
-                border-top: 11px solid $danger;
-                border-bottom: 10px solid $danger;
+                border-top: 0.6875rem solid $danger;
+                border-bottom: 0.625rem solid $danger;
             }
         }
     }
 
     &--desc {
         // padding: 0.9375rem 1.25rem;
-        // border-left: 1px solid #e5e5e5;
-        // border-right: 1px solid #e5e5e5;
+        // border-left: 0.0625rem solid #e5e5e5;
+        // border-right: 0.0625rem solid #e5e5e5;
 
         p {
             margin-bottom: 0.625rem;
@@ -66,13 +66,13 @@
     }
 
     .card-footer {
-        padding: 15px 20px;
+        padding: 0.9375rem 1.25rem;
         background-color: $border;
-        // border: 1px solid #e5e5e5;
+        // border: 0.0625rem solid #e5e5e5;
         border-top: none;
 
-        @include custommq($min: 1200px, $max: 1440px) {
-            padding: 15px;
+        @include custommq($min: 75rem, $max: 90rem) {
+            padding: 0.9375rem;
         }
 
         span{
@@ -83,7 +83,7 @@
 }
 
 .horizontal-card__menu {
-    box-shadow: 0 0 7px rgba(173, 173, 173, 0.32);
+    box-shadow: 0 0 0.4375rem rgba(173, 173, 173, 0.32);
     display: flex;
     flex-direction: row;
 
@@ -93,7 +93,7 @@
 
     .card-body {
         padding: 0;
-        padding: 20px 30px;
+        padding: 1.25rem 1.875rem;
     }
 
 
@@ -134,7 +134,7 @@
     }
 
     &--footer {
-        margin-top: 10px;
+        margin-top: 0.625rem;
     }
 }
 

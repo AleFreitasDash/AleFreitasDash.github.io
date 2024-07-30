@@ -1,29 +1,29 @@
 .picker{
 	.picker__frame {
-		min-width: 450px!important;
-		max-width: 450px!important;
+		min-width: 28.125rem;
+		max-width: 28.125rem;
 		
 		.picker__box{
-			padding: 20px;
+			padding: 1.25rem;
 			border: 0;
-			box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+			box-shadow: 0 0.3125rem 0.625rem rgba(0,0,0,0.1);
 			
 			.picker__header{
 				margin-top: 0;
 				
 				.picker__year{
-					color: $primary;
+					color: var(--primary);
 					font-style: inherit;
-					font-size: 20px;
+					font-size: 1.25rem;
 				}
 			
 				.picker__nav--prev,
 				.picker__nav--next{
-					width: 40px;
-					height: 40px;
+					width: 2.5rem;
+					height: 2.5rem;
 					padding: 0;
-					line-height: 40px;
-					border-radius: 2px;
+					line-height: 2.5rem;
+					border-radius: 0.125rem;
 					&:before{
 						content: none!important
 					}
@@ -31,11 +31,11 @@
 						font-family: fontawesome;
 						border: 0;
 						margin: 0 auto;
-						font-size: 22px;
+						font-size: 1.375rem;
 					}
 					&:hover{
-						background-color: lighten($primary, 30)!important;
-						color: $primary!important;
+						background-color: var(--primary);
+						color:$white;
 					}
 				}
 				.picker__nav--prev{
@@ -54,16 +54,16 @@
 			
 			.picker__table{
 				.picker__weekday {
-					padding: 10px 0;
-					font-size: 16px;
+					padding: 0.625rem 0;
+					font-size: 1rem;
 				}
 				.picker__day {
-					width: 40px;
-					height: 40px;
-					border-radius: 50px;
+					width: 2.5rem;
+					height: 2.5rem;
+					border-radius: 3.125rem;
 					padding: 0!important;
-					font-size: 16px;
-					line-height: 40px;
+					font-size: 1rem;
+					line-height: 2.5rem;
 					margin: auto;
 					border: 0!important;
 					
@@ -76,12 +76,12 @@
 					&.picker__day--highlighted {
 						border: 0!important;
 						padding: 0;
-						background-color: lighten($primary, 30)!important;
+						background-color: var(--primary);
 						color: $white!important;
 					}
 					
 					&:hover{
-						background-color: lighten($primary, 30)!important;
+						background-color: var(--primary);
 						color: $white !important;
 					}
 				}
@@ -89,7 +89,7 @@
 			
 			.picker__footer{
 				.picker__button--today{
-					background-color: lighten($primary, 30)!important;
+					background-color: var(--primary);
 					color: $white !important;
 					
 					&:before{
@@ -101,10 +101,10 @@
 				.picker__button--close, 
 				.picker__button--today{
 					border: 0;
-					border-radius: 2px;
-					font-size: 16px;
+					border-radius: 0.125rem;
+					font-size: 1rem;
 					&:hover{
-						background-color: lighten($primary, 30)!important;
+						background-color:var(--primary);
 						color: $white !important;
 					}
 				}
@@ -117,8 +117,8 @@
 			max-width: 100%!important;
 			
 			.picker__box{
-				padding: 15px;
-				margin: 0 10px;
+				padding: 0.9375rem;
+				margin: 0 0.625rem;
 			}
 		}
 	}

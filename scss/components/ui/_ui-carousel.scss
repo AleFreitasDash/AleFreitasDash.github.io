@@ -1,4 +1,4 @@
-.carousel-custom{
+    .carousel-custom{
 
     &-prev, &-next{
         width: 2.5rem;
@@ -37,7 +37,8 @@
 
 .carousel-caption{
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.78);
-
+	z-index:1;
+	background: rgba($black,0.6);
     h5{
         color: $white;
         font-size: 1.8rem;
@@ -46,4 +47,7 @@
     p{
         margin-bottom: 0;
     }
+}
+.carousel-indicators{
+    z-index:1;
 }

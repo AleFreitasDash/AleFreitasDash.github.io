@@ -2,13 +2,14 @@
     margin-bottom: 0;
 
    .btn {
-		border: 1px solid $border !important;
+		border: 1px solid #cdcdcd!important;
 		background-color: transparent !important;
 		font-weight:400;
 		color: $body-color !important;
 		
 		@at-root [data-theme-version="dark"] & {
 			border-color:$d-border !important;
+			background:$d-bg !important;
 		}
        
        &:active,
@@ -26,7 +27,7 @@
 		box-shadow:$shadow;
 		
 		.dropdown-item{
-			padding: 0.25rem 1rem;
+			padding: 0.45rem 1rem;
 		}
 		
 		@at-root [data-theme-version="dark"] & {
@@ -42,4 +43,8 @@
 .input-group > .bootstrap-select:not(:last-child) .dropdown-toggle{
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+.select2-container .select2-search--inline .select2-search__field{
+	margin-top: 9px;
+    padding: 0px 7px;
 }

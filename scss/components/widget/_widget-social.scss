@@ -1,13 +1,13 @@
 .social-icon{
     display: inline-block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 4px;
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 2.5rem;
+    border-radius: 0.25rem;
     text-align: center;
     background: $body-bg;
     margin-bottom: 0.5rem;
-    font-size: 20px;
+    font-size: 1.25rem;
 
     i{
         // font-size: 0.875rem; 
@@ -23,11 +23,37 @@
         background: $twitter;
     }
 }
-
+.social-graph-wrapper {
+    text-align: center;
+    padding: 1.25rem;
+    position: relative;
+    color: $white;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+	
+    &.widget-facebook {
+        background-color: $facebook;
+    }
+    &.widget-twitter {
+        background-color: $twitter;
+    }
+    &.widget-linkedin {
+        background-color: $linkedin;
+    }
+    &.widget-googleplus {
+        background-color: $google-plus;
+    }
+    .s-icon {
+        font-size: 1.5rem;
+        position: relative;
+        // top: 0.625rem;
+        padding: 0 0.625rem;
+    }
+}
 
 .social-icon2{
     a{
-        border: .1rem solid $primary;
+        border: .1rem solid var(--primary);
         display: block;
         padding: 1rem;
         margin-top: 1.5rem;
@@ -37,8 +63,8 @@
     }
 
     i{
-        font-size: 12px;
-        color: $primary;
+        font-size: 0.75rem;
+        color: var(--primary);
     }
 }
 
@@ -55,7 +81,7 @@
                 }
                 &:hover{
                     i{
-                        color: $primary;
+                        color: var(--primary);
                     }
                 }
             }

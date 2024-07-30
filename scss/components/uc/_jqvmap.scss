@@ -2,26 +2,26 @@
 .jqvmap-zoomin, .jqvmap-zoomout
 {
 	position: absolute;
-	left: 10px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
+	left: 0.625rem;
+	-webkit-border-radius: 0.1875rem;
+	-moz-border-radius: 0.1875rem;
+	border-radius: 0.1875rem;
 	background: #000000;
-	padding: 3px;
+	padding: 0.1875rem;
 	color: white;
-	width: 17px;
-	height: 17px;
+	width: 1.0625rem;
+	height: 1.0625rem;
 	cursor: pointer;
-	line-height: 10px;
+	line-height: 0.625rem;
 	text-align: center;
 }
 .jqvmap-zoomin
 {
-	top: 10px;
+	top: 0.625rem;
 }
 .jqvmap-zoomout
 {
-	top: 30px;
+	top: 1.875rem;
 }
 
 

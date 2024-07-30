@@ -95,7 +95,7 @@
 
 .amChartsInputField {
     border: 0;
-    background: $primary;
+    background: var(--primary);
     color: $white;
     padding: 0.3125rem 0.9375rem;
     margin: 0 0.9375rem;
@@ -111,7 +111,7 @@
 .amcharts-period-input-selected {
     border: 0;
     margin-left: 0.625rem;
-    background: $primary;
+    background: var(--primary);
     color: $white;
     padding: 0.3125rem 0.9375rem;
 }
@@ -120,7 +120,7 @@
 // CSS Animation
 ///////////////////
 .amcharts-graph-g2 .amcharts-graph-stroke {
-    stroke-dasharray: 3px 3px;
+    stroke-dasharray: 0.1875rem 0.1875rem;
     stroke-linejoin: round;
     stroke-linecap: round;
     -webkit-animation: am-moving-dashes 1s linear infinite;

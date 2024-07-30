@@ -1,6 +1,6 @@
 .toast {
     &-success {
-        background-color: $primary;
+        background-color: var(--primary);
     }
 
     &-info {
@@ -22,12 +22,12 @@
         box-shadow: none;
         border-radius: 0;
         width: auto;
-        max-width: 250px;
+        max-width: 15.625rem;
         opacity: 1;
 
         @at-root [direction="rtl"] & {
-            padding: 15px 50px 15px 15px;
-            background-position: calc(100% - 15px);
+            padding: 0.9375rem 3.125rem 0.9375rem 0.9375rem;
+            background-position: calc(100% - 0.9375rem);
             text-align: right;
         }
 
@@ -37,17 +37,17 @@
     }
 
     .toast-title {
-        margin-bottom: 5px;
+        margin-bottom: 0.3125rem;
         font-weight: 600;
     }
 
     .toast-message {
-        font-size: 12px;
+        font-size: 0.75rem;
     }
 
     .toast-close-button {
         opacity: 1;
-        font-size: 8px;
+        font-size: 1.25rem;
         font-weight: normal;
         text-shadow: none;
     }
@@ -57,7 +57,7 @@
 
 [direction="rtl"] {
     .toast-top-right.demo_rtl_class {
-        left: 12px;
+        left: 0.75rem;
         right: auto;
     }
 }

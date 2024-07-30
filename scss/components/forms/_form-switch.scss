@@ -1,7 +1,7 @@
 .js-switch {
 
     & + .switchery {
-        border-radius: 50px;
+        border-radius: 3.125rem;
         margin-right: 4rem;
 
         @include media-breakpoint-down(sm) {
@@ -9,7 +9,7 @@
         }
 
         &>small {
-            top: 2px;
+            top: 0.125rem;
         }
     }
 
@@ -45,7 +45,7 @@
             &>small {
                 width: 0.875rem;
                 height: 0.875rem;
-                top: 1px;
+                top: 0.0625rem;
             }
         }
     }
@@ -57,7 +57,7 @@
     
             &>small {
                 border-radius: 0;
-                top: 2px;
+                top: 0.125rem;
             }
         }
 
@@ -93,7 +93,7 @@
                 &>small {
                     width: 0.875rem;
                     height: 0.875rem;
-                    top: 1px;
+                    top: 0.0625rem;
                 }
             }
         }

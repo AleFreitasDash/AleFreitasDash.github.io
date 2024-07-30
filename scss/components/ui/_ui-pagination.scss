@@ -1,28 +1,38 @@
 .pagination .page-item{
-	
-		.page-link{
-			
-				
-			&:hover{
-				background: $primary;
-				border-color: $primary;
-				color:$white;
-			}
-		}
-		&.active .page-link{
-			background: $primary;
-			border-color: $primary;
+	.page-link{	
+		&:hover{
+			background: var(--primary);
+			border-color: var(--primary);
 			color:$white;
 		}
 	}
+	&.active .page-link{
+		background: var(--primary);
+		border-color: var(--primary);
+		color:$white;
+	}
+}
 .pagination {
-    margin-bottom: 20px;
-
+    margin-bottom: 1.25rem;
+	&.page-indicator-light{
+		.page-item{
+			&.active{
+				.page-link{
+					background-color:var(--primary-light);
+					border-color:var(--primary-light);
+					color: var(--text-dark);
+				}
+			}
+		}
+	}
     .page-item {
 
         &.page-indicator .page-link {
-            padding: .65rem .8rem;
-            font-size: 14px;
+            padding: .69rem .8rem;
+            font-size: 1.2rem;
+			border-top-left-radius: unset; 
+    		 border-bottom-left-radius: unset;
+			 border-radius: $radius;
         }
 
         &.page-indicator:hover{
@@ -33,13 +43,21 @@
 
         .page-link {
             // height: 3.125rem;
-            text-align: center;
-            padding: 0.55rem 1rem;
+           
+			z-index:1;
+            padding: 0;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: 0.625rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
             font-size: 1rem;
             background: rgba(255, 255, 255, 0.15);
             color: $dark;
+			margin-left: 7px;
             // line-height: 2.375rem;
-            border: 1px solid $border;
+            border: 0.0625rem solid $border;
 			@at-root [data-theme-version="dark"] & {
 				border-color: $d-border;
 				color: $d-ctl;
@@ -55,17 +73,20 @@
             }
 
             &:hover{
-                background: $primary;
+                background: var(--primary);
                 color: $white;
-                border-color: $primary;
+                border-color: var(--primary);
             }
+			@include respond ('phone'){
+				width: 2.2rem;
+				height: 2.2rem;
+			}
         }
 
         &.active .page-link {
-            background-color: $primary;
-            border-color: $primary;
+            background-color: var(--primary);
+            border-color: var(--primary);
             color: $white;
-			box-shadow:0 10px 20px 0px rgba($primary, 0.2);
 			@at-root [data-theme-version="dark"] & {
 				color:$white;
 			}
@@ -90,17 +111,20 @@
     }
 	&.no-bg{
 		li:not(.page-indicator):not(.active) .page-link{
-		 	background:transparent;
+		 	background:$white;
 		 	border-color:transparent;
+			@at-root [data-theme-version="dark"] & {
+					background:$dark-card;
+				}
 			
 		}
 		&.pagination-primary{
 			li:not(.page-indicator):not(.active):hover .page-link{
-				background:$primary;
-				border-color:$primary;
+				background:var(--primary);
+				border-color:var(--primary);
 				@at-root [data-theme-version="dark"] & {
-					background:$primary;
-					border-color:$primary;
+					background:var(--primary);
+					border-color:var(--primary);
 				}
 			}
 		}
@@ -138,23 +162,22 @@
 	&-primary{
 		.page-item{
 			.page-link{
-				background:$primary-light;
-				border-color:$primary-light;
-				color:$primary;
+				background:var(--rgba-primary-1);
+				border-color:var(--rgba-primary-1);
+				color:$body-color;
 				@at-root [data-theme-version="dark"] & {
-					background:$primary-opacity;
+					background:var(--rgba-primary-1);
 					border-color:transparent;
-					color:$primary;
+					color:var(--primary);
 				}
 			}
 			&:hover,
 			&.active{
 				.page-link{
-					background:$primary;
-					border-color:$primary;
-					box-shadow:0 10px 20px 0px rgba($primary, 0.2);
+					background:var(--primary);
+					border-color:var(--primary);
 					@at-root [data-theme-version="dark"] & {
-						color:$white;
+						color: black!important;
 					}
 				}
 			}
@@ -165,7 +188,7 @@
 			.page-link{
 				background:$danger-light;
 				border-color:$danger-light;
-				color:$danger;
+				color: var(--text-dark);
 				@at-root [data-theme-version="dark"] & {
 					background:$danger-opacity;
 					border-color:transparent;
@@ -177,7 +200,7 @@
 				.page-link{
 					background:$danger;
 					border-color:$danger;
-					box-shadow:0 10px 20px 0px rgba($danger, 0.2);
+					box-shadow:0 0.625rem 1.25rem 0rem rgba($danger, 0.2);
 					@at-root [data-theme-version="dark"] & {
 						color:$white;
 					}
@@ -190,7 +213,7 @@
 			.page-link{
 				background:$info-light;
 				border-color:$info-light;
-				color:$info;
+				color: var(--text-dark);
 				@at-root [data-theme-version="dark"] & {
 					background:$info-opacity;
 					border-color:transparent;
@@ -202,7 +225,7 @@
 				.page-link{
 					background:$info;
 					border-color:$info;
-					box-shadow:0 10px 20px 0px rgba($info, 0.2);
+					box-shadow:0 0.625rem 1.25rem 0rem rgba($info, 0.2);
 				}
 			}
 		}
@@ -212,7 +235,7 @@
 			.page-link{
 				background:$warning-light;
 				border-color:$warning-light;
-				color:$warning;
+				color: var(--text-dark);
 				@at-root [data-theme-version="dark"] & {
 					background:$warning-opacity;
 					border-color:transparent;
@@ -222,9 +245,9 @@
 			&:hover,
 			&.active{
 				.page-link{
-					background:$warning;
-					border-color:$warning;
-					box-shadow:0 10px 20px 0px rgba($warning, 0.2);
+					background:$warning-light;
+					border-color:$warning-light;
+					box-shadow:0 0.625rem 1.25rem 0rem rgba($warning, 0.2);
 				}
 			}
 		}
@@ -233,74 +256,95 @@
     &-gutter{
 
         .page-item{
-            margin-right: 7px;
+            margin-right: 0.4375rem;
             
             .page-link{
-                border-radius: $radius !important;
+                border-radius: $radius;
             }
         }
     }
 
     &-circle{
         .page-item{
-            margin-right: 7px;
+            margin-right: 0.4375rem;
             
-            .page-link, &.page-indicator .page-link{
-                width: 40px;
-                height: 40px;
+            .page-link,  .page-link{
+                width: 2.5rem;
+                height: 2.5rem;
                 padding: 0;
-                line-height: 40px;
+                line-height: 2.5rem;
                 border-radius: 50% !important;
                 padding: 0;
+				@include respond ('phone'){
+					width: 2rem;
+					height: 2rem;
+				}
             }
+			&.page-indicator{
+				.page-link{
+					width: 2.5rem;
+					border: 1px solid var(--primary);
+					border-radius: 22px!important;
+					line-height: 1.3rem;
+					height: 2.5rem;	
+					background:var(--rgba-primary-1);
+					color:var(--primary);
+					&:hover{
+						color:$white;
+						background:var(--primary);
+					}
+					@include respond ('phone'){
+						width: 2rem;
+						height: 2rem;
+					}
+				}	
+			}
         }
     }
 
     &.pagination-md{
 
         .page-item{
-
             .page-link{
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-                font-size: 14px;
+                width: 1.875rem;
+                height: 1.875rem;
+                line-height: 1.875rem;
+                font-size: 0.875rem;
             }
         }
     }
 
     &.pagination-sm{
-
         .page-item{
-
             &.page-indicator .page-link {
-                font-size: 12px;
+                font-size: 0.75rem;
             }
 
             .page-link{
                 padding: 0;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
-                font-size: 14px;
+                width: 1.875rem;
+                height: 1.875rem;
+                line-height: 1.875rem;
+                font-size: 1rem;
+				border-radius:$radius;
             }
         }
     }
 
     &.pagination-xs{
-
         .page-item{
 
             &.page-indicator .page-link {
-                font-size: 10px;
+                font-size: 0.625rem;
             }
 
             .page-link{
                 padding: 0;
-                width: 25px;
-                height: 25px;
-                line-height: 25px;
-                font-size: 12px;
+                width: 24px;
+				height: 24px;
+				line-height: 24px;
+                font-size: 0.75rem;
+				border-radius:$radius-sm;
             }
         }
     }
@@ -308,7 +352,9 @@
     
 }
 
-
+.card-text{
+	color:var(--secondary);
+}
 
 
 

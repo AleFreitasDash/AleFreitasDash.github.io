@@ -1,31 +1,32 @@
 .card {
-    margin-bottom: 1.875rem;
+    margin-bottom: 20px;
     background-color: $white;
     transition: all .5s ease-in-out;
     position: relative;
-    border: 0px solid transparent;
-    border-radius: 20px;
-    box-shadow: 0px 12px 23px 0px rgba($secondary,0.04);
-	height: calc(100% - 30px);
+    border: 0rem solid transparent;
+    border-radius: $radius;
+	height: calc(100% - 20px);
+	border: 1px solid $card-border;
 	
 	// z-index: 0;
-	@include custommq($max: 575px) {
+	@include custommq($max: 35.9375rem) {
 		margin-bottom:0.938rem;
 		height: calc(100% - 0.938rem);
 	}
 
     &-body {
-        padding: 1.875rem;
+        padding: 1.25rem;
 		@include respond('phone') {
 			padding: 1rem;
 		}
     }
 
     &-title {
-        font-size: 20px;
-        font-weight: 500;
+        font-size: 1rem;
+        font-weight:700;
+		line-height: 28px;
         // line-height: 2.2rem;
-        color: #000;
+        color:#252525;
         text-transform: capitalize;
         // margin-bottom: 1.5rem;
     
@@ -41,42 +42,38 @@
             font-size: 0.875rem;
         }
     }
-
     &-header {
-        border-color: $border;
+        border-color:$card-border;
         position: relative;
         background: transparent;
-        padding:1.5rem 1.875rem 1.25rem;
+        padding:$card-header-padding;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        // min-height: 65px;
-		@include respond('phone') {
-			padding: 1.25rem 1rem 1.25rem;
-		}
+        // min-height: 4.0625rem;
         @at-root [data-theme-version="dark"] & {
             border-color: $d-border;
         }
 
         .card-title{
-            margin-bottom: 0px;
+            margin-bottom: 0rem;
         }
         .subtitle{
-            padding-top: 5px;
-            font-size: 14px;
+            padding-top: 0.3125rem;
+            font-size: 0.875rem;
 			line-height: 1.5;
         }
     }
 
     &-footer {
-        border-color: $border;
+        border-color:$card-border;;
         background: transparent;
-        padding: 1.25rem 1.875rem 1.25rem;
+        padding: 1rem 1.25rem 1rem;
         @at-root [data-theme-version="dark"] & {
             border-color: $d-border;
         }
 		@include respond('phone') {
-			padding: 1rem;
+			  padding: 1.25rem 1rem 1.25rem;
 		}
     }    
 }
@@ -84,7 +81,7 @@
 .transparent-card{
     &.card{
         background: transparent;
-        border: 1px solid transparent;
+        border: 0.0625rem solid transparent;
         box-shadow: none;
     }
 }
@@ -98,15 +95,15 @@
 .card-action {
     > a {
         display: inline-block;
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        border-radius: 5px;
+        width: 1.875rem;
+        height: 1.875rem;
+        line-height: 1.875rem;
+        border-radius: 0.3125rem;
         border-color: transparent;
         text-align: center;
-        background: darken($primary,57%);
+        background: var(--primary-dark);
         color: $white;
-        margin-right: 8px;
+        margin-right: 0.5rem;
 
         @at-root [data-theme-version="dark"] & {
             background: $d-bg;
@@ -116,7 +113,7 @@
             margin-right: 0;
         }
         &:hover,&:focus{
-            background: darken($primary,57%);
+            background: var(--primary-dark);
 
             @at-root [data-theme-version="dark"] & {
                 background: $d-bg;
@@ -132,24 +129,24 @@
     }
 
     .dropdown{
-        width: 30px;
-        height: 30px;
-        border-radius: 5px;
+        width: 1.875rem;
+        height: 1.875rem;
+        border-radius: 0.3125rem;
         border-color: transparent;
         text-align: center;
-        margin-right: 8px;
-        top: -2px;
+        margin-right: 0.5rem;
+        top: -0.125rem;
         position: relative;
         display: inline-block;
-        background: darken($primary,57%);
-        color: $primary;
+        background: var(--primary-dark);
+        color: var(--primary);
 
         @at-root [data-theme-version="dark"] & {
             background: $d-bg;
         }
         
         &:hover,&:focus{
-            background: darken($primary,57%);
+            background: var(--primary-dark);
 
             @at-root [data-theme-version="dark"] & {
                 background: $d-bg;
@@ -158,7 +155,7 @@
 
         .btn{
             padding: 0;
-            line-height: 27px;
+            line-height: 1.6875rem;
             color: $white;
 
             &:focus{
@@ -196,8 +193,8 @@
 
 .card-loader i {
     margin: 0 auto;
-    background: darken($primary,7%);
-    padding: 10px;
+    background: var(--primary-dark);
+    padding: 0.625rem;
     border-radius: 50%;
     color: $white;
     font-size: 1rem
@@ -212,8 +209,8 @@
 .card-header {
     .date_picker {
         display: inline-block;
-        padding: 8px;
-        border: 1px solid $border;
+        padding: 0.5rem;
+        border: 0.0625rem solid $border;
         cursor: pointer;
         border-radius: .375rem;
     }

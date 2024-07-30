@@ -14,12 +14,12 @@
     .jsgrid-insert-row, .jsgrid-edit-row{
 
         input, select{
-            border: 1px solid #DDDFE1;
+            border: 0.0625rem solid #DDDFE1;
         }
     }
 }
 
 .jsgrid .jsgrid-button{
     border: 0 !important;
-    margin-left: 10px;
+    margin-left: 0.625rem;
 }

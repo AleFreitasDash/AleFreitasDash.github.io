@@ -1,7 +1,11 @@
 .list-group-item {
     background-color: rgba(255,255,255,0);
-    border: 1px solid $border;
+    border: 1px solid $border-color;
 	padding: 1rem 1.5rem;
+	&.active{
+		background-color :var(--primary-light);
+		border-color :var(--primary-light);
+	}
     @at-root [data-theme-version="dark"] & {
         border-color: $d-border;
     }
@@ -25,3 +29,15 @@
 // .list-group-item-action {
 //     color: #fff;
 // }
+
+.bg-primary,
+.bg-warning{
+	.list-group-flush{
+		.list-group-item{
+			//color:$white;
+		}
+	}
+}
+.swal2-popup .swal2-image{
+	max-width: 15%;
+}

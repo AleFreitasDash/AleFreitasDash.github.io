@@ -4,7 +4,7 @@
 
 .app-fullcalender {
     button {
-        border-radius: 0px;
+        border-radius: 0rem;
         color: $dark;
     }
     td{
@@ -19,6 +19,10 @@
 
 .fc-view {
     margin-top: 1.875rem;
+}
+.fc .fc-button-group{
+	margin-bottom:0.625rem;
+
 }
 
 .fc-toolbar {
@@ -72,14 +76,14 @@
 }
 
 .fc-widget-header {
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     border-bottom: 0 !important;
 }
 
 
 
 // .fc-widget-content {
-//     border: 1px solid #E5E5E5 !important;
+//     border: 0.0625rem solid #E5E5E5 !important;
 // }
 
 .fc th.fc-widget-header {
@@ -91,7 +95,7 @@
 }
 
 .fc-button {
-    border        : 1px solid $border;
+    border        : 0.0625rem solid $border;
     text-transform: capitalize;
     &.active{
         box-shadow: none!important;
@@ -105,7 +109,8 @@
 
 
 
-.fc-event {
+.fc-event ,
+.external-event{
     border-radius: 0.125rem;
     border       : none;
     cursor       : move;
@@ -130,7 +135,7 @@
 }
 
 #drop-remove {
-    margin-right: 8px;
+    margin-right: 0.5rem;
     top   : 0.1875rem;
 }
 
@@ -146,7 +151,7 @@
     color: $white;
 }
 // .fc-widget-content {
-//     border: 1px solid $l-border!important;
+//     border: 0.0625rem solid $l-border!important;
 // }
 .fc th.fc-widget-header {
     // background: $l-border!important;
@@ -190,15 +195,15 @@
 }
 
 .fc-scroller.fc-day-grid-container {
-    height: 490px !important;
+    height: 30.625rem !important;
 }
 
 .fc-row.fc-week.fc-widget-content.fc-rigid {
-    height: 81px !important;
+    height: 5.0625rem !important;
 }
 
 .email_left_pane {
-    @include custommq($max: 1440px) {
+    @include custommq($max: 90rem) {
         display: none;
     }
 }
@@ -209,70 +214,57 @@
     
 	.external-event:before{
 		content: "";
-		display: inline-block;
-		width: 14px;
-		height: 14px;
+		display: block;
+		width: 0.875rem;
+		min-width:0.875rem;
+		height: 0.875rem;
 		border-radius: 50%;
 		margin-right: .9rem;
 		position: relative;
-		top: 2px;
+		top: 0.025rem;
 	}
     [data-class="bg-primary"]{
-        background-color: transparent !important;
-        color: $dark;
         @at-root [data-theme-version="dark"] & {
-            color: $white!important;
+            color: $black!important;
         }
         &::before{
-            background: $primary;
+            background: var(--primary);
         }
     }
     [data-class="bg-success"]{
-        background-color: transparent !important;
-        color: $dark;
 
         &::before{
             background: $success;
         }
     }
     [data-class="bg-warning"]{
-        background-color: transparent !important;
-        color: $dark;
-
         &::before{
             background: $warning;
         }
     }
     [data-class="bg-dark"]{
-        background-color: transparent !important;
-        color: $dark;
-
         &::before{
             background: $dark;
         }
     }
     [data-class="bg-danger"]{
-        background-color: transparent !important;
-        color: $dark;
-
         &::before{
             background: $danger;
         }
     }
     [data-class="bg-info"]{
-        background-color: transparent !important;
-        color: $dark;
-
         &::before{
             background: $info;
         }
     }
     [data-class="bg-pink"]{
-        background-color: transparent !important;
-        color: $dark;
-
         &::before{
             background: $pink;
+        }
+    }
+	[data-class="bg-secondary"]{
+        &::before{
+            background: $secondary;
         }
     }
 }

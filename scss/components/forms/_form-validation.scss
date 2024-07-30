@@ -3,7 +3,7 @@
 /////////////////////////////
 .form-control.is-valid {
     border-color: $success !important;
-    border-right: 0px !important;
+    border-right: 0rem !important;
     &:focus {
         box-shadow: none;
     }
@@ -11,7 +11,7 @@
 
 .form-control.is-warning {
     border-color: $warning !important;
-    border-right: 0px !important;
+    border-right: 0rem !important;
     &:focus {
         box-shadow: none;
     }
@@ -19,7 +19,7 @@
 
 .form-control.is-invalid {
     border-color: $danger !important;
-    border-right: 0px !important;
+    border-right: 0rem !important;
     &:focus {
         box-shadow: none;
     }
@@ -42,8 +42,31 @@
     .input-group-prepend {
         .input-group-text {
             i {
-                color: lighten($primary, 15%)
+                color: var(--rgba-primary-2);
             }
         }
     }
+}
+
+// Show Pass
+.show-pass{
+	cursor:pointer;
+	
+	.fa-eye{
+		display:none;
+	}
+	
+	&.active{
+		.fa-eye-slash{
+			display:none;
+		}
+		.fa-eye{
+			display:inline-block;
+		}
+	}
+}
+
+.bleft {
+    border-top-left-radius: 0.625rem !important;
+    border-bottom-left-radius: 0.625rem !important;
 }

@@ -1,35 +1,37 @@
 .morris-hover {
 	position: absolute;
 	z-index : 1;
-	background: $primary;
+	background: var(--primary);
 	color: $white;
 }
 
 .morris-hover .morris-hover-point {
 	color: $white !important;
-	margin: 3px 0;
+	margin: 0.1875rem 0;
 	text-align: center;
-	padding: 0 25px;
+	padding: 0 1.5625rem;
+	color: #fff;
 }
 
 .morris-hover .morris-hover-row-label {
 	background-color: $dark;
 	text-align: center;
-	padding: 5px;
-	margin-bottom: 5px;
+	padding: 0.3125rem;
+	color: #fff;
+	margin-bottom: 0.3125rem;
 }
 
 .morris-hover.morris-default-style {
-	border-radius: 5px;
+	border-radius: 0.3125rem;
 	padding      : 0;
 	margin: 0;
 	border       : none;
 	overflow: hidden;
 }
 
-svg text {
+/* svg text {
     font-weight: 600 !important;
-}
+} */
 
 
 #morris_donught, 
@@ -40,11 +42,11 @@ svg text {
 #morris_bar_2, 
 #morris_area_2, 
 #morris_area {
-    height: 240px !important;
+    height: 15rem !important;
 }
 
 #morris_line {
-	height: 278px !important;
+	height: 17.375rem !important;
 }
 
 
