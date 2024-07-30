@@ -4,15 +4,15 @@
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID,
-    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
-  };
+  apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
+  authDomain: "basededadossite-bb29b.firebaseapp.com",
+  databaseURL: "https://basededadossite-bb29b-default-rtdb.firebaseio.com",
+  projectId: "basededadossite-bb29b",
+  storageBucket: "basededadossite-bb29b.appspot.com",
+  messagingSenderId: "770564649369",
+  appId: "1:770564649369:web:82ba6af1b55b9cc6ff2308",
+  measurementId: "G-PY7SBTHNMR"
+};
 
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
