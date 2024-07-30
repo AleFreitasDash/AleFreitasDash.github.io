@@ -414,5 +414,18 @@
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
+	<script src="./js/highlight.min.js"></script>
+	<script>hljs.highlightAll();
+	hljs.configure({ ignoreUnescapedHTML: true })
+		
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			document.querySelectorAll('pre code').forEach((el) => {
+				hljs.highlightElement(el);
+			});
+			});
+	</script>
 </body>
 </html>
