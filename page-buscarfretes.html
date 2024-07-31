@@ -15,6 +15,8 @@
     <title>Solistica</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
     <link href="./css/style.css" rel="stylesheet">
     <script src="page-index.js" type="module"></script>
     <script src="./js/inactivity-logout.js" type="module"></script>
@@ -162,7 +164,7 @@
                             <span class="nav-text">Inicio</span>
                         </a>
                     </li>
-                    <li><a href="contacts.html" class="" aria-expanded="false">
+                    <li><a href="page-meusfretes.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M18.148 20.417C20.021 20.417 21.54 18.899 21.541 17.026V17.024V14.324C20.304 14.324 19.302 13.322 19.301 12.085C19.301 10.849 20.303 9.846 21.54 9.846H21.541V7.146C21.543 5.272 20.026 3.752 18.153 3.75H18.147H6.43502C4.56102 3.75 3.04202 5.268 3.04102 7.142V7.143V9.933C4.23502 9.891 5.23602 10.825 5.27802 12.019C5.27902 12.041 5.28002 12.063 5.28002 12.085C5.28102 13.32 4.28202 14.322 3.04702 14.324H3.04102V17.024C3.04002 18.897 4.55902 20.417 6.43202 20.417H6.43302H18.148Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -172,7 +174,7 @@
                             <span class="nav-text">Meus Fretes</span>
                         </a>
                     </li>
-                    <li><a href="blog.html" class="" aria-expanded="false">
+                    <li><a href="page-buscarfretes.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76181H8.08493C6.00493 2.75381 4.29993 4.41181 4.25093 6.49081V17.2038C4.20493 19.3168 5.87993 21.0678 7.99293 21.1148C8.02393 21.1148 8.05393 21.1158 8.08493 21.1148H16.0739C18.1679 21.0298 19.8179 19.2998 19.8029 17.2038V8.03781L14.7379 2.76181Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -198,12 +200,12 @@
                         </a>
                         <ul aria-expanded="false">
                             <li class="mini-dashboard">...</li>
-                            <li><a href="./chat.html">Meus Dados</a></li>
-                            <li><a href="./chat.html">Motoristas</a></li>
-                            <li><a href="./chat.html">Veiculos</a></li>
+                            <li><a href="./page-meusdados.html">Meus Dados</a></li>
+                            <li><a href="./page-motorista.html">Motoristas</a></li>
+                            <li><a href="./page-veiculo.html">Veiculos</a></li>
                         </ul>
                     </li>
-                    <li><a href="disponibilidade.html" class="" aria-expanded="false">
+                    <li><a href="page-disponibilidade.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.395 4.17701L15.2224 7.82776C15.4015 8.18616 15.7472 8.43467 16.1481 8.49218L20.2361 9.08062C21.2461 9.22644 21.6481 10.4505 20.9171 11.1519L17.961 13.9924C17.6704 14.2718 17.5382 14.6733 17.6069 15.0676L18.3046 19.0778C18.4764 20.0698 17.4205 20.8267 16.5178 20.3574L12.864 18.4627C12.5058 18.2768 12.0768 18.2768 11.7176 18.4627L8.06378 20.3574C7.161 20.8267 6.10517 20.0698 6.27801 19.0778L6.97462 15.0676C7.04334 14.6733 6.9111 14.2718 6.62059 13.9924L3.66445 11.1519C2.93349 10.4505 3.33541 9.22644 4.34544 9.08062L8.43342 8.49218C8.83431 8.43467 9.18105 8.18616 9.36014 7.82776L11.1865 4.17701C11.6384 3.27433 12.9431 3.27433 13.395 4.17701Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -231,51 +233,161 @@
             <div class="inner-body">
                 <div class="content-body">
                     <div class="container-fluid">
-                        <h3 class="head-title">Meus Dados</h3>
+                        <h3 class="head-title">Buscar Fretes</h3>
                         <div class="row">
-                            <div class="col-xl-6">
+                            <div class="col-xl-3">
                                 <div class="card overflow-hidden">
                                     <div class="card-body" style="background-color: #ededed;">
+									<h3 class="head-title">Filtros</h3>
                                         <div class="col-xl-12 col-sm-6">
                                             <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
+                                                <div class="card-body">
+                                                    <div class="sales-data">
                                                         <div class="ms-2">
-                                                            <h4 class="mb-0">Nome:</h4>
-                                                            <p class="mb-0" id="user-name">Nome Usuario</p>
-                                                            <input type="text" id="edit-name" class="form-control" style="display:none;">
+                                                            <h4 class="mb-0">Origem e Destino:</h4>
+                                                            <div class="mb-3 col-md-12">
+														        <label class="form-label">Origem</label>
+														            <div class="mb-12">
+											                            <select class="default-placeholder">
+												                            <option value="CAMPINAS">CAMPINAS</option>
+												                            <option value="MINAS GERAIS">MINAS GERAIS</option>
+											                            </select>
+										                            </div>
+													        </div>
+															<div class="mb-3 col-md-12">
+														        <label class="form-label">Destino</label>
+														        <div class="mb-12">
+											                            <select class="default-placeholder">
+												                            <option value="CAMPINAS">CAMPINAS</option>
+												                            <option value="MINAS GERAIS">MINAS GERAIS</option>
+											                            </select>
+										                            </div>
+													        </div>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="name"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                            </div>
+											<div class="card">
+                                                <div class="card-body">
+                                                    <div class="sales-data">
+                                                        <div class="ms-2">
+                                                            <h4 class="mb-0">Região:</h4>
+                                                            <div class="mb-3 col-md-12">
+														        <label class="form-label">Origem</label>
+														            <div class="mb-12">
+											                            <select class="default-placeholder">
+												                            <option value="Sul">Sul</option>
+												                            <option value="Sudeste">Sudeste</option>
+											                            </select>
+										                            </div>
+													        </div>
+															<div class="mb-3 col-md-12">
+														        <label class="form-label">Destino</label>
+														        <div class="mb-12">
+											                            <select class="default-placeholder">
+												                            <option value="Sul">Sul</option>
+												                            <option value="Sudeste">Sudeste</option>
+											                            </select>
+										                            </div>
+													        </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
+                                                <div class="card-body">
+                                                    <div class="sales-data">
                                                         <div class="ms-2">
-                                                            <h4 class="mb-0">Telefone:</h4>
-                                                            <p class="mb-0" id="user-phone">Telefone Usuario</p>
-                                                            <input type="text" id="edit-phone" class="form-control" style="display:none;">
+                                                            <h4 class="mb-0">Veiculo:</h4>
+                                                            <div class="mb-3 col-md-12">
+														        <div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Fiorino</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Van</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Vuc</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">3/4</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Toco</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Truck</label>
+										                        </div>
+																<div class="mb-12">
+											                        <input type="checkbox" class="form-check-input" id="customCheckBox1" >
+													                <label class="form-check-label" for="customCheckBox1">Carreta</label>
+										                        </div>
+													        </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="phone"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
+                                                <div class="card-body">
+                                                    <div class="sales-data">
                                                         <div class="ms-2">
-                                                            <h4 class="mb-0">Email:</h4>
-                                                            <p class="mb-0" id="user-email">Email Usuario</p>
-                                                            <input type="email" id="edit-email" class="form-control" style="display:none;">
+                                                            <h4 class="mb-0">Rastreador:</h4>
+                                                            <div class="mb-3 col-md-12">
+														        <div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-rastreador" value="rast-ambos" checked>
+																<label class="form-check-label">
+																	Ambos
+																</label>
+																</div>
+																<div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-rastreador" value="rast-sim">
+																<label class="form-check-label">
+																	Sim
+																</label>
+																</div>
+																<div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-rastreador" value="rast-nao">
+																<label class="form-check-label">
+																	Não
+																</label>
+																</div>
+													        </div>
                                                         </div>
                                                     </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="email"><i class="fa fa-pencil"></i></a>
+                                                </div>
+                                            </div>
+											<div class="card">
+                                                <div class="card-body">
+                                                    <div class="sales-data">
+                                                        <div class="ms-2">
+                                                            <h4 class="mb-0">Refrigerado:</h4>
+                                                            <div class="mb-3 col-md-12">
+														        <div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-refrigerador" value="refr-ambos" checked>
+																<label class="form-check-label">
+																	Ambos
+																</label>
+																</div>
+																<div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-refrigerador" value="refr-sim">
+																<label class="form-check-label">
+																	Sim
+																</label>
+																</div>
+																<div class="form-check">
+																<input class="form-check-input" type="radio" name="radio-refrigerador" value="refr-nao">
+																<label class="form-check-label">
+																	Não
+																</label>
+																</div>
+													        </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -283,94 +395,52 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-9">
                                 <div class="card overflow-hidden">
                                     <div class="card-body" style="background-color: #ededed;">
                                         <div class="col-xl-12 col-sm-6">
                                             <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">CPF / CNPJ:</h4>
-                                                            <p class="mb-0" id="user-cpf-cnpj">CPF / CNPJ Usuario</p>
-                                                            <input type="text" id="edit-cpf-cnpj" class="form-control" style="display:none;">
+                                                <ul class="timeline ms-2">
+                                                    <li>
+                                                        <div class="timeline-item">
+                                                            <span class="origin"><div class="circle"></div> Bragança Paulista, SP</span>
+                                                                <div class="line"></div>
+                                                            <span class="destination"><div class="square"></div> Pinhais, PR</span>
                                                         </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="cpf-cnpj"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
+                                                    </li>
+                                                </ul>
                                             </div>
                                             <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Razão Social:</h4>
-                                                            <p class="mb-0" id="user-razao-social">Razão Social Usuario</p>
-                                                            <input type="text" id="edit-razao-social" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="razao-social"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb0">Nome Fantasia:</h4>
-                                                            <p class="mb-0" id="user-nome-fantasia">Nome Fantasia Usuario</p>
-                                                            <input type="text" id="edit-nome-fantasia" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="nome-fantasia"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Documentos:</h4>
-                                                            <div class="table-responsive">
-                                                                <table class="table table-bordered verticle-middle table-responsive-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">Tipo</th>
-                                                                            <th scope="col">Nome Arquivo</th>
-                                                                            <th scope="col">Ação</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>CNH:</td>
-                                                                            <td><span id="cnh-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Comprovante de Endereço:</td>
-                                                                            <td><span id="comprovante-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Documento ANTT:</td>
-                                                                            <td><span id="antt-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Foto Frente Veículo:</td>
-                                                                            <td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+													<div class="card-header border-0  pb-0">
+														<h4 class="card-title">Timeline</h4>
+													</div>
+												<div class="card-body p-0">
+													<div id="DZ_W_TimeLine" class="widget-timeline dz-scroll height370 my-4 px-4">
+														<ul class="timeline">
+															<li>
+																	<div class="timeline-badge primary"></div>
+																<a class="timeline-panel " href="#">
+																	<span>Origem</span>
+																	<h6 class="mb-0">Bragança Paulista, SP</h6>
+																	<span>Destino</span>
+																	<h6 class="mb-0">Pinhais, PR</h6>
+																	<p class="mb-0"><strong class="text-light">Valor do Frete: </strong><strong class="text-light">R$500,00</strong></p>
+																</a>
+															</li>
+															<li>
+																	<div class="timeline-badge info"></div>
+																<a class="timeline-panel " href="#">
+																	<span>Origem</span>
+																	<h6 class="mb-0">Bragança Paulista, SP</h6>
+																	<span>Destino</span>
+																	<h6 class="mb-0">Pinhais, PR</h6>
+																	<p class="mb-0"><strong class="text-dark">Valor do Frete: </strong><strong class="text-dark">R$500,00</strong></p>
+																</a>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
                                         </div>                                    
                                     </div>
                                 </div>
@@ -405,6 +475,27 @@
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./vendor/apexchart/apexchart.js"></script>
+	<script src="./vendor/select2/js/select2.full.min.js"></script>
+    <script src="./js/plugins-init/select2-init.js"></script>
+	<script src="js/plugins-init/widgets-script-init.js"></script>
+	
+	<!-- Chartist -->
+    <script src="vendor/chartist/js/chartist.min.js"></script>
+    <script src="vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    
+	<!-- Flot -->
+     <script src="vendor/flot/jquery.flot.js"></script>
+    <script src="vendor/flot/jquery.flot.pie.js"></script>
+    <script src="vendor/flot/jquery.flot.resize.js"></script>
+    <script src="vendor/flot-spline/jquery.flot.spline.min.js"></script>
+	
+	<!-- Chart sparkline plugin files -->
+    <script src="vendor/jquery-sparkline/jquery.sparkline.min.js"></script>
+	<script src="js/plugins-init/sparkline-init.js"></script>
+	
+	<!-- Chart piety plugin files -->
+     <script src="vendor/peity/jquery.peity.min.js"></script>
+	<script src="js/plugins-init/piety-init.js"></script>
     
     <!-- Dashboard 1 -->
     <script src="./js/dashboard/analytics.js"></script>
@@ -412,6 +503,6 @@
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
-    <script src="./js/styleSwitcher.js"></script>
+    <script src="./js/styleSwitcherr.js"></script>
 </body>
 </html>
