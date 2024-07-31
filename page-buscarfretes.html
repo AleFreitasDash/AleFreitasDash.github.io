@@ -15,6 +15,8 @@
     <title>Solistica</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="./icons/flaticon/flaticon.css" rel="stylesheet">
+	<link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
 	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
     <link href="./css/style.css" rel="stylesheet">
@@ -398,50 +400,47 @@
                             <div class="col-xl-9">
                                 <div class="card overflow-hidden">
                                     <div class="card-body" style="background-color: #ededed;">
-                                        <div class="col-xl-12 col-sm-6">
-                                            <div class="card">
-                                                <ul class="timeline ms-2">
-                                                    <li>
-                                                        <div class="timeline-item">
-                                                            <span class="origin"><div class="circle"></div> Bragança Paulista, SP</span>
-                                                                <div class="line"></div>
-                                                            <span class="destination"><div class="square"></div> Pinhais, PR</span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="card">
-													<div class="card-header border-0  pb-0">
-														<h4 class="card-title">Timeline</h4>
+									<div class="tab-pane fade show active" id="withoutSpace" role="tabpanel" aria-labelledby="home-tab-2">
+                                        <div class="card card-body pt-0">
+														<div class="table-responsive">
+															<table id="example3" class="display table" style="min-width: 845px">
+																<thead>
+																	<tr>
+																		<th>Data Coleta</th>
+																		<th>Origem</th>
+																		<th>Destino</th>
+																		<th>Frete</th>
+																		<th>Peso</th>
+																		<th>Veiculo</th>
+																		<th>Rastreador</th>
+																		<th>Baú</th>
+																		<th>KM</th>
+																		<th>Ação</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>01/08/2024</td>
+																		<td>Vinhedo, SP</td>
+																		<td>Pinhais, SP</td>
+																		<td>R$ 500,00</td>
+																		<td>200 KG</td>
+																		<td>Fiorino</td>
+																		<td>Não</td>
+																		<td>Seco</td>
+																		<td>450 KM</td>
+																		<td>
+																			<div class="d-flex">
+																				<button type="button" class="btn btn-rounded btn-whatsapp"><span class="btn-icon-start text-info"><i class="fab fa-whatsapp"></i></span></button>
+																				<button type="button" class="btn btn-rounded btn-info"><span class="btn-icon-start text-info"><i class="fa fa-plus color-info"></i></span></button>
+																			</div>												
+																		</td>												
+																	</tr>
+																</tbody>
+															</table>
+														</div>
 													</div>
-												<div class="card-body p-0">
-													<div id="DZ_W_TimeLine" class="widget-timeline dz-scroll height370 my-4 px-4">
-														<ul class="timeline">
-															<li>
-																	<div class="timeline-badge primary"></div>
-																<a class="timeline-panel " href="#">
-																	<span>Origem</span>
-																	<h6 class="mb-0">Bragança Paulista, SP</h6>
-																	<span>Destino</span>
-																	<h6 class="mb-0">Pinhais, PR</h6>
-																	<p class="mb-0"><strong class="text-light">Valor do Frete: </strong><strong class="text-light">R$500,00</strong></p>
-																</a>
-															</li>
-															<li>
-																	<div class="timeline-badge info"></div>
-																<a class="timeline-panel " href="#">
-																	<span>Origem</span>
-																	<h6 class="mb-0">Bragança Paulista, SP</h6>
-																	<span>Destino</span>
-																	<h6 class="mb-0">Pinhais, PR</h6>
-																	<p class="mb-0"><strong class="text-dark">Valor do Frete: </strong><strong class="text-dark">R$500,00</strong></p>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-                                        </div>                                    
+</div>													
                                     </div>
                                 </div>
                             </div>
@@ -493,6 +492,10 @@
     <script src="vendor/jquery-sparkline/jquery.sparkline.min.js"></script>
 	<script src="js/plugins-init/sparkline-init.js"></script>
 	
+	<!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="./js/plugins-init/datatables.init.js"></script>
+	
 	<!-- Chart piety plugin files -->
      <script src="vendor/peity/jquery.peity.min.js"></script>
 	<script src="js/plugins-init/piety-init.js"></script>
@@ -503,6 +506,18 @@
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
-    <script src="./js/styleSwitcher.js"></script>
+	<script src="./js/highlight.min.js"></script>
+	<script>hljs.highlightAll();
+		hljs.configure({ ignoreUnescapedHTML: true })
+		
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			document.querySelectorAll('pre code').forEach((el) => {
+				hljs.highlightElement(el);
+			});
+			});
+	</script>
 </body>
 </html>
