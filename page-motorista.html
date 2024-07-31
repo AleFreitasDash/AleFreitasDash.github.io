@@ -12,9 +12,10 @@
     <meta property="og:description" content="Solistica">
     <meta property="og:image" content="https://alefreitasdash.github.io/images/logo-text.png">
     <meta name="format-detection" content="telephone=no">
-    <title>Solistica</title>
+    <title>Motoristas</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
     <link href="./css/style.css" rel="stylesheet">
     <script src="page-index.js" type="module"></script>
     <script src="./js/inactivity-logout.js" type="module"></script>
@@ -98,7 +99,7 @@
                                                 <span class="badge border-0 rounded">Status Cadastro</span>
                                             </div>
                                             <input type="file" id="edit-profile-picture" accept="image/*" style="display:none;">
-                                            <button id="upload-profile-picture" class="btn btn-primary">Alterar Foto</button>
+                                            <button id="upload-m-profile-picture" class="btn btn-primary">Alterar Foto</button>
                                         </div>
                                         <div class="account-setting">
                                             <a href="app-profile-2.html" class="ai-icon">
@@ -162,7 +163,7 @@
                             <span class="nav-text">Inicio</span>
                         </a>
                     </li>
-                    <li><a href="contacts.html" class="" aria-expanded="false">
+                    <li><a href="page-meusfretes.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M18.148 20.417C20.021 20.417 21.54 18.899 21.541 17.026V17.024V14.324C20.304 14.324 19.302 13.322 19.301 12.085C19.301 10.849 20.303 9.846 21.54 9.846H21.541V7.146C21.543 5.272 20.026 3.752 18.153 3.75H18.147H6.43502C4.56102 3.75 3.04202 5.268 3.04102 7.142V7.143V9.933C4.23502 9.891 5.23602 10.825 5.27802 12.019C5.27902 12.041 5.28002 12.063 5.28002 12.085C5.28102 13.32 4.28202 14.322 3.04702 14.324H3.04102V17.024C3.04002 18.897 4.55902 20.417 6.43202 20.417H6.43302H18.148Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -172,7 +173,7 @@
                             <span class="nav-text">Meus Fretes</span>
                         </a>
                     </li>
-                    <li><a href="blog.html" class="" aria-expanded="false">
+                    <li><a href="page-buscarfretes.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M14.7379 2.76181H8.08493C6.00493 2.75381 4.29993 4.41181 4.25093 6.49081V17.2038C4.20493 19.3168 5.87993 21.0678 7.99293 21.1148C8.02393 21.1148 8.05393 21.1158 8.08493 21.1148H16.0739C18.1679 21.0298 19.8179 19.2998 19.8029 17.2038V8.03781L14.7379 2.76181Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -198,12 +199,12 @@
                         </a>
                         <ul aria-expanded="false">
                             <li class="mini-dashboard">...</li>
-                            <li><a href="./chat.html">Meus Dados</a></li>
-                            <li><a href="./chat.html">Motoristas</a></li>
-                            <li><a href="./chat.html">Veiculos</a></li>
+                            <li><a href="./page-meusdados.html">Meus Dados</a></li>
+                            <li><a href="./page-motorista.html">Motoristas</a></li>
+                            <li><a href="./page-veiculo.html">Veiculos</a></li>
                         </ul>
                     </li>
-                    <li><a href="disponibilidade.html" class="" aria-expanded="false">
+                    <li><a href="page-disponibilidade.html" class="" aria-expanded="false">
                         <div class="menu-icon">
                             <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M13.395 4.17701L15.2224 7.82776C15.4015 8.18616 15.7472 8.43467 16.1481 8.49218L20.2361 9.08062C21.2461 9.22644 21.6481 10.4505 20.9171 11.1519L17.961 13.9924C17.6704 14.2718 17.5382 14.6733 17.6069 15.0676L18.3046 19.0778C18.4764 20.0698 17.4205 20.8267 16.5178 20.3574L12.864 18.4627C12.5058 18.2768 12.0768 18.2768 11.7176 18.4627L8.06378 20.3574C7.161 20.8267 6.10517 20.0698 6.27801 19.0778L6.97462 15.0676C7.04334 14.6733 6.9111 14.2718 6.62059 13.9924L3.66445 11.1519C2.93349 10.4505 3.33541 9.22644 4.34544 9.08062L8.43342 8.49218C8.83431 8.43467 9.18105 8.18616 9.36014 7.82776L11.1865 4.17701C11.6384 3.27433 12.9431 3.27433 13.395 4.17701Z" stroke="#252525" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -231,150 +232,172 @@
             <div class="inner-body">
                 <div class="content-body">
                     <div class="container-fluid">
-                        <h3 class="head-title">Meus Dados</h3>
+                        <h3 class="head-title">Motoristas</h3>
                         <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body" style="background-color: #ededed;">
-                                        <div class="col-xl-12 col-sm-6">
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Nome:</h4>
-                                                            <p class="mb-0" id="user-name">Nome Usuario</p>
-                                                            <input type="text" id="edit-name" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="name"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Telefone:</h4>
-                                                            <p class="mb-0" id="user-phone">Telefone Usuario</p>
-                                                            <input type="text" id="edit-phone" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="phone"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Email:</h4>
-                                                            <p class="mb-0" id="user-email">Email Usuario</p>
-                                                            <input type="email" id="edit-email" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="email"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card overflow-hidden">
-                                    <div class="card-body" style="background-color: #ededed;">
-                                        <div class="col-xl-12 col-sm-6">
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">CPF / CNPJ:</h4>
-                                                            <p class="mb-0" id="user-cpf-cnpj">CPF / CNPJ Usuario</p>
-                                                            <input type="text" id="edit-cpf-cnpj" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="cpf-cnpj"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Razão Social:</h4>
-                                                            <p class="mb-0" id="user-razao-social">Razão Social Usuario</p>
-                                                            <input type="text" id="edit-razao-social" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="razao-social"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb0">Nome Fantasia:</h4>
-                                                            <p class="mb-0" id="user-nome-fantasia">Nome Fantasia Usuario</p>
-                                                            <input type="text" id="edit-nome-fantasia" class="form-control" style="display:none;">
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <a href="#" class="btn btn-primary light shadow btn-xs sharp me-1 edit-btn" data-field="nome-fantasia"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card">
-                                                <div class="card-body d-flex justify-content-between align-items-center">
-                                                    <div class="d-flex sales-data">
-                                                        <div class="ms-2">
-                                                            <h4 class="mb-0">Documentos:</h4>
-                                                            <div class="table-responsive">
-                                                                <table class="table table-bordered verticle-middle table-responsive-sm">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th scope="col">Tipo</th>
-                                                                            <th scope="col">Nome Arquivo</th>
-                                                                            <th scope="col">Ação</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>CNH:</td>
-                                                                            <td><span id="cnh-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-cnh">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Comprovante de Endereço:</td>
-                                                                            <td><span id="comprovante-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-comprovante">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Documento ANTT:</td>
-                                                                            <td><span id="antt-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-antt">Upload</button></td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>Foto Frente Veículo:</td>
-                                                                            <td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
-                                                                            <td><input type="file" id="upload-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-foto-frente">Upload</button></td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>                                    
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="col-xl-6 col-lg-12 col-6">
+								<div class="card  blog-card">
+									<div class="card-header">
+										<h4 class="card-title">Cadastrar</h4>
+										<button class="btn btn-primary" id="home-tab-115" data-bs-toggle="tab" data-bs-target="#leftPosition1" type="button" role="tab" aria-selected="true">Enviar</button>
+									</div>
+									<div class="card-body">
+										<div class="basic-form">
+											<form>
+												<div class="row">
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Nome">
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="CPF">
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="card-body pt-0 mt-2">
+									<h4 class="mb-0">Contatos de referencia:</h4>
+										<div class="basic-form">
+											<form>
+												<div class="row">
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Nome">
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<select class="select2-width-50" style="width: 50%" placeholder="Tipologia">
+														<option value="">Parentesco</option>
+															<option value="Mãe">Mãe</option>
+															<option value="Pai">Pai</option>
+															<option value="Irmã(o)">Irmã(o)</option>
+															<option value="Tio(a)">Tio(a)</option>
+															<option value="Primo(a)">Primo(a)</option>
+															<option value="Amigo(a)">Amigo(a)</option>
+														</select>
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Contato">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Nome">
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<select class="select2-width-50" style="width: 50%" placeholder="Tipologia">
+														<option value="">Parentesco</option>
+															<option value="Mãe">Mãe</option>
+															<option value="Pai">Pai</option>
+															<option value="Irmã(o)">Irmã(o)</option>
+															<option value="Tio(a)">Tio(a)</option>
+															<option value="Primo(a)">Primo(a)</option>
+															<option value="Amigo(a)">Amigo(a)</option>
+														</select>
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Contato">
+													</div>
+												</div>
+												<div class="row">
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Nome">
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<select class="select2-width-50" style="width: 50%" placeholder="Tipologia">
+														<option value="">Parentesco</option>
+															<option value="Mãe">Mãe</option>
+															<option value="Pai">Pai</option>
+															<option value="Irmã(o)">Irmã(o)</option>
+															<option value="Tio(a)">Tio(a)</option>
+															<option value="Primo(a)">Primo(a)</option>
+															<option value="Amigo(a)">Amigo(a)</option>
+														</select>
+													</div>
+													<div class="col mt-2 mt-sm-0">
+														<input type="text" class="form-control" placeholder="Contato">
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+									<div class="card-body pt-0">
+											<h4 class="mb-0">Documentos do Proprietario:</h4>
+												<div class="table-responsive">
+													<table class="table table-hover table-responsive-sm">
+														<thead>
+															<tr>
+																<th>Tipo</th>
+																<th>Status</th>
+																<th>Ação</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+                                                                <td>RG:</td>
+                                                                <td><span id="rg-file-name">Nenhum arquivo</span></td>
+                                                                <td><input type="file" id="upload-m-rg" class="upload-document" data-doc-type="rg" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-m-rg">Upload</button></td>
+                                                            </tr>
+															<tr>
+                                                                <td>CNH:</td>
+                                                                <td><span id="cnh-file-name">Nenhum arquivo</span></td>
+                                                                <td><input type="file" id="upload-m-cnh" class="upload-document" data-doc-type="cnh" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-m-cnh">Upload</button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Comprovante de Endereço:</td>
+                                                                <td><span id="comprovante-file-name">Nenhum arquivo</span></td>
+                                                                <td><input type="file" id="upload-m-comprovante" class="upload-document" data-doc-type="comprovante" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-m-comprovante">Upload</button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Documento ANTT:</td>
+                                                                <td><span id="antt-file-name">Nenhum arquivo</span></td>
+                                                                <td><input type="file" id="upload-m-antt" class="upload-document" data-doc-type="antt" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-m-antt">Upload</button></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Foto:</td>
+                                                                <td><span id="foto-frente-file-name">Nenhum arquivo</span></td>
+                                                                <td><input type="file" id="upload-m-foto-frente" class="upload-document" data-doc-type="foto-frente" accept="image/*,.pdf" style="display:none;"><button class="btn btn-primary upload-btn" data-input-id="upload-m-foto-frente">Upload</button></td>
+                                                            </tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+								</div>
+							</div>
+							<div class="col-xl-6 col-lg-6 col-6">
+								<div class="card  blog-card">
+									<div class="card-header">
+										<h4 class="card-title">Cadastrado</h4>
+									</div>
+									<div class="card-body pt-0">
+													<div class="table-responsive">
+														<table id="example4" class="display table" style="min-width: 845px">
+															<thead>
+																<tr>
+																	<th>Nome</th>
+																	<th>CPF</th>
+																	<th>RG</th>
+																	<th>CNH</th>
+																	<th>Endereço</th>
+																	<th>ANTT</th>
+																	<th>Foto</th>
+																	<th>Ação</th>
+																</tr>
+															</thead>
+															<tbody>
+																<tr>
+																	<td>João Augusto</td>
+																	<td>000.000.000-00</td>
+																	<td><span class="badge badge-sm light badge-danger">Pendente</span></td>
+																	<td><span class="badge badge-sm light badge-success">Enviado</span></td>
+																	<td><span class="badge badge-sm light badge-danger">Pendente</span></td>
+																	<td><span class="badge badge-sm light badge-success">Enviado</span></td>
+																	<td><span class="badge badge-sm light badge-success">Enviado</span></td>
+																	<td><button class="btn btn-success upload-btn" id="editar-veiculo">Editar</button><button class="btn btn-danger upload-btn" id="excluir-veiculo">Excluir</button></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+								</div>
+							</div>
                         </div>
                         <div class="row mt-4">
                             <div class="col-12 text-center">
@@ -392,11 +415,7 @@
         </div>
         <!-- Content body end -->
 
-        <!-- Footer start -->
-        <!-- Footer end -->
-
-        <!-- Support ticket button start -->
-        <!-- Support ticket button end -->
+        
     </div>
     <!-- Main wrapper end -->
 
@@ -405,13 +424,29 @@
     <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="./vendor/apexchart/apexchart.js"></script>
+	<script src="./vendor/select2/js/select2.full.min.js"></script>
+    <script src="./js/plugins-init/select2-init.js"></script>
     
     <!-- Dashboard 1 -->
     <script src="./js/dashboard/analytics.js"></script>
+	<script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="./js/plugins-init/datatables.init.js"></script>
 
     <script src="./js/custom.js"></script>
     <script src="./js/deznav-init.js"></script>
     <script src="./js/demo.js"></script>
-    <script src="./js/styleSwitcher.js"></script>
+	<script src="./js/highlight.min.js"></script>
+	<script>hljs.highlightAll();
+		hljs.configure({ ignoreUnescapedHTML: true })
+		
+	</script>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', (event) => {
+			document.querySelectorAll('pre code').forEach((el) => {
+				hljs.highlightElement(el);
+			});
+			});
+	</script>
 </body>
 </html>
