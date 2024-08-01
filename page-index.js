@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
+import { initializeInactivityHandler } from 'inactivity-logout.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
