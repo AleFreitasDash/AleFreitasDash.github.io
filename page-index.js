@@ -3,17 +3,17 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-import { initializeInactivityHandler } from './inactivity-logout.js'; // Certifique-se de que o caminho esteja correto
+import { initializeInactivityHandler } from './inactivity-logout.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
-    authDomain: "basededadossite-bb29b.firebaseapp.com",
-    databaseURL: "https://basededadossite-bb29b-default-rtdb.firebaseio.com",
-    projectId: "basededadossite-bb29b",
-    storageBucket: "basededadossite-bb29b.appspot.com",
-    messagingSenderId: "770564649369",
-    appId: "1:770564649369:web:82ba6af1b55b9cc6ff2308",
-    measurementId: "G-PY7SBTHNMR"
+  authDomain: "basededadossite-bb29b.firebaseapp.com",
+  databaseURL: "https://basededadossite-bb29b-default-rtdb.firebaseio.com",
+  projectId: "basededadossite-bb29b",
+  storageBucket: "basededadossite-bb29b.appspot.com",
+  messagingSenderId: "770564649369",
+  appId: "1:770564649369:web:82ba6af1b55b9cc6ff2308",
+  measurementId: "G-PY7SBTHNMR"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -168,10 +168,8 @@ onAuthStateChanged(auth, (user) => {
                 }
             });
         });
-
-        // Inicialize o manipulador de inatividade após o usuário estar autenticado
+ // Inicialize o manipulador de inatividade após o usuário estar autenticado
         initializeInactivityHandler();
-
     } else {
         window.location.href = 'page-login.html';
     }
