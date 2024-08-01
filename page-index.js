@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
-import { initializeInactivityHandler } from 'inactivity-logout.js';
+import { initializeInactivityHandler } from './inactivity-logout.js'; // Certifique-se de que o caminho esteja correto
 
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
@@ -168,6 +168,10 @@ onAuthStateChanged(auth, (user) => {
                 }
             });
         });
+
+        // Inicialize o manipulador de inatividade após o usuário estar autenticado
+        initializeInactivityHandler();
+
     } else {
         window.location.href = 'page-login.html';
     }
