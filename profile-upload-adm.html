@@ -452,9 +452,7 @@
     </script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
 
 // Configuração do Firebase
@@ -471,73 +469,50 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 const database = getDatabase(app);
-const storage = getStorage(app);
 
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // Configurações da interface de usuário logado
-        const displayName = user.displayName || "Usuário";
-        document.getElementById('user-name1').innerText = displayName;
-        document.getElementById('user-name2').innerText = "Olá, " + displayName;
-        if (user.photoURL) {
-            document.getElementById('profile-picture').src = user.photoURL;
-            document.getElementById('profile-picture-edit').src = user.photoURL;
-        }
+window.uploadFile = async function () {
+    const fileInput = document.getElementById('fileInput');
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
 
-        // Função para fazer upload e processar o arquivo XLSX
-        document.getElementById('upload-xlsx').addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, {type: 'array'});
-                    const firstSheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[firstSheetName];
-                    const json = XLSX.utils.sheet_to_json(worksheet, {header: 1});
-                    
-                    // Salvar JSON no Firebase Realtime Database
-                    set(ref(database, 'xlsData/'), json).then(() => {
-                        alert('Dados carregados com sucesso no banco de dados!');
-                    }).catch(error => {
-                        console.error('Erro ao salvar dados no banco de dados:', error);
-                    });
-                };
-                reader.readAsArrayBuffer(file);
-            }
-        });
+        const dbRef = ref(database, 'uploadedData/');
+        await set(dbRef, sheet);
 
-        // Carregar dados na tabela a partir do Realtime Database
-        onValue(ref(database, 'xlsData/'), (snapshot) => {
-            const jsonData = snapshot.val();
-            const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = ''; // Limpa qualquer dado existente
-            jsonData.forEach((row, index) => {
-                if (index > 0) { // Ignora a primeira linha do cabeçalho
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = row.map(cell => `<td>${cell}</td>`).join('');
-                    tableBody.appendChild(tr);
-                }
+        alert('Arquivo carregado com sucesso!');
+    };
+    reader.readAsArrayBuffer(file);
+};
+
+// Função para carregar os dados na tabela HTML a partir do Realtime Database
+function loadData() {
+    const dbRef = ref(database, 'uploadedData/');
+    onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        const tableBody = document.querySelector('#data-table tbody');
+        tableBody.innerHTML = ''; // Limpar qualquer dado existente
+
+        data.forEach((row, index) => {
+            const tr = document.createElement('tr');
+            row.forEach((cell) => {
+                const td = document.createElement('td');
+                td.textContent = cell;
+                tr.appendChild(td);
             });
+            tableBody.appendChild(tr);
         });
-    } else {
-        window.location.href = 'page-login.html';
-    }
-});
-
-// Função para realizar logout do usuário
-document.getElementById('logout').addEventListener('click', () => {
-    signOut(auth).then(() => {
-        window.location.href = 'page-login.html';
-    }).catch((error) => {
-        console.error('Erro ao realizar logout:', error);
+    }, {
+        onlyOnce: true
     });
-});
+}
+
+document.getElementById('loadButton').addEventListener('click', loadData);
 </script>
-
-
 
 </body>
 </html>
