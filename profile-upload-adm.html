@@ -451,11 +451,13 @@
         hljs.configure({ ignoreUnescapedHTML: true })
         
     </script>
-<script type="module">
+<script>
+// Importações necessárias do Firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
-import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
 
+// Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
     authDomain: "basededadossite-bb29b.firebaseapp.com",
@@ -467,112 +469,84 @@ const firebaseConfig = {
     measurementId: "G-PY7SBTHNMR"
 };
 
+// Inicialização do Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const database = getDatabase(app);
 
-const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-
-    window.uploadFile = function () {
-        const fileInput = document.getElementById('formFileLg');
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[0];
-            const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
-
-            const dbRef = ref(database, 'uploadedData/');
-            set(dbRef, sheet).then(() => {
-                alert('Arquivo carregado com sucesso!');
-            }).catch(error => {
-                console.error('Erro ao carregar dados:', error);
-            });
-        };
-        reader.readAsArrayBuffer(file);
-    };
-
-    function loadData() {
-        const dbRef = ref(database, 'uploadedData/');
-        onValue(dbRef, (snapshot) => {
-            const data = snapshot.val();
-            const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = '';
-            data.forEach((row, index) => {
-                const tr = document.createElement('tr');
-                row.forEach((cell) => {
-                    const td = document.createElement('td');
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            });
-        }, {
-            onlyOnce: true
+// Função para logar usuário
+function loginUser(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            console.log("Usuário autenticado:", userCredential.user);
+        })
+        .catch((error) => {
+            console.error("Erro de autenticação:", error.message);
+            alert('Falha no login: ' + error.message);
         });
+}
+
+// Função de upload de arquivo `.xlsx`
+function uploadFile() {
+    const fileInput = document.getElementById('formFileLg');
+    const file = fileInput.files[0];
+
+    if (!file) {
+        alert('Por favor, selecione um arquivo.');
+        return;
     }
 
-    document.getElementById('loadButton').addEventListener('click', loadData);
-</script>
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
 
-
- <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
-    import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
-        authDomain: "basededadossite-bb29b.firebaseapp.com",
-        // Outros parâmetros de configuração
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-
-    window.uploadFile = function () {
-        const fileInput = document.getElementById('formFileLg');
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
-            const sheetName = workbook.SheetNames[0];
-            const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
-
-            const dbRef = ref(database, 'uploadedData/');
-            set(dbRef, sheet).then(() => {
-                alert('Arquivo carregado com sucesso!');
-            }).catch(error => {
-                console.error('Erro ao carregar dados:', error);
-            });
-        };
-        reader.readAsArrayBuffer(file);
-    };
-
-    function loadData() {
-        const dbRef = ref(database, 'uploadedData/');
-        onValue(dbRef, (snapshot) => {
-            const data = snapshot.val();
-            const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = '';
-            data.forEach((row, index) => {
-                const tr = document.createElement('tr');
-                row.forEach((cell) => {
-                    const td = document.createElement('td');
-                    td.textContent = cell;
-                    tr.appendChild(td);
-                });
-                tableBody.appendChild(tr);
-            });
-        }, {
-            onlyOnce: true
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const dbRef = ref(database, 'uploads/' + user.uid + '/' + file.name.replace(/\.xlsx$/, ""));
+                set(dbRef, jsonData)
+                    .then(() => {
+                        alert('Dados enviados com sucesso!');
+                        loadDataIntoTable(jsonData);
+                    })
+                    .catch(error => {
+                        console.error('Erro ao enviar dados para o Firebase: ', error);
+                        alert('Erro ao enviar dados.');
+                    });
+            } else {
+                alert('Usuário não autenticado. Por favor, faça o login.');
+            }
         });
-    }
+    };
 
-    document.getElementById('loadButton').addEventListener('click', loadData);
+    reader.readAsArrayBuffer(file);
+}
+
+// Função para carregar dados na tabela
+function loadDataIntoTable(data) {
+    const table = document.getElementById('data-table').getElementsByTagName('tbody')[0];
+    table.innerHTML = ''; // Limpar o conteúdo anterior da tabela
+
+    data.forEach(row => {
+        const newRow = table.insertRow();
+        Object.values(row).forEach(cellData => {
+            const cell = newRow.insertCell();
+            cell.textContent = cellData;
+        });
+    });
+}
+
+// Função para realizar logout
+document.getElementById('logout').addEventListener('click', () => {
+    signOut(auth).then(() => {
+        console.log("Usuário deslogado");
+    }).catch((error) => {
+        console.error('Erro ao realizar logout:', error);
+    });
+});
     </script>
 
 </body>
