@@ -475,49 +475,39 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
 
-// Verifica se o usuário está autenticado
 onAuthStateChanged(auth, (user) => {
     if (user) {
+        // Configurações da interface de usuário logado
         const displayName = user.displayName || "Usuário";
         document.getElementById('user-name1').innerText = displayName;
         document.getElementById('user-name2').innerText = "Olá, " + displayName;
-
         if (user.photoURL) {
             document.getElementById('profile-picture').src = user.photoURL;
             document.getElementById('profile-picture-edit').src = user.photoURL;
         }
 
-        // Prepara para fazer upload e processar arquivos XLSX
-        document.getElementById('upload-xlsx').addEventListener('click', () => {
-            const fileInput = document.getElementById('formFileLg');
-            const file = fileInput.files[0];
+        // Função para fazer upload e processar o arquivo XLSX
+        document.getElementById('upload-xlsx').addEventListener('change', (event) => {
+            const file = event.target.files[0];
             if (file) {
-                const xlsxRef = storageRef(storage, `uploads/${file.name}`);
-                uploadBytes(xlsxRef, file).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        fetch(url)
-                            .then(response => response.arrayBuffer())
-                            .then(data => {
-                                const jsonData = processXLSXData(data);
-                                // Salvar dados processados no Realtime Database
-                                set(ref(database, 'xlsData/'), jsonData).then(() => {
-                                    alert('Dados carregados com sucesso no banco de dados!');
-                                }).catch(error => {
-                                    console.error('Erro ao salvar dados no banco de dados:', error);
-                                });
-                            });
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const json = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+                    
+                    // Salvar JSON no Firebase Realtime Database
+                    set(ref(database, 'xlsData/'), json).then(() => {
+                        alert('Dados carregados com sucesso no banco de dados!');
+                    }).catch(error => {
+                        console.error('Erro ao salvar dados no banco de dados:', error);
                     });
-                });
+                };
+                reader.readAsArrayBuffer(file);
             }
         });
-
-        // Função para processar os dados do arquivo XLSX
-        function processXLSXData(data) {
-            const workbook = XLSX.read(data, { type: 'array' });
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            return XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-        }
 
         // Carregar dados na tabela a partir do Realtime Database
         onValue(ref(database, 'xlsData/'), (snapshot) => {
@@ -546,6 +536,7 @@ document.getElementById('logout').addEventListener('click', () => {
     });
 });
 </script>
+
 
 
 </body>
