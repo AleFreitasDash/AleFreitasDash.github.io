@@ -674,19 +674,20 @@ function setupXLSXUpload() {
             if (fileInput) {
                 const file = fileInput.files[0];
                 if (file) {
+                    // Processa o arquivo XLSX antes de fazer upload
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const data = new Uint8Array(e.target.result);
+                        processXLSXData(data);
+                    };
+                    reader.readAsArrayBuffer(file);
+
+                    // Realiza o upload do arquivo XLSX
                     const xlsxRef = storageRef(storage, `uploads/${file.name}`);
                     uploadBytes(xlsxRef, file).then((snapshot) => {
                         alert('Arquivo XLSX enviado com sucesso!');
                         getDownloadURL(snapshot.ref).then((url) => {
                             console.log('URL do arquivo:', url);
-                            fetch(url)
-                                .then(response => response.arrayBuffer())
-                                .then(data => {
-                                    processXLSXData(data); // Processar e mostrar dados na tabela
-                                })
-                                .catch(error => {
-                                    console.error('Erro ao baixar o arquivo:', error);
-                                });
                         });
                     }).catch((error) => {
                         console.error('Erro ao enviar o arquivo XLSX:', error);
@@ -711,7 +712,7 @@ function processXLSXData(data) {
         tableBody.innerHTML = ''; // Limpar qualquer dado existente
 
         jsonData.forEach((row, index) => {
-            if (index > 0 && row.length >= 109) { // Ignora a primeira linha do cabeçalho
+            if (index > 0) { // Ignora a primeira linha do cabeçalho
                 const tr = document.createElement('tr');
                 tr.innerHTML = row.map((cell) => `<td>${cell || ''}</td>`).join('');
                 tableBody.appendChild(tr);
@@ -735,6 +736,7 @@ updateDOMElementById('logout', (button) => {
 onAuthStateChanged(auth, handleUserAuthentication);
 
 </script>
+
 
 </body>
 </html>
