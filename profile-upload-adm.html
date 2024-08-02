@@ -450,14 +450,11 @@
         hljs.configure({ ignoreUnescapedHTML: true })
         
     </script>
-<script>
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
-
-// Importar biblioteca XLSX para processamento de arquivos
 import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
 
 // Configuração do Firebase
@@ -474,7 +471,6 @@ const firebaseConfig = {
 
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
@@ -665,124 +661,128 @@ onAuthStateChanged(auth, (user) => {
             const tableBody = document.querySelector('#data-table tbody');
             tableBody.innerHTML = ''; // Limpar qualquer dado existente
 
-            // Mapeamento das colunas do XLSX para a tabela HTML
+            // Mapear os índices das colunas para os nomes do cabeçalho
+            const header = jsonData[0];
+            const headerMapping = {};
+            header.forEach((colName, index) => {
+                headerMapping[colName] = index;
+            });
+
             jsonData.forEach((row, index) => {
                 if (index > 0) { // Ignora a primeira linha do cabeçalho
                     const tr = document.createElement('tr');
-                    const rowData = [
-                        row[0],  // Planilha
-                        row[1],  // Produtos
-                        row[2],  // Seg.Transp.
-                        row[3],  // Tp.Contr.
-                        row[4],  // Perfil Planilha
-                        row[5],  // Perfil Carga
-                        row[6],  // Meio Pagto
-                        row[7],  // Tipo Planilha
-                        row[8],  // Numero
-                        row[9],  // Cliente
-                        row[10], // Remetente
-                        row[11], // Prioridade
-                        row[12], // Id_Roteirizador
-                        row[13], // Manifesto
-                        row[14], // C.Custo
-                        row[15], // Origem
-                        row[16], // UF_Origem
-                        row[17], // Destino
-                        row[18], // UF_Destino
-                        row[19], // KM
-                        row[20], // Empresa
-                        row[21], // Destinatario
-                        row[22], // Usuario
-                        row[23], // Justificativa
-                        row[24], // Usuario Cria Planilha
-                        row[25], // Data
-                        row[26], // Finalizado
-                        row[27], // Fin.Contratacao
-                        row[28], // Hora Contratado
-                        row[29], // Fin.Expedicao
-                        row[30], // Hora Expedição
-                        row[31], // DT Lancamento
-                        row[32], // Data Criação Planilha
-                        row[33], // Veiculo Roteirizado
-                        row[34], // Placa
-                        row[35], // Cod.Veiculo
-                        row[36], // Veiculo
-                        row[37], // Motorista
-                        row[38], // Cod.Transp.
-                        row[39], // Transp.
-                        row[40], // Cod.Fornec.
-                        row[41], // Fornecedor
-                        row[42], // Pessoa(F/J)
-                        row[43], // Tel.Motorista
-                        row[44], // Cpf.Motorista
-                        row[45], // Tel.Transportadora
-                        row[46], // Data Cadastro Placa
-                        row[47], // Data Validade Checklist
-                        row[48], // Data Validade Cadastro
-                        row[49], // Data Validade MOPP
-                        row[50], // Data Validade Licenciamento
-                        row[51], // Peso
-                        row[52], // Valor NF
-                        row[53], // Qtd.Entregas
-                        row[54], // Qtd.Ajudantes
-                        row[55], // Tt.Peso Taxado
-                        row[56], // Volume Planilha
-                        row[57], // Peso Taxado
-                        row[58], // Custo
-                        row[59], // Receita Expedição
-                        row[60], // Margem Expedição
-                        row[61], // Frete
-                        row[62], // Custo Total
-                        row[63], // Meta
-                        row[64], // Receita Liquida
-                        row[65], // Margem
-                        row[66], // Receita
-                        row[67], // Receita Liquida Total
-                        row[68], // Receita Bruta Total
-                        row[69], // CNPJ Cliente
-                        row[70], // Nome Cliente(CCUSTO)
-                        row[71], // CNPJ Remetente
-                        row[72], // Nome Remetente
-                        row[73], // CNPJ Destinatario
-                        row[74], // Nome Destinatario
-                        row[75], // Destinatario VIP
-                        row[76], // Agenda
-                        row[77], // Meso-Região AGV
-                        row[78], // Região
-                        row[79], // Cte Emitido
-                        row[80], // Relação de NF
-                        row[81], // Qtd. NF
-                        row[82], // ADVALOREM
-                        row[83], // VR. Pedagio
-                        row[84], // GRIS
-                        row[85], // TX. Adicional
-                        row[86], // Receita Bruta Receber
-                        row[87], // ICMS
-                        row[88], // PIS/CONFINS
-                        row[89], // Frete Peso
-                        row[90], // DT. Entrega
-                        row[91], // Municipalização
-                        row[92], // Pessoa Dest
-                        row[93], // CEP Entrega Doc
-                        row[94], // End. Entrega Doc
-                        row[95], // Bai. Entrega Doc
-                        row[96], // Data Hora Tubo
-                        row[97], // Data Hora Chegada
-                        row[98], // Data Hora Coleta
-                        row[99], // Data Hora Saida
-                        row[100],// Status Expedição
-                        row[101],// Unidade Expedição
-                        row[102],// Frete Receber
-                        row[103],// Prev. Entrega
-                        row[104],// Custo Total Bruto
-                        row[105],// Total Cred. PIS/CONFINS
-                        row[106],// Total Comp. Custo
-                        row[107],// Total Custo Liquido
-                        row[108],// Margem Liquida
-                        row[109] // Mais Info.
-                    ];
-                    
-                    tr.innerHTML = rowData.map((cell) => `<td>${cell || ''}</td>`).join('');
+                    tr.innerHTML = `
+                        <td>${row[headerMapping['Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Produtos']] || ''}</td>
+                        <td>${row[headerMapping['Seg.Transp.']] || ''}</td>
+                        <td>${row[headerMapping['Tp.Contr.']] || ''}</td>
+                        <td>${row[headerMapping['Perfil Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Perfil Carga']] || ''}</td>
+                        <td>${row[headerMapping['Meio Pagto']] || ''}</td>
+                        <td>${row[headerMapping['Tipo Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Numero']] || ''}</td>
+                        <td>${row[headerMapping['Cliente']] || ''}</td>
+                        <td>${row[headerMapping['Remetente']] || ''}</td>
+                        <td>${row[headerMapping['Prioridade']] || ''}</td>
+                        <td>${row[headerMapping['Id_Roteirizador']] || ''}</td>
+                        <td>${row[headerMapping['Manifesto']] || ''}</td>
+                        <td>${row[headerMapping['C.Custo']] || ''}</td>
+                        <td>${row[headerMapping['Origem']] || ''}</td>
+                        <td>${row[headerMapping['UF_Origem']] || ''}</td>
+                        <td>${row[headerMapping['Destino']] || ''}</td>
+                        <td>${row[headerMapping['UF_Destino']] || ''}</td>
+                        <td>${row[headerMapping['KM']] || ''}</td>
+                        <td>${row[headerMapping['Empresa']] || ''}</td>
+                        <td>${row[headerMapping['Destinatario']] || ''}</td>
+                        <td>${row[headerMapping['Usuario']] || ''}</td>
+                        <td>${row[headerMapping['Justificativa']] || ''}</td>
+                        <td>${row[headerMapping['Usuario Cria Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Data']] || ''}</td>
+                        <td>${row[headerMapping['Finalizado']] || ''}</td>
+                        <td>${row[headerMapping['Fin.Contratacao']] || ''}</td>
+                        <td>${row[headerMapping['Hora Contratado']] || ''}</td>
+                        <td>${row[headerMapping['Fin.Expedicao']] || ''}</td>
+                        <td>${row[headerMapping['Hora Expedição']] || ''}</td>
+                        <td>${row[headerMapping['DT Lancamento']] || ''}</td>
+                        <td>${row[headerMapping['Data Criação Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Veiculo Roteirizado']] || ''}</td>
+                        <td>${row[headerMapping['Placa']] || ''}</td>
+                        <td>${row[headerMapping['Cod.Veiculo']] || ''}</td>
+                        <td>${row[headerMapping['Veiculo']] || ''}</td>
+                        <td>${row[headerMapping['Motorista']] || ''}</td>
+                        <td>${row[headerMapping['Cod.Transp.']] || ''}</td>
+                        <td>${row[headerMapping['Transp.']] || ''}</td>
+                        <td>${row[headerMapping['Cod.Fornec.']] || ''}</td>
+                        <td>${row[headerMapping['Fornecedor']] || ''}</td>
+                        <td>${row[headerMapping['Pessoa(F/J)']] || ''}</td>
+                        <td>${row[headerMapping['Tel.Motorista']] || ''}</td>
+                        <td>${row[headerMapping['Cpf.Motorista']] || ''}</td>
+                        <td>${row[headerMapping['Tel.Transportadora']] || ''}</td>
+                        <td>${row[headerMapping['Data Cadastro Placa']] || ''}</td>
+                        <td>${row[headerMapping['Data Validade Checklist']] || ''}</td>
+                        <td>${row[headerMapping['Data Validade Cadastro']] || ''}</td>
+                        <td>${row[headerMapping['Data Validade MOPP']] || ''}</td>
+                        <td>${row[headerMapping['Data Validade Licenciamento']] || ''}</td>
+                        <td>${row[headerMapping['Peso']] || ''}</td>
+                        <td>${row[headerMapping['Valor NF']] || ''}</td>
+                        <td>${row[headerMapping['Qtd.Entregas']] || ''}</td>
+                        <td>${row[headerMapping['Qtd.Ajudantes']] || ''}</td>
+                        <td>${row[headerMapping['Tt.Peso Taxado']] || ''}</td>
+                        <td>${row[headerMapping['Volume Planilha']] || ''}</td>
+                        <td>${row[headerMapping['Peso Taxado']] || ''}</td>
+                        <td>${row[headerMapping['Custo']] || ''}</td>
+                        <td>${row[headerMapping['Receita Expedição']] || ''}</td>
+                        <td>${row[headerMapping['Margem Expedição']] || ''}</td>
+                        <td>${row[headerMapping['Frete']] || ''}</td>
+                        <td>${row[headerMapping['Custo Total']] || ''}</td>
+                        <td>${row[headerMapping['Meta']] || ''}</td>
+                        <td>${row[headerMapping['Receita Liquida']] || ''}</td>
+                        <td>${row[headerMapping['Margem']] || ''}</td>
+                        <td>${row[headerMapping['Receita']] || ''}</td>
+                        <td>${row[headerMapping['Receita Liquida Total']] || ''}</td>
+                        <td>${row[headerMapping['Receita Bruta Total']] || ''}</td>
+                        <td>${row[headerMapping['CNPJ Cliente']] || ''}</td>
+                        <td>${row[headerMapping['Nome Cliente(CCUSTO)']] || ''}</td>
+                        <td>${row[headerMapping['CNPJ Remetente']] || ''}</td>
+                        <td>${row[headerMapping['Nome Remetente']] || ''}</td>
+                        <td>${row[headerMapping['CNPJ Destinatario']] || ''}</td>
+                        <td>${row[headerMapping['Nome Destinatario']] || ''}</td>
+                        <td>${row[headerMapping['Destinatario VIP']] || ''}</td>
+                        <td>${row[headerMapping['Agenda']] || ''}</td>
+                        <td>${row[headerMapping['Meso-Região AGV']] || ''}</td>
+                        <td>${row[headerMapping['Região']] || ''}</td>
+                        <td>${row[headerMapping['Cte Emitido']] || ''}</td>
+                        <td>${row[headerMapping['Relação de NF']] || ''}</td>
+                        <td>${row[headerMapping['Qtd. NF']] || ''}</td>
+                        <td>${row[headerMapping['ADVALOREM']] || ''}</td>
+                        <td>${row[headerMapping['VR. Pedagio']] || ''}</td>
+                        <td>${row[headerMapping['GRIS']] || ''}</td>
+                        <td>${row[headerMapping['TX. Adicional']] || ''}</td>
+                        <td>${row[headerMapping['Receita Bruta Receber']] || ''}</td>
+                        <td>${row[headerMapping['ICMS']] || ''}</td>
+                        <td>${row[headerMapping['PIS/CONFINS']] || ''}</td>
+                        <td>${row[headerMapping['Frete Peso']] || ''}</td>
+                        <td>${row[headerMapping['DT. Entrega']] || ''}</td>
+                        <td>${row[headerMapping['Municipalização']] || ''}</td>
+                        <td>${row[headerMapping['Pessoa Dest']] || ''}</td>
+                        <td>${row[headerMapping['CEP Entrega Doc']] || ''}</td>
+                        <td>${row[headerMapping['End. Entrega Doc']] || ''}</td>
+                        <td>${row[headerMapping['Bai. Entrega Doc']] || ''}</td>
+                        <td>${row[headerMapping['Data Hora Tubo']] || ''}</td>
+                        <td>${row[headerMapping['Data Hora Chegada']] || ''}</td>
+                        <td>${row[headerMapping['Data Hora Coleta']] || ''}</td>
+                        <td>${row[headerMapping['Data Hora Saida']] || ''}</td>
+                        <td>${row[headerMapping['Status Expedição']] || ''}</td>
+                        <td>${row[headerMapping['Unidade Expedição']] || ''}</td>
+                        <td>${row[headerMapping['Frete Receber']] || ''}</td>
+                        <td>${row[headerMapping['Prev. Entrega']] || ''}</td>
+                        <td>${row[headerMapping['Custo Total Bruto']] || ''}</td>
+                        <td>${row[headerMapping['Total Cred. PIS/CONFINS']] || ''}</td>
+                        <td>${row[headerMapping['Total Comp. Custo']] || ''}</td>
+                        <td>${row[headerMapping['Total Custo Liquido']] || ''}</td>
+                        <td>${row[headerMapping['Margem Liquida']] || ''}</td>
+                        <td>${row[headerMapping['Mais Info.']] || ''}</td>
+                    `;
                     tableBody.appendChild(tr);
                 }
             });
