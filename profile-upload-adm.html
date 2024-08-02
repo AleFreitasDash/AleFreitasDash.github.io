@@ -682,7 +682,7 @@ function setupXLSXUpload() {
                             fetch(url)
                                 .then(response => response.arrayBuffer())
                                 .then(data => {
-                                    processXLSXData(data);
+                                    processXLSXData(data); // Processar e mostrar dados na tabela
                                 })
                                 .catch(error => {
                                     console.error('Erro ao baixar o arquivo:', error);
@@ -735,5 +735,6 @@ updateDOMElementById('logout', (button) => {
 onAuthStateChanged(auth, handleUserAuthentication);
 
 </script>
+
 </body>
 </html>
