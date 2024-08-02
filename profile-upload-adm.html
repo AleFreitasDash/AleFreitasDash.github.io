@@ -453,7 +453,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
 
@@ -487,167 +487,27 @@ onAuthStateChanged(auth, (user) => {
             document.getElementById('profile-picture-edit').src = user.photoURL;
         }
 
-        const userId = user.uid;
-        const userRef = ref(database, 'UserProfile/' + userId);
-
-        // Obtém informações do perfil do usuário do banco de dados
-        onValue(userRef, (snapshot) => {
-            const userData = snapshot.val();
-            if (userData) {
-                document.getElementById('user-name').innerText = userData.Nome;
-                document.getElementById('edit-name').value = userData.Nome;
-                document.getElementById('user-phone').innerText = userData.Telefone;
-                document.getElementById('edit-phone').value = userData.Telefone;
-                document.getElementById('user-email').innerText = userData.Email;
-                document.getElementById('edit-email').value = userData.Email;
-                document.getElementById('user-cpf-cnpj').innerText = `${userData.CPF} / ${userData.CNPJ}`;
-                document.getElementById('edit-cpf-cnpj').value = `${userData.CPF} / ${userData.CNPJ}`;
-                document.getElementById('user-razao-social').innerText = userData.RazaoSocial;
-                document.getElementById('edit-razao-social').value = userData.RazaoSocial;
-                document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
-                document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
-
-                const documents = userData.documents || {};
-                ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
-                    const docElement = document.getElementById(`${docType}-file-name`);
-                    docElement.innerText = documents[docType] ? "Enviado" : "Pendente";
-                });
-            }
-        });
-
-        // Exibe notificações do usuário
-        const notificationsRef = ref(database, 'notifications/' + userId);
-        onValue(notificationsRef, (snapshot) => {
-            const notifications = snapshot.val();
-            const notificationContainer = document.getElementById('notification-container');
-            notificationContainer.innerHTML = '';
-            if (notifications) {
-                for (let key in notifications) {
-                    const notification = notifications[key];
-                    const li = document.createElement('li');
-                    li.innerHTML = `<h6 class="mb-1">${notification.title}</h6>\n<small class="d-block">${notification.content}</small>`;
-                    notificationContainer.appendChild(li);
-                }
-            }
-        });
-
-        // Habilita a edição dos dados do usuário
-        document.querySelectorAll('.edit-btn').forEach(button => {
-            button.addEventListener('click', (event) => {
-                event.preventDefault();
-                const field = button.getAttribute('data-field');
-                document.getElementById(`user-${field}`).style.display = 'none';
-                document.getElementById(`edit-${field}`).style.display = 'block';
-                document.getElementById('save-changes').style.display = 'block';
-            });
-        });
-
-        // Salva as alterações dos dados do usuário
-        document.getElementById('save-changes').addEventListener('click', () => {
-            const updatedData = {
-                Nome: document.getElementById('edit-name').value,
-                Telefone: document.getElementById('edit-phone').value,
-                Email: document.getElementById('edit-email').value,
-                CPF: document.getElementById('edit-cpf-cnpj').value.split(' / ')[0],
-                CNPJ: document.getElementById('edit-cpf-cnpj').value.split(' / ')[1],
-                RazaoSocial: document.getElementById('edit-razao-social').value,
-                NomeFantasia: document.getElementById('edit-nome-fantasia').value
-            };
-
-            update(ref(database, 'UserProfile/' + userId), updatedData).then(() => {
-                document.getElementById('save-changes').style.display = 'none';
-                document.querySelectorAll('input').forEach(input => {
-                    input.style.display = 'none';
-                });
-                document.querySelectorAll('p[id^="user-"]').forEach(p => {
-                    p.style.display = 'block';
-                });
-            }).catch((error) => {
-                console.error('Erro ao atualizar dados:', error);
-            });
-        });
-
-        // Upload de foto de perfil
-        document.getElementById('upload-profile-picture').addEventListener('click', () => {
-            document.getElementById('edit-profile-picture').click();
-        });
-
-        document.getElementById('edit-profile-picture').addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const profilePicRef = storageRef(storage, `profilePictures/${userId}`);
-                uploadBytes(profilePicRef, file).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        updateProfile(user, { photoURL: url }).then(() => {
-                            document.getElementById('profile-picture').src = url;
-                            document.getElementById('profile-picture-edit').src = url;
-                            alert('Foto de perfil atualizada com sucesso!');
-                        });
-                    });
-                }).catch((error) => {
-                    console.error('Erro ao fazer upload da foto de perfil:', error);
-                });
-            }
-        });
-
-        // Upload de documentos
-        document.querySelectorAll('.upload-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const inputId = button.getAttribute('data-input-id');
-                document.getElementById(inputId).click();
-            });
-        });
-
-        document.querySelectorAll('.upload-document').forEach(input => {
-            input.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                const docType = event.target.getAttribute('data-doc-type');
-                if (file) {
-                    const docRef = storageRef(storage, `documents/${userId}/${docType}`);
-                    uploadBytes(docRef, file).then((snapshot) => {
-                        getDownloadURL(snapshot.ref).then((url) => {
-                            const documentData = {
-                                fileName: file.name,
-                                url: url
-                            };
-                            update(ref(database, `UserProfile/${userId}/documents`), {
-                                [docType]: documentData
-                            }).then(() => {
-                                document.getElementById(`${docType}-file-name`).innerText = "Enviado";
-                                alert('Documento enviado com sucesso!');
-                            });
-                        });
-                    }).catch((error) => {
-                        console.error('Erro ao fazer upload do documento:', error);
-                    });
-                }
-            });
-        });
-
-        // Upload e processamento de arquivos XLSX
+        // Prepara para fazer upload e processar arquivos XLSX
         document.getElementById('upload-xlsx').addEventListener('click', () => {
             const fileInput = document.getElementById('formFileLg');
             const file = fileInput.files[0];
             if (file) {
                 const xlsxRef = storageRef(storage, `uploads/${file.name}`);
                 uploadBytes(xlsxRef, file).then((snapshot) => {
-                    alert('Arquivo XLSX enviado com sucesso!');
                     getDownloadURL(snapshot.ref).then((url) => {
-                        console.log('URL do arquivo:', url);
                         fetch(url)
                             .then(response => response.arrayBuffer())
                             .then(data => {
-                                processXLSXData(data);
-                            })
-                            .catch(error => {
-                                console.error('Erro ao baixar o arquivo:', error);
+                                const jsonData = processXLSXData(data);
+                                // Salvar dados processados no Realtime Database
+                                set(ref(database, 'xlsData/'), jsonData).then(() => {
+                                    alert('Dados carregados com sucesso no banco de dados!');
+                                }).catch(error => {
+                                    console.error('Erro ao salvar dados no banco de dados:', error);
+                                });
                             });
                     });
-                }).catch((error) => {
-                    console.error('Erro ao enviar o arquivo XLSX:', error);
                 });
-            } else {
-                alert('Por favor, selecione um arquivo XLSX para upload.');
             }
         });
 
@@ -656,137 +516,22 @@ onAuthStateChanged(auth, (user) => {
             const workbook = XLSX.read(data, { type: 'array' });
             const firstSheetName = workbook.SheetNames[0];
             const worksheet = workbook.Sheets[firstSheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+            return XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        }
 
+        // Carregar dados na tabela a partir do Realtime Database
+        onValue(ref(database, 'xlsData/'), (snapshot) => {
+            const jsonData = snapshot.val();
             const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = ''; // Limpar qualquer dado existente
-
-            // Mapear os índices das colunas para os nomes do cabeçalho
-            const header = jsonData[0];
-            const headerMapping = {};
-            header.forEach((colName, index) => {
-                headerMapping[colName] = index;
-            });
-
+            tableBody.innerHTML = ''; // Limpa qualquer dado existente
             jsonData.forEach((row, index) => {
                 if (index > 0) { // Ignora a primeira linha do cabeçalho
                     const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row[headerMapping['Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Produtos']] || ''}</td>
-                        <td>${row[headerMapping['Seg.Transp.']] || ''}</td>
-                        <td>${row[headerMapping['Tp.Contr.']] || ''}</td>
-                        <td>${row[headerMapping['Perfil Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Perfil Carga']] || ''}</td>
-                        <td>${row[headerMapping['Meio Pagto']] || ''}</td>
-                        <td>${row[headerMapping['Tipo Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Numero']] || ''}</td>
-                        <td>${row[headerMapping['Cliente']] || ''}</td>
-                        <td>${row[headerMapping['Remetente']] || ''}</td>
-                        <td>${row[headerMapping['Prioridade']] || ''}</td>
-                        <td>${row[headerMapping['Id_Roteirizador']] || ''}</td>
-                        <td>${row[headerMapping['Manifesto']] || ''}</td>
-                        <td>${row[headerMapping['C.Custo']] || ''}</td>
-                        <td>${row[headerMapping['Origem']] || ''}</td>
-                        <td>${row[headerMapping['UF_Origem']] || ''}</td>
-                        <td>${row[headerMapping['Destino']] || ''}</td>
-                        <td>${row[headerMapping['UF_Destino']] || ''}</td>
-                        <td>${row[headerMapping['KM']] || ''}</td>
-                        <td>${row[headerMapping['Empresa']] || ''}</td>
-                        <td>${row[headerMapping['Destinatario']] || ''}</td>
-                        <td>${row[headerMapping['Usuario']] || ''}</td>
-                        <td>${row[headerMapping['Justificativa']] || ''}</td>
-                        <td>${row[headerMapping['Usuario Cria Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Data']] || ''}</td>
-                        <td>${row[headerMapping['Finalizado']] || ''}</td>
-                        <td>${row[headerMapping['Fin.Contratacao']] || ''}</td>
-                        <td>${row[headerMapping['Hora Contratado']] || ''}</td>
-                        <td>${row[headerMapping['Fin.Expedicao']] || ''}</td>
-                        <td>${row[headerMapping['Hora Expedição']] || ''}</td>
-                        <td>${row[headerMapping['DT Lancamento']] || ''}</td>
-                        <td>${row[headerMapping['Data Criação Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Veiculo Roteirizado']] || ''}</td>
-                        <td>${row[headerMapping['Placa']] || ''}</td>
-                        <td>${row[headerMapping['Cod.Veiculo']] || ''}</td>
-                        <td>${row[headerMapping['Veiculo']] || ''}</td>
-                        <td>${row[headerMapping['Motorista']] || ''}</td>
-                        <td>${row[headerMapping['Cod.Transp.']] || ''}</td>
-                        <td>${row[headerMapping['Transp.']] || ''}</td>
-                        <td>${row[headerMapping['Cod.Fornec.']] || ''}</td>
-                        <td>${row[headerMapping['Fornecedor']] || ''}</td>
-                        <td>${row[headerMapping['Pessoa(F/J)']] || ''}</td>
-                        <td>${row[headerMapping['Tel.Motorista']] || ''}</td>
-                        <td>${row[headerMapping['Cpf.Motorista']] || ''}</td>
-                        <td>${row[headerMapping['Tel.Transportadora']] || ''}</td>
-                        <td>${row[headerMapping['Data Cadastro Placa']] || ''}</td>
-                        <td>${row[headerMapping['Data Validade Checklist']] || ''}</td>
-                        <td>${row[headerMapping['Data Validade Cadastro']] || ''}</td>
-                        <td>${row[headerMapping['Data Validade MOPP']] || ''}</td>
-                        <td>${row[headerMapping['Data Validade Licenciamento']] || ''}</td>
-                        <td>${row[headerMapping['Peso']] || ''}</td>
-                        <td>${row[headerMapping['Valor NF']] || ''}</td>
-                        <td>${row[headerMapping['Qtd.Entregas']] || ''}</td>
-                        <td>${row[headerMapping['Qtd.Ajudantes']] || ''}</td>
-                        <td>${row[headerMapping['Tt.Peso Taxado']] || ''}</td>
-                        <td>${row[headerMapping['Volume Planilha']] || ''}</td>
-                        <td>${row[headerMapping['Peso Taxado']] || ''}</td>
-                        <td>${row[headerMapping['Custo']] || ''}</td>
-                        <td>${row[headerMapping['Receita Expedição']] || ''}</td>
-                        <td>${row[headerMapping['Margem Expedição']] || ''}</td>
-                        <td>${row[headerMapping['Frete']] || ''}</td>
-                        <td>${row[headerMapping['Custo Total']] || ''}</td>
-                        <td>${row[headerMapping['Meta']] || ''}</td>
-                        <td>${row[headerMapping['Receita Liquida']] || ''}</td>
-                        <td>${row[headerMapping['Margem']] || ''}</td>
-                        <td>${row[headerMapping['Receita']] || ''}</td>
-                        <td>${row[headerMapping['Receita Liquida Total']] || ''}</td>
-                        <td>${row[headerMapping['Receita Bruta Total']] || ''}</td>
-                        <td>${row[headerMapping['CNPJ Cliente']] || ''}</td>
-                        <td>${row[headerMapping['Nome Cliente(CCUSTO)']] || ''}</td>
-                        <td>${row[headerMapping['CNPJ Remetente']] || ''}</td>
-                        <td>${row[headerMapping['Nome Remetente']] || ''}</td>
-                        <td>${row[headerMapping['CNPJ Destinatario']] || ''}</td>
-                        <td>${row[headerMapping['Nome Destinatario']] || ''}</td>
-                        <td>${row[headerMapping['Destinatario VIP']] || ''}</td>
-                        <td>${row[headerMapping['Agenda']] || ''}</td>
-                        <td>${row[headerMapping['Meso-Região AGV']] || ''}</td>
-                        <td>${row[headerMapping['Região']] || ''}</td>
-                        <td>${row[headerMapping['Cte Emitido']] || ''}</td>
-                        <td>${row[headerMapping['Relação de NF']] || ''}</td>
-                        <td>${row[headerMapping['Qtd. NF']] || ''}</td>
-                        <td>${row[headerMapping['ADVALOREM']] || ''}</td>
-                        <td>${row[headerMapping['VR. Pedagio']] || ''}</td>
-                        <td>${row[headerMapping['GRIS']] || ''}</td>
-                        <td>${row[headerMapping['TX. Adicional']] || ''}</td>
-                        <td>${row[headerMapping['Receita Bruta Receber']] || ''}</td>
-                        <td>${row[headerMapping['ICMS']] || ''}</td>
-                        <td>${row[headerMapping['PIS/CONFINS']] || ''}</td>
-                        <td>${row[headerMapping['Frete Peso']] || ''}</td>
-                        <td>${row[headerMapping['DT. Entrega']] || ''}</td>
-                        <td>${row[headerMapping['Municipalização']] || ''}</td>
-                        <td>${row[headerMapping['Pessoa Dest']] || ''}</td>
-                        <td>${row[headerMapping['CEP Entrega Doc']] || ''}</td>
-                        <td>${row[headerMapping['End. Entrega Doc']] || ''}</td>
-                        <td>${row[headerMapping['Bai. Entrega Doc']] || ''}</td>
-                        <td>${row[headerMapping['Data Hora Tubo']] || ''}</td>
-                        <td>${row[headerMapping['Data Hora Chegada']] || ''}</td>
-                        <td>${row[headerMapping['Data Hora Coleta']] || ''}</td>
-                        <td>${row[headerMapping['Data Hora Saida']] || ''}</td>
-                        <td>${row[headerMapping['Status Expedição']] || ''}</td>
-                        <td>${row[headerMapping['Unidade Expedição']] || ''}</td>
-                        <td>${row[headerMapping['Frete Receber']] || ''}</td>
-                        <td>${row[headerMapping['Prev. Entrega']] || ''}</td>
-                        <td>${row[headerMapping['Custo Total Bruto']] || ''}</td>
-                        <td>${row[headerMapping['Total Cred. PIS/CONFINS']] || ''}</td>
-                        <td>${row[headerMapping['Total Comp. Custo']] || ''}</td>
-                        <td>${row[headerMapping['Total Custo Liquido']] || ''}</td>
-                        <td>${row[headerMapping['Margem Liquida']] || ''}</td>
-                        <td>${row[headerMapping['Mais Info.']] || ''}</td>
-                    `;
+                    tr.innerHTML = row.map(cell => `<td>${cell}</td>`).join('');
                     tableBody.appendChild(tr);
                 }
             });
-        }
+        });
     } else {
         window.location.href = 'page-login.html';
     }
@@ -801,6 +546,7 @@ document.getElementById('logout').addEventListener('click', () => {
     });
 });
 </script>
+
 
 </body>
 </html>
