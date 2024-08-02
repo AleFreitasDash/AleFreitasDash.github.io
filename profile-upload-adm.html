@@ -12,7 +12,7 @@
     <meta property="og:description" content="Solistica">
     <meta property="og:image" content="https://alefreitasdash.github.io/images/logo-text.png">
     <meta name="format-detection" content="telephone=no">
-    <title>Upload</title>
+    <title>Upload 2.0</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png">
     <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="./icons/flaticon/flaticon.css" rel="stylesheet">
@@ -257,7 +257,7 @@
                                     <div class="tab-pane fade show active" id="withoutSpace" role="tabpanel" aria-labelledby="home-tab-2">
                                         <div class="card card-body pt-0">
                                             <div class="table-responsive">
-                                                <table id="data-table" class="display table" style="min-width: 845px">
+                                                    <table id="data-table" class="display table" style="min-width: 845px">
                                                         <thead>
                                                             <tr>
                                                                 <th>Planilha</th>
@@ -375,7 +375,7 @@
                                                         <tbody>
                                                         </tbody>
                                                     </table>
-                                            </div>
+                                                </div>
                                         </div>
                                     </div>                                                  
                                     </div>
@@ -456,8 +456,11 @@ import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-analytics.js";
-import { XLSX } from "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"; // Importar biblioteca XLSX
 
+// Importar biblioteca XLSX para processamento de arquivos
+import * as XLSX from "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
+
+// Configuração do Firebase
 const firebaseConfig = {
     apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
     authDomain: "basededadossite-bb29b.firebaseapp.com",
@@ -469,12 +472,14 @@ const firebaseConfig = {
     measurementId: "G-PY7SBTHNMR"
 };
 
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
 
+// Verifica se o usuário está autenticado
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const displayName = user.displayName || "Usuário";
@@ -488,6 +493,8 @@ onAuthStateChanged(auth, (user) => {
 
         const userId = user.uid;
         const userRef = ref(database, 'UserProfile/' + userId);
+
+        // Obtém informações do perfil do usuário do banco de dados
         onValue(userRef, (snapshot) => {
             const userData = snapshot.val();
             if (userData) {
@@ -497,8 +504,8 @@ onAuthStateChanged(auth, (user) => {
                 document.getElementById('edit-phone').value = userData.Telefone;
                 document.getElementById('user-email').innerText = userData.Email;
                 document.getElementById('edit-email').value = userData.Email;
-                document.getElementById('user-cpf-cnpj').innerText = userData.CPF + ' / ' + userData.CNPJ;
-                document.getElementById('edit-cpf-cnpj').value = userData.CPF + ' / ' + userData.CNPJ;
+                document.getElementById('user-cpf-cnpj').innerText = `${userData.CPF} / ${userData.CNPJ}`;
+                document.getElementById('edit-cpf-cnpj').value = `${userData.CPF} / ${userData.CNPJ}`;
                 document.getElementById('user-razao-social').innerText = userData.RazaoSocial;
                 document.getElementById('edit-razao-social').value = userData.RazaoSocial;
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
@@ -507,15 +514,12 @@ onAuthStateChanged(auth, (user) => {
                 const documents = userData.documents || {};
                 ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
                     const docElement = document.getElementById(`${docType}-file-name`);
-                    if (documents[docType]) {
-                        docElement.innerText = "Enviado";
-                    } else {
-                        docElement.innerText = "Pendente";
-                    }
+                    docElement.innerText = documents[docType] ? "Enviado" : "Pendente";
                 });
             }
         });
 
+        // Exibe notificações do usuário
         const notificationsRef = ref(database, 'notifications/' + userId);
         onValue(notificationsRef, (snapshot) => {
             const notifications = snapshot.val();
@@ -531,6 +535,7 @@ onAuthStateChanged(auth, (user) => {
             }
         });
 
+        // Habilita a edição dos dados do usuário
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -541,6 +546,7 @@ onAuthStateChanged(auth, (user) => {
             });
         });
 
+        // Salva as alterações dos dados do usuário
         document.getElementById('save-changes').addEventListener('click', () => {
             const updatedData = {
                 Nome: document.getElementById('edit-name').value,
@@ -565,7 +571,7 @@ onAuthStateChanged(auth, (user) => {
             });
         });
 
-        // Upload profile picture
+        // Upload de foto de perfil
         document.getElementById('upload-profile-picture').addEventListener('click', () => {
             document.getElementById('edit-profile-picture').click();
         });
@@ -588,7 +594,7 @@ onAuthStateChanged(auth, (user) => {
             }
         });
 
-        // Upload documents
+        // Upload de documentos
         document.querySelectorAll('.upload-btn').forEach(button => {
             button.addEventListener('click', () => {
                 const inputId = button.getAttribute('data-input-id');
@@ -662,7 +668,7 @@ onAuthStateChanged(auth, (user) => {
             jsonData.forEach((row, index) => {
                 if (index > 0 && row.length >= 109) { // Ignora a primeira linha do cabeçalho
                     const tr = document.createElement('tr');
-                    tr.innerHTML = row.map((cell, i) => `<td>${cell || ''}</td>`).join('');
+                    tr.innerHTML = row.map((cell) => `<td>${cell || ''}</td>`).join('');
                     tableBody.appendChild(tr);
                 }
             });
@@ -672,6 +678,7 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+// Função para realizar logout do usuário
 document.getElementById('logout').addEventListener('click', () => {
     signOut(auth).then(() => {
         window.location.href = 'page-login.html';
@@ -681,188 +688,5 @@ document.getElementById('logout').addEventListener('click', () => {
 });
 
 </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelectorAll('pre code').forEach((el) => {
-                hljs.highlightElement(el);
-            });
-            });
-    </script>
-    <!-- Firebase and XLSX Scripts -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
-
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
-            authDomain: "basededadossite-bb29b.firebaseapp.com",
-            databaseURL: "https://basededadossite-bb29b-default-rtdb.firebaseio.com",
-            projectId: "basededadossite-bb29b",
-            storageBucket: "basededadossite-bb29b.appspot.com",
-            messagingSenderId: "770564649369",
-            appId: "1:770564649369:web:82ba6af1b55b9cc6ff2308",
-            measurementId: "G-PY7SBTHNMR"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const storage = getStorage(app);
-
-        // Evento para enviar o arquivo XLSX para o Firebase Storage e processá-lo
-        document.getElementById('upload-xlsx').addEventListener('click', () => {
-            const fileInput = document.getElementById('formFileLg');
-            const file = fileInput.files[0];
-            if (file) {
-                const xlsxRef = storageRef(storage, `uploads/${file.name}`);
-                uploadBytes(xlsxRef, file).then((snapshot) => {
-                    alert('Arquivo XLSX enviado com sucesso!');
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        console.log('URL do arquivo:', url);
-                        fetch(url)
-                            .then(response => response.arrayBuffer())
-                            .then(data => {
-                                processXLSXData(data);
-                            })
-                            .catch(error => {
-                                console.error('Erro ao baixar o arquivo:', error);
-                            });
-                    });
-                }).catch((error) => {
-                    console.error('Erro ao enviar o arquivo XLSX:', error);
-                });
-            } else {
-                alert('Por favor, selecione um arquivo XLSX para upload.');
-            }
-        });
-
-        // Função para processar os dados do arquivo XLSX
-        function processXLSXData(data) {
-            const workbook = XLSX.read(data, { type: 'array' });
-            const firstSheetName = workbook.SheetNames[0];
-            const worksheet = workbook.Sheets[firstSheetName];
-            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-            const tableBody = document.querySelector('#data-table tbody');
-            tableBody.innerHTML = ''; // Limpar qualquer dado existente
-
-            jsonData.forEach((row, index) => {
-                if (index > 0 && row.length >= 109) { // Ignora a primeira linha do cabeçalho
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${row[0] || ''}</td>
-                        <td>${row[1] || ''}</td>
-                        <td>${row[2] || ''}</td>
-                        <td>${row[3] || ''}</td>
-                        <td>${row[4] || ''}</td>
-                        <td>${row[5] || ''}</td>
-                        <td>${row[6] || ''}</td>
-                        <td>${row[7] || ''}</td>
-                        <td>${row[8] || ''}</td>
-                        <td>${row[9] || ''}</td>
-                        <td>${row[10] || ''}</td>
-                        <td>${row[11] || ''}</td>
-                        <td>${row[12] || ''}</td>
-                        <td>${row[13] || ''}</td>
-                        <td>${row[14] || ''}</td>
-                        <td>${row[15] || ''}</td>
-                        <td>${row[16] || ''}</td>
-                        <td>${row[17] || ''}</td>
-                        <td>${row[18] || ''}</td>
-                        <td>${row[19] || ''}</td>
-                        <td>${row[20] || ''}</td>
-                        <td>${row[21] || ''}</td>
-                        <td>${row[22] || ''}</td>
-                        <td>${row[23] || ''}</td>
-                        <td>${row[24] || ''}</td>
-                        <td>${row[25] || ''}</td>
-                        <td>${row[26] || ''}</td>
-                        <td>${row[27] || ''}</td>
-                        <td>${row[28] || ''}</td>
-                        <td>${row[29] || ''}</td>
-                        <td>${row[30] || ''}</td>
-                        <td>${row[31] || ''}</td>
-                        <td>${row[32] || ''}</td>
-                        <td>${row[33] || ''}</td>
-                        <td>${row[34] || ''}</td>
-                        <td>${row[35] || ''}</td>
-                        <td>${row[36] || ''}</td>
-                        <td>${row[37] || ''}</td>
-                        <td>${row[38] || ''}</td>
-                        <td>${row[39] || ''}</td>
-                        <td>${row[40] || ''}</td>
-                        <td>${row[41] || ''}</td>
-                        <td>${row[42] || ''}</td>
-                        <td>${row[43] || ''}</td>
-                        <td>${row[44] || ''}</td>
-                        <td>${row[45] || ''}</td>
-                        <td>${row[46] || ''}</td>
-                        <td>${row[47] || ''}</td>
-                        <td>${row[48] || ''}</td>
-                        <td>${row[49] || ''}</td>
-                        <td>${row[50] || ''}</td>
-                        <td>${row[51] || ''}</td>
-                        <td>${row[52] || ''}</td>
-                        <td>${row[53] || ''}</td>
-                        <td>${row[54] || ''}</td>
-                        <td>${row[55] || ''}</td>
-                        <td>${row[56] || ''}</td>
-                        <td>${row[57] || ''}</td>
-                        <td>${row[58] || ''}</td>
-                        <td>${row[59] || ''}</td>
-                        <td>${row[60] || ''}</td>
-                        <td>${row[61] || ''}</td>
-                        <td>${row[62] || ''}</td>
-                        <td>${row[63] || ''}</td>
-                        <td>${row[64] || ''}</td>
-                        <td>${row[65] || ''}</td>
-                        <td>${row[66] || ''}</td>
-                        <td>${row[67] || ''}</td>
-                        <td>${row[68] || ''}</td>
-                        <td>${row[69] || ''}</td>
-                        <td>${row[70] || ''}</td>
-                        <td>${row[71] || ''}</td>
-                        <td>${row[72] || ''}</td>
-                        <td>${row[73] || ''}</td>
-                        <td>${row[74] || ''}</td>
-                        <td>${row[75] || ''}</td>
-                        <td>${row[76] || ''}</td>
-                        <td>${row[77] || ''}</td>
-                        <td>${row[78] || ''}</td>
-                        <td>${row[79] || ''}</td>
-                        <td>${row[80] || ''}</td>
-                        <td>${row[81] || ''}</td>
-                        <td>${row[82] || ''}</td>
-                        <td>${row[83] || ''}</td>
-                        <td>${row[84] || ''}</td>
-                        <td>${row[85] || ''}</td>
-                        <td>${row[86] || ''}</td>
-                        <td>${row[87] || ''}</td>
-                        <td>${row[88] || ''}</td>
-                        <td>${row[89] || ''}</td>
-                        <td>${row[90] || ''}</td>
-                        <td>${row[91] || ''}</td>
-                        <td>${row[92] || ''}</td>
-                        <td>${row[93] || ''}</td>
-                        <td>${row[94] || ''}</td>
-                        <td>${row[95] || ''}</td>
-                        <td>${row[96] || ''}</td>
-                        <td>${row[97] || ''}</td>
-                        <td>${row[98] || ''}</td>
-                        <td>${row[99] || ''}</td>
-                        <td>${row[100] || ''}</td>
-                        <td>${row[101] || ''}</td>
-                        <td>${row[102] || ''}</td>
-                        <td>${row[103] || ''}</td>
-                        <td>${row[104] || ''}</td>
-                        <td>${row[105] || ''}</td>
-                        <td>${row[106] || ''}</td>
-                        <td>${row[107] || ''}</td>
-                        <td>${row[108] || ''}</td>
-                    `;
-                    tableBody.appendChild(tr);
-                }
-            });
-        }
-    </script>
 </body>
 </html>
