@@ -450,7 +450,7 @@
         hljs.configure({ ignoreUnescapedHTML: true })
         
     </script>
-<script type="module">
+<script>
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-database.js";
@@ -479,25 +479,16 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 const storage = getStorage(app);
 
-// Função auxiliar para atualizar elementos DOM de forma segura
-function updateDOMElementById(id, callback) {
-    const element = document.getElementById(id);
-    if (element) {
-        callback(element);
-    }
-}
-
-// Função para manipular estado de autenticação do usuário
-function handleUserAuthentication(user) {
+// Verifica se o usuário está autenticado
+onAuthStateChanged(auth, (user) => {
     if (user) {
         const displayName = user.displayName || "Usuário";
-
-        updateDOMElementById('user-name1', (el) => el.innerText = displayName);
-        updateDOMElementById('user-name2', (el) => el.innerText = "Olá, " + displayName);
+        document.getElementById('user-name1').innerText = displayName;
+        document.getElementById('user-name2').innerText = "Olá, " + displayName;
 
         if (user.photoURL) {
-            updateDOMElementById('profile-picture', (el) => el.src = user.photoURL);
-            updateDOMElementById('profile-picture-edit', (el) => el.src = user.photoURL);
+            document.getElementById('profile-picture').src = user.photoURL;
+            document.getElementById('profile-picture-edit').src = user.photoURL;
         }
 
         const userId = user.uid;
@@ -507,7 +498,24 @@ function handleUserAuthentication(user) {
         onValue(userRef, (snapshot) => {
             const userData = snapshot.val();
             if (userData) {
-                updateUserProfile(userData);
+                document.getElementById('user-name').innerText = userData.Nome;
+                document.getElementById('edit-name').value = userData.Nome;
+                document.getElementById('user-phone').innerText = userData.Telefone;
+                document.getElementById('edit-phone').value = userData.Telefone;
+                document.getElementById('user-email').innerText = userData.Email;
+                document.getElementById('edit-email').value = userData.Email;
+                document.getElementById('user-cpf-cnpj').innerText = `${userData.CPF} / ${userData.CNPJ}`;
+                document.getElementById('edit-cpf-cnpj').value = `${userData.CPF} / ${userData.CNPJ}`;
+                document.getElementById('user-razao-social').innerText = userData.RazaoSocial;
+                document.getElementById('edit-razao-social').value = userData.RazaoSocial;
+                document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
+                document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
+
+                const documents = userData.documents || {};
+                ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
+                    const docElement = document.getElementById(`${docType}-file-name`);
+                    docElement.innerText = documents[docType] ? "Enviado" : "Pendente";
+                });
             }
         });
 
@@ -516,66 +524,30 @@ function handleUserAuthentication(user) {
         onValue(notificationsRef, (snapshot) => {
             const notifications = snapshot.val();
             const notificationContainer = document.getElementById('notification-container');
-            if (notificationContainer) {
-                notificationContainer.innerHTML = '';
-                if (notifications) {
-                    for (let key in notifications) {
-                        const notification = notifications[key];
-                        const li = document.createElement('li');
-                        li.innerHTML = `<h6 class="mb-1">${notification.title}</h6>\n<small class="d-block">${notification.content}</small>`;
-                        notificationContainer.appendChild(li);
-                    }
+            notificationContainer.innerHTML = '';
+            if (notifications) {
+                for (let key in notifications) {
+                    const notification = notifications[key];
+                    const li = document.createElement('li');
+                    li.innerHTML = `<h6 class="mb-1">${notification.title}</h6>\n<small class="d-block">${notification.content}</small>`;
+                    notificationContainer.appendChild(li);
                 }
             }
         });
 
-        enableUserProfileEditing(userId);
-        setupProfilePictureUpload(user);
-        setupDocumentUploads(userId);
-        setupXLSXUpload();
-    } else {
-        window.location.href = 'page-login.html';
-    }
-}
-
-// Atualiza o perfil do usuário no DOM
-function updateUserProfile(userData) {
-    updateDOMElementById('user-name', (el) => el.innerText = userData.Nome);
-    updateDOMElementById('edit-name', (el) => el.value = userData.Nome);
-    updateDOMElementById('user-phone', (el) => el.innerText = userData.Telefone);
-    updateDOMElementById('edit-phone', (el) => el.value = userData.Telefone);
-    updateDOMElementById('user-email', (el) => el.innerText = userData.Email);
-    updateDOMElementById('edit-email', (el) => el.value = userData.Email);
-    updateDOMElementById('user-cpf-cnpj', (el) => el.innerText = `${userData.CPF} / ${userData.CNPJ}`);
-    updateDOMElementById('edit-cpf-cnpj', (el) => el.value = `${userData.CPF} / ${userData.CNPJ}`);
-    updateDOMElementById('user-razao-social', (el) => el.innerText = userData.RazaoSocial);
-    updateDOMElementById('edit-razao-social', (el) => el.value = userData.RazaoSocial);
-    updateDOMElementById('user-nome-fantasia', (el) => el.innerText = userData.NomeFantasia);
-    updateDOMElementById('edit-nome-fantasia', (el) => el.value = userData.NomeFantasia);
-
-    const documents = userData.documents || {};
-    ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
-        updateDOMElementById(`${docType}-file-name`, (el) => {
-            el.innerText = documents[docType] ? "Enviado" : "Pendente";
+        // Habilita a edição dos dados do usuário
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const field = button.getAttribute('data-field');
+                document.getElementById(`user-${field}`).style.display = 'none';
+                document.getElementById(`edit-${field}`).style.display = 'block';
+                document.getElementById('save-changes').style.display = 'block';
+            });
         });
-    });
-}
 
-// Habilita a edição dos dados do usuário
-function enableUserProfileEditing(userId) {
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault();
-            const field = button.getAttribute('data-field');
-            updateDOMElementById(`user-${field}`, (el) => el.style.display = 'none');
-            updateDOMElementById(`edit-${field}`, (el) => el.style.display = 'block');
-            updateDOMElementById('save-changes', (el) => el.style.display = 'block');
-        });
-    });
-
-    // Salva as alterações dos dados do usuário
-    updateDOMElementById('save-changes', (button) => {
-        button.addEventListener('click', () => {
+        // Salva as alterações dos dados do usuário
+        document.getElementById('save-changes').addEventListener('click', () => {
             const updatedData = {
                 Nome: document.getElementById('edit-name').value,
                 Telefone: document.getElementById('edit-phone').value,
@@ -587,7 +559,7 @@ function enableUserProfileEditing(userId) {
             };
 
             update(ref(database, 'UserProfile/' + userId), updatedData).then(() => {
-                updateDOMElementById('save-changes', (el) => el.style.display = 'none');
+                document.getElementById('save-changes').style.display = 'none';
                 document.querySelectorAll('input').forEach(input => {
                     input.style.display = 'none';
                 });
@@ -598,27 +570,21 @@ function enableUserProfileEditing(userId) {
                 console.error('Erro ao atualizar dados:', error);
             });
         });
-    });
-}
 
-// Configura o upload de foto de perfil
-function setupProfilePictureUpload(user) {
-    updateDOMElementById('upload-profile-picture', (button) => {
-        button.addEventListener('click', () => {
-            updateDOMElementById('edit-profile-picture', (input) => input.click());
+        // Upload de foto de perfil
+        document.getElementById('upload-profile-picture').addEventListener('click', () => {
+            document.getElementById('edit-profile-picture').click();
         });
-    });
 
-    updateDOMElementById('edit-profile-picture', (input) => {
-        input.addEventListener('change', (event) => {
+        document.getElementById('edit-profile-picture').addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (file) {
-                const profilePicRef = storageRef(storage, `profilePictures/${user.uid}`);
+                const profilePicRef = storageRef(storage, `profilePictures/${userId}`);
                 uploadBytes(profilePicRef, file).then((snapshot) => {
                     getDownloadURL(snapshot.ref).then((url) => {
                         updateProfile(user, { photoURL: url }).then(() => {
-                            updateDOMElementById('profile-picture', (el) => el.src = url);
-                            updateDOMElementById('profile-picture-edit', (el) => el.src = url);
+                            document.getElementById('profile-picture').src = url;
+                            document.getElementById('profile-picture-edit').src = url;
                             alert('Foto de perfil atualizada com sucesso!');
                         });
                     });
@@ -627,116 +593,214 @@ function setupProfilePictureUpload(user) {
                 });
             }
         });
-    });
-}
 
-// Configura o upload de documentos
-function setupDocumentUploads(userId) {
-    document.querySelectorAll('.upload-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const inputId = button.getAttribute('data-input-id');
-            updateDOMElementById(inputId, (input) => input.click());
+        // Upload de documentos
+        document.querySelectorAll('.upload-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const inputId = button.getAttribute('data-input-id');
+                document.getElementById(inputId).click();
+            });
         });
-    });
 
-    document.querySelectorAll('.upload-document').forEach(input => {
-        input.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            const docType = event.target.getAttribute('data-doc-type');
-            if (file) {
-                const docRef = storageRef(storage, `documents/${userId}/${docType}`);
-                uploadBytes(docRef, file).then((snapshot) => {
-                    getDownloadURL(snapshot.ref).then((url) => {
-                        const documentData = {
-                            fileName: file.name,
-                            url: url
-                        };
-                        update(ref(database, `UserProfile/${userId}/documents`), {
-                            [docType]: documentData
-                        }).then(() => {
-                            updateDOMElementById(`${docType}-file-name`, (el) => el.innerText = "Enviado");
-                            alert('Documento enviado com sucesso!');
-                        });
-                    });
-                }).catch((error) => {
-                    console.error('Erro ao fazer upload do documento:', error);
-                });
-            }
-        });
-    });
-}
-
-// Configura o upload e processamento de arquivos XLSX
-function setupXLSXUpload() {
-    updateDOMElementById('upload-xlsx', (button) => {
-        button.addEventListener('click', () => {
-            const fileInput = document.getElementById('formFileLg');
-            if (fileInput) {
-                const file = fileInput.files[0];
+        document.querySelectorAll('.upload-document').forEach(input => {
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const docType = event.target.getAttribute('data-doc-type');
                 if (file) {
-                    // Processa o arquivo XLSX antes de fazer upload
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const data = new Uint8Array(e.target.result);
-                        processXLSXData(data);
-                    };
-                    reader.readAsArrayBuffer(file);
-
-                    // Realiza o upload do arquivo XLSX
-                    const xlsxRef = storageRef(storage, `uploads/${file.name}`);
-                    uploadBytes(xlsxRef, file).then((snapshot) => {
-                        alert('Arquivo XLSX enviado com sucesso!');
+                    const docRef = storageRef(storage, `documents/${userId}/${docType}`);
+                    uploadBytes(docRef, file).then((snapshot) => {
                         getDownloadURL(snapshot.ref).then((url) => {
-                            console.log('URL do arquivo:', url);
+                            const documentData = {
+                                fileName: file.name,
+                                url: url
+                            };
+                            update(ref(database, `UserProfile/${userId}/documents`), {
+                                [docType]: documentData
+                            }).then(() => {
+                                document.getElementById(`${docType}-file-name`).innerText = "Enviado";
+                                alert('Documento enviado com sucesso!');
+                            });
                         });
                     }).catch((error) => {
-                        console.error('Erro ao enviar o arquivo XLSX:', error);
+                        console.error('Erro ao fazer upload do documento:', error);
                     });
-                } else {
-                    alert('Por favor, selecione um arquivo XLSX para upload.');
                 }
+            });
+        });
+
+        // Upload e processamento de arquivos XLSX
+        document.getElementById('upload-xlsx').addEventListener('click', () => {
+            const fileInput = document.getElementById('formFileLg');
+            const file = fileInput.files[0];
+            if (file) {
+                const xlsxRef = storageRef(storage, `uploads/${file.name}`);
+                uploadBytes(xlsxRef, file).then((snapshot) => {
+                    alert('Arquivo XLSX enviado com sucesso!');
+                    getDownloadURL(snapshot.ref).then((url) => {
+                        console.log('URL do arquivo:', url);
+                        fetch(url)
+                            .then(response => response.arrayBuffer())
+                            .then(data => {
+                                processXLSXData(data);
+                            })
+                            .catch(error => {
+                                console.error('Erro ao baixar o arquivo:', error);
+                            });
+                    });
+                }).catch((error) => {
+                    console.error('Erro ao enviar o arquivo XLSX:', error);
+                });
+            } else {
+                alert('Por favor, selecione um arquivo XLSX para upload.');
             }
         });
-    });
-}
 
-// Função para processar os dados do arquivo XLSX
-function processXLSXData(data) {
-    const workbook = XLSX.read(data, { type: 'array' });
-    const firstSheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[firstSheetName];
-    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Função para processar os dados do arquivo XLSX
+        function processXLSXData(data) {
+            const workbook = XLSX.read(data, { type: 'array' });
+            const firstSheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[firstSheetName];
+            const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-    const tableBody = document.querySelector('#data-table tbody');
-    if (tableBody) {
-        tableBody.innerHTML = ''; // Limpar qualquer dado existente
+            const tableBody = document.querySelector('#data-table tbody');
+            tableBody.innerHTML = ''; // Limpar qualquer dado existente
 
-        jsonData.forEach((row, index) => {
-            if (index > 0) { // Ignora a primeira linha do cabeçalho
-                const tr = document.createElement('tr');
-                tr.innerHTML = row.map((cell) => `<td>${cell || ''}</td>`).join('');
-                tableBody.appendChild(tr);
-            }
-        });
+            // Mapeamento das colunas do XLSX para a tabela HTML
+            jsonData.forEach((row, index) => {
+                if (index > 0) { // Ignora a primeira linha do cabeçalho
+                    const tr = document.createElement('tr');
+                    const rowData = [
+                        row[0],  // Planilha
+                        row[1],  // Produtos
+                        row[2],  // Seg.Transp.
+                        row[3],  // Tp.Contr.
+                        row[4],  // Perfil Planilha
+                        row[5],  // Perfil Carga
+                        row[6],  // Meio Pagto
+                        row[7],  // Tipo Planilha
+                        row[8],  // Numero
+                        row[9],  // Cliente
+                        row[10], // Remetente
+                        row[11], // Prioridade
+                        row[12], // Id_Roteirizador
+                        row[13], // Manifesto
+                        row[14], // C.Custo
+                        row[15], // Origem
+                        row[16], // UF_Origem
+                        row[17], // Destino
+                        row[18], // UF_Destino
+                        row[19], // KM
+                        row[20], // Empresa
+                        row[21], // Destinatario
+                        row[22], // Usuario
+                        row[23], // Justificativa
+                        row[24], // Usuario Cria Planilha
+                        row[25], // Data
+                        row[26], // Finalizado
+                        row[27], // Fin.Contratacao
+                        row[28], // Hora Contratado
+                        row[29], // Fin.Expedicao
+                        row[30], // Hora Expedição
+                        row[31], // DT Lancamento
+                        row[32], // Data Criação Planilha
+                        row[33], // Veiculo Roteirizado
+                        row[34], // Placa
+                        row[35], // Cod.Veiculo
+                        row[36], // Veiculo
+                        row[37], // Motorista
+                        row[38], // Cod.Transp.
+                        row[39], // Transp.
+                        row[40], // Cod.Fornec.
+                        row[41], // Fornecedor
+                        row[42], // Pessoa(F/J)
+                        row[43], // Tel.Motorista
+                        row[44], // Cpf.Motorista
+                        row[45], // Tel.Transportadora
+                        row[46], // Data Cadastro Placa
+                        row[47], // Data Validade Checklist
+                        row[48], // Data Validade Cadastro
+                        row[49], // Data Validade MOPP
+                        row[50], // Data Validade Licenciamento
+                        row[51], // Peso
+                        row[52], // Valor NF
+                        row[53], // Qtd.Entregas
+                        row[54], // Qtd.Ajudantes
+                        row[55], // Tt.Peso Taxado
+                        row[56], // Volume Planilha
+                        row[57], // Peso Taxado
+                        row[58], // Custo
+                        row[59], // Receita Expedição
+                        row[60], // Margem Expedição
+                        row[61], // Frete
+                        row[62], // Custo Total
+                        row[63], // Meta
+                        row[64], // Receita Liquida
+                        row[65], // Margem
+                        row[66], // Receita
+                        row[67], // Receita Liquida Total
+                        row[68], // Receita Bruta Total
+                        row[69], // CNPJ Cliente
+                        row[70], // Nome Cliente(CCUSTO)
+                        row[71], // CNPJ Remetente
+                        row[72], // Nome Remetente
+                        row[73], // CNPJ Destinatario
+                        row[74], // Nome Destinatario
+                        row[75], // Destinatario VIP
+                        row[76], // Agenda
+                        row[77], // Meso-Região AGV
+                        row[78], // Região
+                        row[79], // Cte Emitido
+                        row[80], // Relação de NF
+                        row[81], // Qtd. NF
+                        row[82], // ADVALOREM
+                        row[83], // VR. Pedagio
+                        row[84], // GRIS
+                        row[85], // TX. Adicional
+                        row[86], // Receita Bruta Receber
+                        row[87], // ICMS
+                        row[88], // PIS/CONFINS
+                        row[89], // Frete Peso
+                        row[90], // DT. Entrega
+                        row[91], // Municipalização
+                        row[92], // Pessoa Dest
+                        row[93], // CEP Entrega Doc
+                        row[94], // End. Entrega Doc
+                        row[95], // Bai. Entrega Doc
+                        row[96], // Data Hora Tubo
+                        row[97], // Data Hora Chegada
+                        row[98], // Data Hora Coleta
+                        row[99], // Data Hora Saida
+                        row[100],// Status Expedição
+                        row[101],// Unidade Expedição
+                        row[102],// Frete Receber
+                        row[103],// Prev. Entrega
+                        row[104],// Custo Total Bruto
+                        row[105],// Total Cred. PIS/CONFINS
+                        row[106],// Total Comp. Custo
+                        row[107],// Total Custo Liquido
+                        row[108],// Margem Liquida
+                        row[109] // Mais Info.
+                    ];
+                    
+                    tr.innerHTML = rowData.map((cell) => `<td>${cell || ''}</td>`).join('');
+                    tableBody.appendChild(tr);
+                }
+            });
+        }
+    } else {
+        window.location.href = 'page-login.html';
     }
-}
-
-// Função para realizar logout do usuário
-updateDOMElementById('logout', (button) => {
-    button.addEventListener('click', () => {
-        signOut(auth).then(() => {
-            window.location.href = 'page-login.html';
-        }).catch((error) => {
-            console.error('Erro ao realizar logout:', error);
-        });
-    });
 });
 
-// Verifica se o usuário está autenticado
-onAuthStateChanged(auth, handleUserAuthentication);
-
+// Função para realizar logout do usuário
+document.getElementById('logout').addEventListener('click', () => {
+    signOut(auth).then(() => {
+        window.location.href = 'page-login.html';
+    }).catch((error) => {
+        console.error('Erro ao realizar logout:', error);
+    });
+});
 </script>
-
 
 </body>
 </html>
