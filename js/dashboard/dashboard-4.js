@@ -20,10 +20,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -34,11 +34,11 @@
 		
 		colors:['#fff'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -48,7 +48,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -72,7 +72,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -80,21 +80,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -111,7 +111,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,
@@ -142,10 +142,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -154,11 +154,11 @@
 		
 		colors:['#fff'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -168,7 +168,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -192,7 +192,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -200,21 +200,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -231,7 +231,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,
@@ -262,10 +262,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -274,11 +274,11 @@
 		
 		colors:['#fff'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -288,7 +288,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -312,7 +312,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -320,21 +320,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -351,7 +351,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,
@@ -390,13 +390,13 @@
 			
 			
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			
 		},
 		plotOptions: {
 		  bar: {
-			horizontal: false,
+			horizontal: true,
 			endingShape:'rounded',
 			columnWidth: '45%',
 			borderRadius: 5,
@@ -405,13 +405,13 @@
 		},
 		colors:['#', '#77248B'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 		markers: {
 			shape: "circle",
 		},
 		legend: {
-			show: false,
+			show: true,
 			fontSize: '12px',
 			labels: {
 				colors: '#000000',
@@ -435,7 +435,7 @@
 			borderColor: 'rgba(252, 252, 252,0.2)',
 		},
 		xaxis: {
-		  categories: ['Jan', 'Feb', 'Mar','Apr','May','Jun','Jul','Agu', 'Sep', 'Oct','Nev','Dec'],
+		  categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 		  labels: {
 			style: {
 				colors: '#000',
@@ -446,10 +446,10 @@
 				},		
 		  },
 		  axisBorder: {
-			show: false,
+			show: true,
 	  	 },
 		  axisTicks: {
-			show: false,
+			show: true,
 			borderType: 'solid',
 			color: '#78909C',
 			height: 6,
@@ -457,7 +457,7 @@
 			offsetY: 0
 		},
 		  crosshairs: {
-		  show: false,
+		  show: true,
 		  }
 		},
 		yaxis: {
@@ -551,22 +551,22 @@
 		 var options = {
           series: [
           {
-            name: 'Order',
-            data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+            name: '2024',
+            data: generateDayWiseTimeSeries(new Date().getTime(), 20, {
               min: 10,
               max: 5287
             })
           },
           {
-            name: 'Profit',
-            data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+            name: '2023',
+            data: generateDayWiseTimeSeries(new Date().getTime(), 20, {
               min: 10,
               max: 5658
             })
           },
           {
-            name: 'Last Month',
-            data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
+            name: '2022',
+            data: generateDayWiseTimeSeries(new Date().getTime(), 20, {
               min: 10,
               max: 8554
             })
@@ -582,12 +582,12 @@
             }
           },
 		   toolbar: {
-			    show: false,
+			    show: true,
 		   },
         },
         colors: ['var(--primary-light)', '#DCDFE5', '#FFCCC0'],
         dataLabels: {
-          enabled: false
+          enabled: true
         },
         stroke: {
           curve: 'smooth'
@@ -634,12 +634,12 @@
 				data: data,
 				options: {
 					responsive: !0,
-					//maintainAspectRatio: false,
+					//maintainAspectRatio: true,
 					legend: {
 						display: !1
 					},
 					tooltips: {
-						enabled: false
+						enabled: true
 					},
 					scales: {
 						xAxes: [{
@@ -701,12 +701,12 @@
 				data: data,
 				options: {
 					responsive: !0,
-					//maintainAspectRatio: false,
+					maintainAspectRatio: true,
 					legend: {
 						display: !1
 					},
 					tooltips: {
-						enabled: false
+						enabled: true
 					},
 					scales: {
 						xAxes: [{
@@ -752,7 +752,7 @@
             var i = 0;
             var series = [];
             if (!includeZ)
-                includeZ = false;
+                includeZ = true;
             while (i < count) {
                 var x = Math.floor(Math.random() * (750 - 1 + 1)) + 1;
                 var y = Math.floor(Math.random() * (yrange.max - yrange.min + 1)) + yrange.min;
@@ -804,7 +804,7 @@
           // width: 250,
           type: 'heatmap',
 		  toolbar: {
-			   show: false,
+			   show: true,
 		  }
         },
 		plotOptions: {
@@ -823,7 +823,7 @@
 			dashArray: 0,      
 		},
         dataLabels: {
-          enabled: false
+          enabled: true
         },
         colors: ['#452b90','#ffd125'],
         title: {
@@ -848,10 +848,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -860,11 +860,11 @@
 		
 		colors:['var(--primary)'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -874,7 +874,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -909,7 +909,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -917,21 +917,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -948,7 +948,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,
@@ -980,10 +980,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -993,11 +993,11 @@
 		
 		colors:['#FF7C7C'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -1007,7 +1007,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -1042,7 +1042,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -1050,21 +1050,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -1081,7 +1081,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,
@@ -1113,10 +1113,10 @@
 			type: 'line',
 			height: 50,
 			toolbar: {
-				show: false,
+				show: true,
 			},
 			zoom: {
-				enabled: false
+				enabled: true
 			},
 			sparkline: {
 				enabled: true
@@ -1125,11 +1125,11 @@
 		
 		colors:['#58bad7'],
 		dataLabels: {
-		  enabled: false,
+		  enabled: true,
 		},
 
 		legend: {
-			show: false,
+			show: true,
 		},
 		stroke: {
 		  show: true,
@@ -1139,7 +1139,7 @@
 		},
 		
 		grid: {
-			show:false,
+			show:true,
 			borderColor: '#eee',
 			padding: {
 				top: 0,
@@ -1174,7 +1174,7 @@
                     }
                 },
                 active: {
-                    allowMultipleDataPointsSelection: false,
+                    allowMultipleDataPointsSelection: true,
                     filter: {
                         type: 'none',
                         value: 0
@@ -1182,21 +1182,21 @@
                 }
             },
 		x: {
-			categories: ['Jan', 'feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct'],
+			categories: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
 			axisBorder: {
-				show: false,
+				show: true,
 			},
 			axisTicks: {
-				show: false
+				show: true
 			},
 			labels: {
-				show: false,
+				show: true,
 				style: {
 					fontSize: '12px',
 				}
 			},
 			crosshairs: {
-				show: false,
+				show: true,
 				position: 'front',
 				stroke: {
 					width: 1,
@@ -1213,7 +1213,7 @@
 			}
 		},
 		y: {
-			show: false,
+			show: true,
 		},
 		tooltip: {
 			enabled:true,

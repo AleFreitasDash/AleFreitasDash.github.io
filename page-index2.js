@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-analytics.js";
 
 const firebaseConfig = {
@@ -18,12 +19,18 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
 const database = getDatabase(app);
+const storage = getStorage(app);
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const displayName = user.displayName || "Usuário";
         document.getElementById('user-name1').innerText = displayName;
         document.getElementById('user-name2').innerText = "Olá, " + displayName;
+
+        if (user.photoURL) {
+            document.getElementById('profile-picture').src = user.photoURL;
+            document.getElementById('profile-picture-edit').src = user.photoURL;
+        }
 
         const userId = user.uid;
         const userRef = ref(database, 'UserProfile/' + userId);
@@ -42,6 +49,16 @@ onAuthStateChanged(auth, (user) => {
                 document.getElementById('edit-razao-social').value = userData.RazaoSocial;
                 document.getElementById('user-nome-fantasia').innerText = userData.NomeFantasia;
                 document.getElementById('edit-nome-fantasia').value = userData.NomeFantasia;
+
+                const documents = userData.documents || {};
+                ['cnh', 'comprovante', 'foto-frente', 'antt'].forEach(docType => {
+                    const docElement = document.getElementById(`${docType}-file-name`);
+                    if (documents[docType]) {
+                        docElement.innerText = "Enviado";
+                    } else {
+                        docElement.innerText = "Pendente";
+                    }
+                });
             }
         });
 
@@ -91,6 +108,63 @@ onAuthStateChanged(auth, (user) => {
                 });
             }).catch((error) => {
                 console.error('Erro ao atualizar dados:', error);
+            });
+        });
+
+        // Upload profile picture
+        document.getElementById('upload-profile-picture').addEventListener('click', () => {
+            document.getElementById('edit-profile-picture').click();
+        });
+
+        document.getElementById('edit-profile-picture').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const profilePicRef = storageRef(storage, `profilePictures/${userId}`);
+                uploadBytes(profilePicRef, file).then((snapshot) => {
+                    getDownloadURL(snapshot.ref).then((url) => {
+                        updateProfile(user, { photoURL: url }).then(() => {
+                            document.getElementById('profile-picture').src = url;
+                            document.getElementById('profile-picture-edit').src = url;
+                            alert('Foto de perfil atualizada com sucesso!');
+                        });
+                    });
+                }).catch((error) => {
+                    console.error('Erro ao fazer upload da foto de perfil:', error);
+                });
+            }
+        });
+
+        // Upload documents
+        document.querySelectorAll('.upload-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const inputId = button.getAttribute('data-input-id');
+                document.getElementById(inputId).click();
+            });
+        });
+
+        document.querySelectorAll('.upload-document').forEach(input => {
+            input.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const docType = event.target.getAttribute('data-doc-type');
+                if (file) {
+                    const docRef = storageRef(storage, `documents/${userId}/${docType}`);
+                    uploadBytes(docRef, file).then((snapshot) => {
+                        getDownloadURL(snapshot.ref).then((url) => {
+                            const documentData = {
+                                fileName: file.name,
+                                url: url
+                            };
+                            update(ref(database, `UserProfile/${userId}/documents`), {
+                                [docType]: documentData
+                            }).then(() => {
+                                document.getElementById(`${docType}-file-name`).innerText = "Enviado";
+                                alert('Documento enviado com sucesso!');
+                            });
+                        });
+                    }).catch((error) => {
+                        console.error('Erro ao fazer upload do documento:', error);
+                    });
+                }
             });
         });
     } else {

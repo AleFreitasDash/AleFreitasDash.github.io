@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linha do Tempo</title>
+    <style>
+        ul.timeline {
+            list-style: none;
+            padding: 0;
+        }
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+        .origin, .destination {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .circle, .square {
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            margin-right: 2px;
+        }
+        .circle {
+            border-radius: 50%;
+        }
+        .line {
+            width: 2px;
+            height: 30px; /* Ajuste conforme necessário */
+            background-color: gray;
+            margin-left: 5px; /* Adicione a margem esquerda para a linha */
+        }
+    </style>
+</head>
+<body>
+    <ul class="timeline">
+        <li>
+            <div class="timeline-item">
+                <span class="origin"><div class="circle"></div> Bragança Paulista, SP</span>
+                <div class="line"></div> <!-- Linha adicionada -->
+                <span class="destination"><div class="square"></div> Pinhais, PR</span>
+            </div>
+        </li>
+    </ul>
+</body>
+</html>

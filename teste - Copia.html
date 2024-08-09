@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Solistica, Alexandre Freitas">
+    <meta name="author" content="Alexandre Freitas">
+    <meta name="robots" content="Solistica, Alexandre Freitas">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Solistica">
+    <meta property="og:title" content="Solistica">
+    <meta property="og:description" content="Solistica">
+    <meta property="og:image" content="https://alefreitasdash.github.io/images/logo-text.png">
+    <meta name="format-detection" content="telephone=no">
+    <title>Upload 2.0</title>
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./icons/flaticon/flaticon.css" rel="stylesheet">
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./vendor/select2/css/select2.min.css">
+    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./css/style.css" rel="stylesheet">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body data-typography="poppins" data-theme-version="light" data-layout="vertical" data-nav-headerbg="black" data-headerbg="color_1">
+
+    <!-- Preloader start -->
+    <div id="preloader">
+        <div class="dz-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- Preloader end -->
+
+    <!-- Main wrapper start -->
+    <div id="main-wrapper">
+        <!-- Nav header start -->
+        <div class="nav-header">
+            <a href="index.html" class="brand-logo">
+                <img class="logo-abbr" width="51" height="51" src="./images/logo-text.png" alt="">
+                <img class="brand-title" width="80" height="80" src="./images/logo-light.svg" alt="">
+            </a>
+
+            <div class="nav-control" style="display: none;">
+                <div class="hamburger"></div>
+            </div>
+        </div>
+        <!-- Nav header end -->
+        
+        <!-- Header start -->
+        <div class="header">
+            <div class="header-content">
+                <nav class="navbar navbar-expand">
+                    <div class="collapse navbar-collapse justify-content-between">
+                        <div class="header-left"></div>
+                        <ul class="navbar-nav header-right">
+                            <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
+                                    <i class="fa fa-bell"></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3 pt-0" style="height:380px;">
+                                        <ul class="timeline">
+                                            <li>
+                                                <div class="timeline-panel">
+                                                    <div class="media-body" id="notification-container">
+                                                        <h6 class="mb-1">Titulo</h6>
+                                                        <small class="d-block">Texto</small>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <a class="all-notification" href="javascript:void(0);">Exibir mais <i class="ti-arrow-end"></i></a>
+                                </div>
+                            </li>
+                            <li class="nav-item align-items-center header-border"><a href="relatorio.html" class="btn btn-primary">Relatorio</a></li>
+                            <li class="nav-item ps-3">
+                                <div class="header-profile2">
+                                    <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <div class="header-info2 d-flex align-items-center">
+                                            <div class="header-media">
+                                                <img src="images/user.jpg" class="avatar avatar-lg" id="profile-picture" alt="">
+                                            </div>
+                                            <div class="header-info">
+                                                <h6 id="user-name2">Usuario</h6>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="profile-box">
+                                        <div class="products">
+                                            <div class="border-img">
+                                                <img src="images/user.jpg" class="avatar" id="profile-picture-edit" alt="">
+                                            </div>    
+                                            <div class="ms-3">
+                                                <h6 class="mb-0" id="user-name1">Usuario</h6>
+                                                <span class="badge border-0 rounded">Status Cadastro</span>
+                                            </div>
+                                            <input type="file" id="edit-profile-picture" accept="image/*" style="display:none;">
+                                            <button id="upload-profile-picture" class="btn btn-primary">Alterar Foto</button>
+                                        </div>
+                                        <div class="account-setting">
+                                            <a href="app-profile-2.html" class="ai-icon">
+                                                <i class="fa fa-user"></i>
+                                                <span class="ms-2">Configurações de Conta</span>
+                                            </a>
+                                            <a href="app-profile-1.html" class="ai-icon ">
+                                                <i class="fa fa-load"></i>
+                                                <span class="ms-2">Atualizações</span>
+                                            </a>
+                                            <div class="d-flex align-items-center">
+                                                <a href="javascript:void(0);" class="dropdown-item ai-icon">
+                                                    <div>
+                                                        <i class="fa fa-moon"></i>
+                                                        <span class="ms-2">Modo Escuro</span>
+                                                    </div>
+                                                </a>
+                                                <div class="dz-layout">
+                                                    <i class="fas fa-sun sun"></i>
+                                                    <i class="fas fa-moon moon"></i>
+                                                </div>    
+                                            </div>
+                                            <a href="page-login.html" class="ai-icon" id="logout">
+                                                <i class="fa fa-shutdown"></i>
+                                                <span class="ms-2">Sair </span>
+                                            </a>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Header end -->
+
+        <!-- Sidebar start -->
+        <div class="deznav">
+            <div class="deznav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li><a href="index.html" class="" aria-expanded="false">
+                        <div class="menu-icon">
+                            <i class="fa fa-home"></i>
+                        </div>    
+                            <span class="nav-text">Inicio</span>
+                        </a>
+                    </li>
+                    <li><a href="page-meusfretes.html" class="" aria-expanded="false">
+                        <div class="menu-icon">
+                            <i class="fa fa-doc"></i>
+                        </div>    
+                            <span class="nav-text">Meus Fretes</span>
+                        </a>
+                    </li>
+                    <li><a href="page-buscarfretes.html" class="" aria-expanded="false">
+                        <div class="menu-icon">
+                            <i class="fa fa-search"></i>
+                        </div>
+                        <span class="nav-text">Buscar Fretes</span>
+                        </a>
+                    </li>
+                    <li class="menu-title">Outras Ferramentas</li>
+                    <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                        <div class="menu-icon">
+                            <i class="fa fa-doc"></i>
+                        </div>
+                        <span class="nav-text">Cadastro</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li class="mini-dashboard">...</li>
+                            <li><a href="./page-meusdados.html">Meus Dados</a></li>
+                            <li><a href="./page-motorista.html">Motoristas</a></li>
+                            <li><a href="./page-veiculo.html">Veiculos</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="page-disponibilidade.html" class="" aria-expanded="false">
+                        <div class="menu-icon">
+                            <i class="fa fa-search"></i>
+                        </div>    
+                            <span class="nav-text">Disponibilidade</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="switch-btn">
+                    <a href="page-login.html">
+                        <i class="fa fa-bye"></i>
+                        <span>Sair</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar end -->
+        
+        <!-- Content body start -->
+        <div class="outer-body">  
+            <div class="inner-body">
+                <div class="content-body">
+                    <div class="container-fluid">
+                        <h3 class="head-title">Upload de Demanda</h3>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body" style="background-color: #ededed;">
+                                    <div class="tab-pane fade show active" id="withoutSpace" role="tabpanel" aria-labelledby="home-tab-2">
+                                        <div class="card card-body pt-0">
+                                            <div>
+                                                <input class="form-control form-control-lg" type="file" id="formFileLg" accept=".xlsx">
+                                            </div>
+                                            <button class="btn btn-light" onclick="uploadFile()">Enviar</button>
+                                        </div>
+                                    </div>                                                  
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="col-xl-12">
+                                <div class="card overflow-hidden">
+                                    <div class="card-body" style="background-color: #ededed;">
+                                    <div class="tab-pane fade show active" id="withoutSpace" role="tabpanel" aria-labelledby="home-tab-2">
+                                        <div class="card card-body pt-0">
+                                            <div class="table-responsive">
+                                                    <table id="data-table" class="display table" style="min-width: 845px">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Planilha</th>
+                                                                <th>Produtos</th>
+                                                                <th>Seg.Transp.</th>
+                                                                <th>Tp.Contr.</th>
+                                                                <th>Perfil Planilha</th>
+                                                                <th>Perfil Carga</th>
+                                                                <th>Meio Pagto</th>
+                                                                <th>Tipo Planilha</th>
+                                                                <th>Numero</th>
+                                                                <th>Cliente</th>
+                                                                <th>Remetente</th>
+                                                                <th>Prioridade</th>
+                                                                <th>Id_Roteirizador</th>
+                                                                <th>Manifesto</th>
+                                                                <th>C.Custo</th>
+                                                                <th>Origem</th>
+                                                                <th>UF_Origem</th>
+                                                                <th>Destino</th>
+                                                                <th>UF_Destino</th>
+                                                                <th>KM</th>
+                                                                <th>Empresa</th>
+                                                                <th>Destinatario</th>
+                                                                <th>Usuario</th>
+                                                                <th>Justificativa</th>
+                                                                <th>Usuario Cria Planilha</th>
+                                                                <th>Data</th>
+                                                                <th>Finalizado</th>
+                                                                <th>Fin.Contratacao</th>
+                                                                <th>Hora Contratado</th>
+                                                                <th>Fin.Expedicao</th>
+                                                                <th>Hora Expedição</th>
+                                                                <th>DT Lancamento</th>
+                                                                <th>Data Criação Planilha</th>
+                                                                <th>Veiculo Roteirizado</th>
+                                                                <th>Placa</th>
+                                                                <th>Cod.Veiculo</th>
+                                                                <th>Veiculo</th>
+                                                                <th>Motorista</th>
+                                                                <th>Cod.Transp.</th>
+                                                                <th>Transp.</th>
+                                                                <th>Cod.Fornec.</th>
+                                                                <th>Fornecedor</th>
+                                                                <th>Pessoa(F/J)</th>
+                                                                <th>Tel.Motorista</th>
+                                                                <th>Cpf.Motorista</th>
+                                                                <th>Tel.Transportadora</th>
+                                                                <th>Data Cadastro Placa</th>
+                                                                <th>Data Validade Checklist</th>
+                                                                <th>Data Validade Cadastro</th>
+                                                                <th>Data Validade MOPP</th>
+                                                                <th>Data Validade Licenciamento</th>
+                                                                <th>Peso</th>
+                                                                <th>Valor NF</th>
+                                                                <th>Qtd.Entregas</th>
+                                                                <th>Qtd.Ajudantes</th>
+                                                                <th>Tt.Peso Taxado</th>
+                                                                <th>Volume Planilha</th>
+                                                                <th>Peso Taxado</th>
+                                                                <th>Custo</th>
+                                                                <th>Receita Expedição</th>
+                                                                <th>Margem Expedição</th>
+                                                                <th>Frete</th>
+                                                                <th>Custo Total</th>
+                                                                <th>Meta</th>
+                                                                <th>Receita Liquida</th>
+                                                                <th>Margem</th>
+                                                                <th>Receita</th>
+                                                                <th>Receita Liquida Total</th>
+                                                                <th>Receita Bruta Total</th>
+                                                                <th>CNPJ Cliente</th>
+                                                                <th>Nome Cliente(CCUSTO)</th>
+                                                                <th>CNPJ Remetente</th>
+                                                                <th>Nome Remetente</th>
+                                                                <th>CNPJ Destinatario</th>
+                                                                <th>Nome Destinatario</th>
+                                                                <th>Destinatario VIP</th>
+                                                                <th>Agenda</th>
+                                                                <th>Meso-Região AGV</th>
+                                                                <th>Região</th>
+                                                                <th>Cte Emitido</th>
+                                                                <th>Relação de NF</th>
+                                                                <th>Qtd. NF</th>
+                                                                <th>ADVALOREM</th>
+                                                                <th>VR. Pedagio</th>
+                                                                <th>GRIS</th>
+                                                                <th>TX. Adicional</th>
+                                                                <th>Receita Bruta Receber</th>
+                                                                <th>ICMS</th>
+                                                                <th>PIS/CONFINS</th>
+                                                                <th>Frete Peso</th>
+                                                                <th>DT. Entrega</th>
+                                                                <th>Municipalização</th>
+                                                                <th>Pessoa Dest</th>
+                                                                <th>CEP Entrega Doc</th>
+                                                                <th>End. Entrega Doc</th>
+                                                                <th>Bai. Entrega Doc</th>
+                                                                <th>Data Hora Tubo</th>
+                                                                <th>Data Hora Chegada</th>
+                                                                <th>Data Hora Coleta</th>
+                                                                <th>Data Hora Saida</th>
+                                                                <th>Status Expedição</th>
+                                                                <th>Unidade Expedição</th>
+                                                                <th>Frete Receber</th>
+                                                                <th>Prev. Entrega</th>
+                                                                <th>Custo Total Bruto</th>
+                                                                <th>Total Cred. PIS/CONFINS</th>
+                                                                <th>Total Comp. Custo</th>
+                                                                <th>Total Custo Liquido</th>
+                                                                <th>Margem Liquida</th>
+                                                                <th>Mais Info.</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="data-table-body">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </div>
+                                    </div>                                                  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button id="save-changes" class="btn btn-success" style="display:none;">Salvar Alterações</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="copyright">
+                       <p>Copyright © Developed by Alexandre Freitas 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content body end -->
+
+        <!-- Footer start -->
+        <!-- Footer end -->
+
+        <!-- Support ticket button start -->
+        <!-- Support ticket button end -->
+    </div>
+    <!-- Main wrapper end -->
+
+    <!-- Scripts -->
+    <script src="./vendor/global/global.min.js"></script>
+    <script src="./vendor/chart.js/Chart.bundle.min.js"></script>
+    <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./vendor/apexchart/apexchart.js"></script>
+    <script src="./vendor/select2/js/select2.full.min.js"></script>
+    <script src="./js/plugins-init/select2-init.js"></script>
+    <script src="js/plugins-init/widgets-script-init.js"></script>
+    
+    <!-- Chartist -->
+    <script src="vendor/chartist/js/chartist.min.js"></script>
+    <script src="vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+    
+    <!-- Flot -->
+     <script src="vendor/flot/jquery.flot.js"></script>
+    <script src="vendor/flot/jquery.flot.pie.js"></script>
+    <script src="vendor/flot/jquery.flot.resize.js"></script>
+    <script src="vendor/flot-spline/jquery.flot.spline.min.js"></script>
+    
+    <!-- Chart sparkline plugin files -->
+    <script src="vendor/jquery-sparkline/jquery.sparkline.min.js"></script>
+    <script src="js/plugins-init/sparkline-init.js"></script>
+    
+    <!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="./js/plugins-init/datatables.init.js"></script>
+    
+    <!-- Chart piety plugin files -->
+     <script src="vendor/peity/jquery.peity.min.js"></script>
+    <script src="js/plugins-init/piety-init.js"></script>
+    
+    <!-- Dashboard 1 -->
+    <script src="./js/dashboard/analytics.js"></script>
+
+    <script src="./js/custom.js"></script>
+    <script src="./js/deznav-init.js"></script>
+    <script src="./js/demo.js"></script>
+    <script src="./js/highlight.min.js"></script>
+
+    <!-- Firebase and SheetJS -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-database.js";
+        import * as XLSX from 'https://cdn.sheetjs.com/xlsx-latest/package/xlsx.mjs';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCwE7-9BCn1_Oqriw6gKEH1oitFXOW4oNE",
+            authDomain: "basededadossite-bb29b.firebaseapp.com",
+            databaseURL: "https://basededadossite-bb29b-default-rtdb.firebaseio.com",
+            projectId: "basededadossite-bb29b",
+            storageBucket: "basededadossite-bb29b.appspot.com",
+            messagingSenderId: "770564649369",
+            appId: "1:770564649369:web:82ba6af1b55b9cc6ff2308",
+            measurementId: "G-PY7SBTHNMR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        window.uploadFile = async function () {
+            const fileInput = document.getElementById('formFileLg');
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Por favor, selecione um arquivo para upload.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const sheet = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName], { header: 1 });
+
+                const dbRef = ref(database, 'uploadedData/');
+                await set(dbRef, sheet);
+
+                alert('Arquivo carregado com sucesso!');
+                loadData(); // Atualiza a visualização dos dados
+            };
+            reader.readAsArrayBuffer(file);
+        };
+
+        async function loadData() {
+            const dbRef = ref(database);
+            const tableBody = document.getElementById('data-table-body');
+            tableBody.innerHTML = ''; // Limpa a tabela antes de renderizar
+
+            try {
+                for (let i = 1; i <= 5624; i++) { // Ignora a linha 0
+                    const dataSnap = await get(child(dbRef, `uploadedData/${i}`));
+                    if (dataSnap.exists()) {
+                        const row = dataSnap.val();
+                        const tr = document.createElement('tr');
+                        row.forEach(cell => {
+                            const td = document.createElement('td');
+                            td.textContent = cell;
+                            tr.appendChild(td);
+                        });
+                        tableBody.appendChild(tr);
+                    }
+                }
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+            }
+        }
+
+        // Carrega os dados ao iniciar
+        loadData();
+    </script>
+
+</body>
+</html>

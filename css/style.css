@@ -108,6 +108,38 @@ $warning-light: lighten($warning, 20%);
 $danger-light: lighten($danger, 10%);
 $info-light: lighten($info, 20%);
 $dark-light: lighten($dark, 50%); */
+
+ul.timeline {
+            list-style: none;
+            padding: 0;
+        }
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin: 20px 0;
+        }
+        .origin, .destination {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .circle, .square {
+            width: 10px;
+            height: 10px;
+            border: 1px solid black;
+            margin-right: 2px;
+        }
+        .circle {
+            border-radius: 50%;
+        }
+        .line {
+            width: 2px;
+            height: 30px; /* Ajuste conforme necessário */
+            background-color: gray;
+            margin-left: 5px; /* Adicione a margem esquerda para a linha */
+        }
+
 .gradient_one {
   background-image: linear-gradient(to right, rgba(186, 1, 181, 0.85) 0%, rgba(103, 25, 255, 0.85) 100%); }
 
