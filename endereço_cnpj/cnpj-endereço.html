@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Endereço pelo CNPJ e CEP</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h1 class="card-title text-center">Consulta de Endereço pelo CNPJ e CEP</h1>
+                <form class="mt-4">
+                    <div class="mb-3">
+                        <label for="pCNPJ" class="form-label">Insira o CNPJ:</label>
+                        <input type="text" id="pCNPJ" class="form-control" placeholder="00.000.000/0000-00">
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary" onclick="buscarInformacoes()">Consultar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-4 shadow-sm">
+            <div class="card-body">
+                <h2 class="card-title">Informações da Empresa</h2>
+                <p id="cnpj" class="fw-bold"></p>
+                <p id="razao_social"></p>
+                <p id="endereco"></p>
+
+                <h3 class="mt-4">Contato</h3>
+                <p id="email"></p>
+                <p id="telefone_1"></p>
+                <p id="telefone_2"></p>
+                
+                <h3 class="mt-4">Endereço CEP</h3>
+                <p id="endereco_cep"></p>
+                <p id="longitude"></p>
+                <p id="latitude"></p>
+
+                <!-- Botão para copiar -->
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-secondary" onclick="copiarInformacoes()">Copiar Informações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function buscarInformacoes() {
+            buscarInformacoesCNPJ();
+        }
+
+        function buscarInformacoesCNPJ() {
+            var cnpj = document.getElementById("pCNPJ").value.replace("-", "").replace("/", "");
+
+            var url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Não foi possível obter os dados do CNPJ.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+					
+                    document.getElementById("cnpj").innerText = "CNPJ: " + data.cnpj + " - " + data.descricao_situacao_cadastral;
+                    document.getElementById("razao_social").innerText = "Razão Social: " + data.razao_social;
+                    document.getElementById("endereco").innerText = "Endereço: " + data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
+                    document.getElementById("email").innerText = "Email: " + data.email;
+                    document.getElementById("telefone_1").innerText = "Telefone 1" + data.ddd_telefone_1;
+                    document.getElementById("telefone_2").innerText = "Telefone 2" + data.ddd_telefone_2;
+                    
+                    // Buscar as informações do CEP
+                    buscarInformacoesCEP(data.cep);
+                })
+                .catch(error => {
+                    console.error("Ocorreu um erro ao buscar o CNPJ:", error);
+                });
+        }
+
+        function buscarInformacoesCEP(cep) {
+            var url = `https://brasilapi.com.br/api/cep/v2/${cep}`;
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Não foi possível obter os dados do CEP.");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+					
+                    document.getElementById("endereco_cep").innerText = "Endereço CEP: " + data.street + " - " + data.neighborhood + ", " + data.city + " - " + data.state + ", " + data.cep;
+                    document.getElementById("longitude").innerText = "Longitude: " + data.location.coordinates.longitude;
+                    document.getElementById("latitude").innerText = "Latitude: " + data.location.coordinates.latitude;
+                })
+                .catch(error => {
+                    console.error("Ocorreu um erro ao buscar o CEP:", error);
+                });
+        }
+
+        function copiarInformacoes() {
+            const cnpj = document.getElementById("cnpj").innerText;
+            const razaoSocial = document.getElementById("razao_social").innerText;
+            const endereco = document.getElementById("endereco").innerText;
+            const email = document.getElementById("email").innerText;
+            const telefone1 = document.getElementById("telefone_1").innerText;
+            const telefone2 = document.getElementById("telefone_2").innerText;
+            const enderecoCep = document.getElementById("endereco_cep").innerText;
+            const longitude = document.getElementById("longitude").innerText;
+            const latitude = document.getElementById("latitude").innerText;
+
+            const informacoes = `
+> *Informações da Empresa*
+- *CNPJ:* ${cnpj}
+- *Razão Social:* ${razaoSocial}
+- *Endereço:* ${endereco}
+
+> *Contato*
+- *Email:* ${email}
+- *Telefone 1:* ${telefone1}
+- *Telefone 2:* ${telefone2}
+
+> *Endereço CEP*
+- *Endereço CEP:* ${enderecoCep}
+- *Longitude:* ${longitude}
+- *Latitude:* ${latitude}
+            `;
+
+            navigator.clipboard.writeText(informacoes.trim())
+                .then(() => {
+                    alert("Informações copiadas com sucesso!");
+                })
+                .catch(err => {
+                    console.error("Erro ao copiar as informações: ", err);
+                });
+        }
+    </script>
+</body>
+</html>
