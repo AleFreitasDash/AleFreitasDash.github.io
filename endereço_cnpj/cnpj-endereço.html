@@ -58,7 +58,12 @@
         }
 
         function buscarInformacoesCNPJ() {
-            var cnpj = document.getElementById("pCNPJ").value.replace("-", "").replace("/", "");
+            var cnpj = document.getElementById("pCNPJ").value.replace(/\D/g, ''); // Remove todos os caracteres que não são números
+
+            if (cnpj.length !== 14) {
+                alert("CNPJ inválido! Insira um CNPJ com 14 dígitos.");
+                return;
+            }
 
             var url = `https://brasilapi.com.br/api/cnpj/v1/${cnpj}`;
 
@@ -72,22 +77,17 @@
                 .then(data => {
                     console.log(data);
 					
-                    document.getElementById("cnpj").innerText = "CNPJ: " + data.cnpj + " - " + data.descricao_situacao_cadastral;
-                    document.getElementById("razao_social").innerText = "Razão Social: " + data.razao_social;
-                    document.getElementById("endereco").innerText = "Endereço: " + data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
-                    document.getElementById("email").innerText = "Email: " + data.email;
-                    document.getElementById("telefone_1").innerText = "Telefone 1: " + data.ddd_telefone_1;
-                    document.getElementById("telefone_2").innerText = "Telefone 2: " + data.ddd_telefone_2;
-
-                    document.getElementById("cnpj_c").innerText = data.cnpj + " - " + data.descricao_situacao_cadastral;
-                    document.getElementById("razao_social_c").innerText = data.razao_social;
-                    document.getElementById("endereco_c").innerText = data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
-                    document.getElementById("email_c").innerText = data.email;
-                    document.getElementById("telefone_1_c").innerText = data.ddd_telefone_1;
-                    document.getElementById("telefone_2_c").innerText = data.ddd_telefone_2;
+                    document.getElementById("cnpj").innerText = data.cnpj ? "CNPJ: " + data.cnpj + " - " + data.descricao_situacao_cadastral : "";
+                    document.getElementById("razao_social").innerText = data.razao_social ? "Razão Social: " + data.razao_social : "";
+                    document.getElementById("endereco").innerText = data.logradouro ? "Endereço: " + data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + (data.complemento || "") + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep : "";
+                    document.getElementById("email").innerText = data.email ? "Email: " + data.email : "";
+                    document.getElementById("telefone_1").innerText = data.ddd_telefone_1 ? "Telefone 1: " + data.ddd_telefone_1 : "";
+                    document.getElementById("telefone_2").innerText = data.ddd_telefone_2 ? "Telefone 2: " + data.ddd_telefone_2 : "";
                     
                     // Buscar as informações do CEP
-                    buscarInformacoesCEP(data.cep);
+                    if (data.cep) {
+                        buscarInformacoesCEP(data.cep);
+                    }
                 })
                 .catch(error => {
                     console.error("Ocorreu um erro ao buscar o CNPJ:", error);
@@ -107,9 +107,9 @@
                 .then(data => {
                     console.log(data);
 					
-                    document.getElementById("endereco_cep").innerText = "Endereço CEP: " + data.street + " - " + data.neighborhood + ", " + data.city + " - " + data.state + ", " + data.cep;
-                    document.getElementById("longitude").innerText = "Longitude: " + data.location.coordinates.longitude;
-                    document.getElementById("latitude").innerText = "Latitude: " + data.location.coordinates.latitude;
+                    document.getElementById("endereco_cep").innerText = data.street ? "Endereço CEP: " + data.street + " - " + data.neighborhood + ", " + data.city + " - " + data.state + ", " + data.cep : "";
+                    document.getElementById("longitude").innerText = data.location?.coordinates?.longitude ? "Longitude: " + data.location.coordinates.longitude : "";
+                    document.getElementById("latitude").innerText = data.location?.coordinates?.latitude ? "Latitude: " + data.location.coordinates.latitude : "";
                 })
                 .catch(error => {
                     console.error("Ocorreu um erro ao buscar o CEP:", error);
@@ -117,17 +117,17 @@
         }
 
         function copiarInformacoes() {
-            const cnpj = document.getElementById("cnpj_c").innerText;
-            const razaoSocial = document.getElementById("razao_social_c").innerText;
-            const endereco = document.getElementById("endereco_c").innerText;
-            const email = document.getElementById("email_c").innerText;
-            const telefone1 = document.getElementById("telefone_1_c").innerText;
-            const telefone2 = document.getElementById("telefone_2_c").innerText;
-            const enderecoCep = document.getElementById("endereco_cep_c").innerText;
-            const longitude = document.getElementById("longitude_c").innerText;
-            const latitude = document.getElementById("latitude_c").innerText;
+    const cnpj = document.getElementById("cnpj").innerText.replace("CNPJ: ", "");
+    const razaoSocial = document.getElementById("razao_social").innerText.replace("Razão Social: ", "");
+    const endereco = document.getElementById("endereco").innerText.replace("Endereço: ", "");
+    const email = document.getElementById("email").innerText.replace("Email: ", "");
+    const telefone1 = document.getElementById("telefone_1").innerText.replace("Telefone 1: ", "");
+    const telefone2 = document.getElementById("telefone_2").innerText.replace("Telefone 2: ", "");
+    const enderecoCep = document.getElementById("endereco_cep").innerText.replace("Endereço CEP: ", "");
+    const longitude = document.getElementById("longitude").innerText.replace("Longitude: ", "");
+    const latitude = document.getElementById("latitude").innerText.replace("Latitude: ", "");
 
-            const informacoes = `
+    const informacoes = `
 > *Informações da Empresa*
 - *CNPJ:* ${cnpj}
 - *Razão Social:* ${razaoSocial}
@@ -142,16 +142,17 @@
 - *Endereço CEP:* ${enderecoCep}
 - *Longitude:* ${longitude}
 - *Latitude:* ${latitude}
-            `;
+    `;
 
-            navigator.clipboard.writeText(informacoes.trim())
-                .then(() => {
-                    alert("Informações copiadas com sucesso!");
-                })
-                .catch(err => {
-                    console.error("Erro ao copiar as informações: ", err);
-                });
-        }
+    navigator.clipboard.writeText(informacoes.trim())
+        .then(() => {
+            alert("Informações copiadas com sucesso!");
+        })
+        .catch(err => {
+            console.error("Erro ao copiar as informações: ", err);
+        });
+}
+
     </script>
 </body>
 </html>
