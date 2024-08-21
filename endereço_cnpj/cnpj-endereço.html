@@ -78,6 +78,13 @@
                     document.getElementById("email").innerText = "Email: " + data.email;
                     document.getElementById("telefone_1").innerText = "Telefone 1: " + data.ddd_telefone_1;
                     document.getElementById("telefone_2").innerText = "Telefone 2: " + data.ddd_telefone_2;
+
+                    document.getElementById("cnpj_c").innerText = data.cnpj + " - " + data.descricao_situacao_cadastral;
+                    document.getElementById("razao_social_c").innerText = data.razao_social;
+                    document.getElementById("endereco_c").innerText = data.descricao_tipo_de_logradouro + " " + data.logradouro + ", " + data.complemento + ", " + data.numero + " - " + data.bairro + ", " + data.municipio + " - " + data.uf + ", " + data.cep;
+                    document.getElementById("email_c").innerText = data.email;
+                    document.getElementById("telefone_1_c").innerText = data.ddd_telefone_1;
+                    document.getElementById("telefone_2_c").innerText = data.ddd_telefone_2;
                     
                     // Buscar as informações do CEP
                     buscarInformacoesCEP(data.cep);
@@ -110,15 +117,15 @@
         }
 
         function copiarInformacoes() {
-            const cnpj = document.getElementById("cnpj").innerText;
-            const razaoSocial = document.getElementById("razao_social").innerText;
-            const endereco = document.getElementById("endereco").innerText;
-            const email = document.getElementById("email").innerText;
-            const telefone1 = document.getElementById("telefone_1").innerText;
-            const telefone2 = document.getElementById("telefone_2").innerText;
-            const enderecoCep = document.getElementById("endereco_cep").innerText;
-            const longitude = document.getElementById("longitude").innerText;
-            const latitude = document.getElementById("latitude").innerText;
+            const cnpj = document.getElementById("cnpj_c").innerText;
+            const razaoSocial = document.getElementById("razao_social_c").innerText;
+            const endereco = document.getElementById("endereco_c").innerText;
+            const email = document.getElementById("email_c").innerText;
+            const telefone1 = document.getElementById("telefone_1_c").innerText;
+            const telefone2 = document.getElementById("telefone_2_c").innerText;
+            const enderecoCep = document.getElementById("endereco_cep_c").innerText;
+            const longitude = document.getElementById("longitude_c").innerText;
+            const latitude = document.getElementById("latitude_c").innerText;
 
             const informacoes = `
 > *Informações da Empresa*
