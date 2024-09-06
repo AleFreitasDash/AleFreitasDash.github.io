@@ -1,92 +1,87 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!doctype html>
+<html lang="pt">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canal de Denúncia</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  
+  <script src="https://unpkg.com/blip-chat-extension@1.0.4" type="text/javascript"></script>
+
+  <title>Canal de Denúncia BLiP</title>
 </head>
 
 <body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Canal de Denúncia</h2>
+  <div id="container" style="padding: 20px">
+    <h1>Canal de Denúncia</h1>
+    <p>Preencha o formulário abaixo e clique em "Enviar"</p>
 
     <form id="denunciaForm">
-      <!-- Nome do denunciante -->
       <div class="form-group">
         <label for="nomeDenunciante">Nome (opcional)</label>
         <input type="text" class="form-control" id="nomeDenunciante" placeholder="Digite seu nome">
       </div>
 
-      <!-- E-mail do denunciante -->
-      <div class="form-group">
-        <label for="emailDenunciante">E-mail (opcional)</label>
-        <input type="email" class="form-control" id="emailDenunciante" placeholder="Digite seu e-mail">
-      </div>
-
-      <!-- Tipo de denúncia -->
       <div class="form-group">
         <label for="tipoDenuncia">Tipo de Denúncia</label>
         <select class="form-control" id="tipoDenuncia" required>
-          <option value="">Selecione o tipo</option>
+          <option value="">Selecione</option>
           <option value="Assédio">Assédio</option>
           <option value="Fraude">Fraude</option>
           <option value="Corrupção">Corrupção</option>
-          <option value="Outros">Outros</option>
         </select>
       </div>
 
-      <!-- Descrição da denúncia -->
       <div class="form-group">
-        <label for="descricaoDenuncia">Descrição</label>
-        <textarea class="form-control" id="descricaoDenuncia" rows="5" placeholder="Descreva os detalhes da denúncia" required></textarea>
+        <label for="descricaoDenuncia">Descrição da Denúncia</label>
+        <textarea class="form-control" id="descricaoDenuncia" rows="5" placeholder="Descreva o ocorrido" required></textarea>
       </div>
 
-      <!-- Botão de envio -->
-      <button type="submit" class="btn btn-primary">Enviar Denúncia</button>
+      <button type="button" id="enviarDenuncia" class="btn btn-primary">Enviar</button>
     </form>
-
-    <!-- Feedback da submissão -->
+    
     <div id="mensagemSucesso" class="alert alert-success mt-4" style="display: none;">
       Sua denúncia foi enviada com sucesso!
     </div>
   </div>
 
-  <!-- JQuery e Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-  <!-- Script para enviar denúncia -->
   <script>
-    $('#denunciaForm').submit(function(event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
+    var webView = new BlipChatExtension();
 
-      // Captura os dados do formulário
-      var nome = $('#nomeDenunciante').val();
-      var email = $('#emailDenunciante').val();
-      var tipoDenuncia = $('#tipoDenuncia').val();
-      var descricao = $('#descricaoDenuncia').val();
+    document.getElementById('enviarDenuncia').addEventListener('click', function () {
+      var nome = document.getElementById('nomeDenunciante').value || "Anônimo";
+      var tipoDenuncia = document.getElementById('tipoDenuncia').value;
+      var descricao = document.getElementById('descricaoDenuncia').value;
 
-      // Envia a denúncia para o bot via BLiP (exemplo de uso)
-      var webView = new BlipChatExtension();
+      if (tipoDenuncia && descricao) {
+        // Monta o objeto denuncia
+        var denunciaForm = {
+          "nome": nome,
+          "tipoDenuncia": tipoDenuncia,
+          "descricao": descricao
+        };
 
-      // Envio da denúncia
-      var denuncia = {
-        "nome": nome || "Anônimo",
-        "email": email || "Não informado",
-        "tipoDenuncia": tipoDenuncia,
-        "descricao": descricao
-      };
+        // Envia a denúncia para a variável "denunciaform" no Builder da BLiP
+        webView.sendMessage({
+          "type": "application/json",
+          "content": denunciaForm
+        });
 
-      webView.sendMessage({
-        "type": "application/json",
-        "content": denuncia
-      });
+        // Exibe mensagem de sucesso
+        document.getElementById('mensagemSucesso').style.display = "block";
 
-      // Exibe mensagem de sucesso
-      $('#mensagemSucesso').show();
+        // Fecha a Webview após o envio
+        webView.closeWebView();
+      } else {
+        alert('Por favor, preencha os campos obrigatórios.');
+      }
     });
   </script>
 </body>
