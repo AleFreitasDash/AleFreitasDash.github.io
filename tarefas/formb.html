@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canal de Denúncia</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2 class="mb-4">Canal de Denúncia</h2>
+
+    <form id="denunciaForm">
+      <!-- Nome do denunciante -->
+      <div class="form-group">
+        <label for="nomeDenunciante">Nome (opcional)</label>
+        <input type="text" class="form-control" id="nomeDenunciante" placeholder="Digite seu nome">
+      </div>
+
+      <!-- E-mail do denunciante -->
+      <div class="form-group">
+        <label for="emailDenunciante">E-mail (opcional)</label>
+        <input type="email" class="form-control" id="emailDenunciante" placeholder="Digite seu e-mail">
+      </div>
+
+      <!-- Tipo de denúncia -->
+      <div class="form-group">
+        <label for="tipoDenuncia">Tipo de Denúncia</label>
+        <select class="form-control" id="tipoDenuncia" required>
+          <option value="">Selecione o tipo</option>
+          <option value="Assédio">Assédio</option>
+          <option value="Fraude">Fraude</option>
+          <option value="Corrupção">Corrupção</option>
+          <option value="Outros">Outros</option>
+        </select>
+      </div>
+
+      <!-- Descrição da denúncia -->
+      <div class="form-group">
+        <label for="descricaoDenuncia">Descrição</label>
+        <textarea class="form-control" id="descricaoDenuncia" rows="5" placeholder="Descreva os detalhes da denúncia" required></textarea>
+      </div>
+
+      <!-- Botão de envio -->
+      <button type="submit" class="btn btn-primary">Enviar Denúncia</button>
+    </form>
+
+    <!-- Feedback da submissão -->
+    <div id="mensagemSucesso" class="alert alert-success mt-4" style="display: none;">
+      Sua denúncia foi enviada com sucesso!
+    </div>
+  </div>
+
+  <!-- JQuery e Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- Script para enviar denúncia -->
+  <script>
+    $('#denunciaForm').submit(function(event) {
+      event.preventDefault(); // Impede o envio padrão do formulário
+
+      // Captura os dados do formulário
+      var nome = $('#nomeDenunciante').val();
+      var email = $('#emailDenunciante').val();
+      var tipoDenuncia = $('#tipoDenuncia').val();
+      var descricao = $('#descricaoDenuncia').val();
+
+      // Envia a denúncia para o bot via BLiP (exemplo de uso)
+      var webView = new BlipChatExtension();
+
+      // Envio da denúncia
+      var denuncia = {
+        "nome": nome || "Anônimo",
+        "email": email || "Não informado",
+        "tipoDenuncia": tipoDenuncia,
+        "descricao": descricao
+      };
+
+      webView.sendMessage({
+        "type": "application/json",
+        "content": denuncia
+      });
+
+      // Exibe mensagem de sucesso
+      $('#mensagemSucesso').show();
+    });
+  </script>
+</body>
+
+</html>
