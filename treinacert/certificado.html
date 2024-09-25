@@ -213,7 +213,7 @@
                     DATA
                 </div>
                 <div>
-                    <span class="field">Solistica</span><br>
+                    <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 25px;">Solistica</span><br>
                     ASSINATURA
                 </div>
             </div>
@@ -348,7 +348,7 @@
         document.getElementById('nota-geral').textContent = 'Nota Geral: ' + notaGeral;
     }
 
-    async function downloadCertificate() {
+    function downloadCertificate() {
         // Atualiza os spans com os valores dos inputs
         const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
@@ -365,10 +365,6 @@
 
         // Gera o PDF
         const element = document.getElementById('conteudo-para-pdf');
-
-        // Certifica-se de que jsPDF está disponível
-        const { jsPDF } = window.jspdf;
-
         html2canvas(element, {
             scale: 2,
             useCORS: true,
@@ -380,9 +376,9 @@
             }
         }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF('landscape', 'pt', 'a4');
-            const imgWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
+            const pdf = new jspdf.jsPDF('landscape', 'pt', 'a4');
+            const imgWidth = 1122; // Largura da página em pontos (A4 landscape)
+            const pageHeight = 793; // Altura da página em pontos (A4 landscape)
             const imgHeight = canvas.height * imgWidth / canvas.width;
 
             let position = 0;
@@ -392,9 +388,6 @@
             // Restaura os inputs e oculta os spans após gerar o PDF
             inputs.forEach(input => input.style.display = '');
             spans.forEach(span => span.style.display = 'none');
-        }).catch(error => {
-            console.error('Erro ao gerar o PDF:', error);
-            alert('Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.');
         });
     }
 
