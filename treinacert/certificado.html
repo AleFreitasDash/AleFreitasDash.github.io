@@ -2,13 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificado de Conclusão</title>
     <!-- Importando fontes do Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Montserrat&display=swap" rel="stylesheet">
     <!-- Adicionando a biblioteca html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        /* Seu CSS aqui */
+        /* Ajustes gerais */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f4f4f4;
@@ -18,110 +19,114 @@
             margin: 0;
             padding-top: 20px;
         }
+
         .inputs {
             margin-bottom: 20px;
         }
+
         .inputs label {
             margin-right: 10px;
             font-weight: bold;
         }
+
         .inputs input {
             margin-right: 20px;
             padding: 5px;
             font-size: 16px;
         }
+
         .inputs button {
             padding: 6px 12px;
             font-size: 16px;
             cursor: pointer;
         }
+
         .certificate {
-            width: 1100px;
+            width: 800px; /* Ajustei para um tamanho mais adequado ao formato A4 */
             background: #ffffff;
-            padding: 40px;
-            border: 10px solid #1c2a5a;
+            padding: 20px;
+            border: 8px solid #1c2a5a;
             box-sizing: border-box;
             position: relative;
-            overflow: hidden;
             margin-bottom: 40px;
-            min-height: 700px;
-            page-break-after: always; /* Adicionado para evitar corte */
+            min-height: 600px;
+            page-break-after: always; /* Forçar quebra de página após o certificado */
         }
-        .certificate::before,
-        .certificate::after {
-            content: '';
-            position: absolute;
-            border: 1px solid #f16821;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-        }
-        /* Estilos de cabeçalho e estrutura */
+
         .header {
             text-align: center;
-            font-size: 50px;
+            font-size: 40px;
             font-family: 'Great Vibes', cursive;
             color: #1c2a5a;
-            margin-top: 30px;
+            margin-top: 20px;
         }
+
         .sub-header {
             text-align: center;
-            font-size: 24px;
+            font-size: 22px;
             color: #f16821;
             margin: 10px 0;
         }
+
         .content {
             text-align: center;
             font-size: 18px;
-            margin: 30px 50px;
-            line-height: 1.8;
+            margin: 30px 20px;
+            line-height: 1.5;
         }
+
         .field {
             color: #d74343;
             font-weight: bold;
         }
+
         /* Ajuste do rodapé */
         .footer {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0;
+            padding: 0 20px;
         }
+
         .footer div {
             text-align: center;
             font-size: 16px;
         }
+
         .badge {
             position: absolute;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             background-color: #1c2a5a;
             color: #ffffff;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 5px;
-            font-size: 20px;
+            font-size: 18px;
         }
-        /* Estilo para Tabela de Pontuações */
+
+        /* Estilo para a tabela de pontuações */
         .score-table {
             width: 80%;
             margin: 30px auto;
             border-collapse: collapse;
             page-break-inside: avoid;
         }
+
         .score-table th, .score-table td {
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             border: 1px solid #ddd;
             font-size: 16px;
         }
+
         .score-table th {
             background-color: #1c2a5a;
             color: #ffffff;
         }
+
         .overall-score {
             text-align: center;
             font-size: 22px;
@@ -129,52 +134,18 @@
             color: #1c2a5a;
             font-weight: bold;
         }
-        /* Ajustes para a imagem do logo */
+
         .logo {
-            position: absolute;
-            top: 30px;
-            left: 30px;
-            width: 140px;
+            width: 100px;
             height: auto;
+            margin-bottom: 20px;
         }
-        .logo img {
-            width: 100%;
-            height: auto;
-        }
-        /* Adicionando o design da borda amarela e azul */
-        .top-banner {
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            width: 200px;
-            height: 200px;
-            background-color: #f16821;
-            transform: rotate(95deg);
-            z-index: 1;
-        }
-        .bottom-banner {
-            position: absolute;
-            bottom: -50px;
-            left: -50px;
-            width: 200px;
-            height: 200px;
-            background-color: #1c2a5a;
-            transform: rotate(95deg);
-            z-index: 1;
-        }
-        /* Garantindo que os elementos interativos estejam acima dos banners */
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-            min-height: 600px; /* Ajuste para garantir espaço para o rodapé */
-        }
-        /* Controle de quebras de página para PDF */
+
+        /* Controle de quebras de página */
         .page-break {
             page-break-before: always;
         }
-        .input-value {
-            display: none;
-        }
+
     </style>
 </head>
 <body>
@@ -187,46 +158,32 @@
     <button onclick="downloadCertificate()">Download</button>
 </div>
 
-<!-- Envolvendo o certificado e a tabela em um contêiner -->
 <div id="conteudo-para-pdf">
     <!-- Certificado na primeira página -->
     <div id="certificado" class="certificate">
-        <div class="logo">
-            <!-- Inserindo a imagem do logotipo localmente -->
-            <img src="logo.png" alt="Logo" crossorigin="anonymous">
+        <div class="header">Certificado de Conclusão</div>
+        <div class="sub-header">Este certificado é apresentado a:</div>
+        <div class="content">
+            <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 40px;" id="nome">Nome</span><br><br>
+            Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, sendo aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
         </div>
-        <div class="top-banner"></div>
-        <div class="bottom-banner"></div>
 
-        <!-- Envolvendo o conteúdo interativo em uma div com classe 'certificate-content' -->
-        <div class="certificate-content">
-            <div class="header">Certificado de Conclusão</div>
-            <div class="sub-header">Este certificado é orgulhosamente apresentado a:</div>
-            <div class="content">
-                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;" id="nome">Nome</span><br><br>
-                Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, tendo sido aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
+        <div class="footer">
+            <div>
+                <span class="field" id="data">24/09/2024</span><br>
+                DATA
             </div>
-
-            <div class="footer">
-                <div>
-                    <span class="field" id="data">24/09/2024</span><br>
-                    DATA
-                </div>
-                <div>
-                    <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 25px;">Solistica</span><br>
-                    ASSINATURA
-                </div>
+            <div>
+                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 20px;">Solistica</span><br>
+                ASSINATURA
             </div>
-
-            <div class="badge">2024 CERTIFICADO</div>
         </div>
+
+        <div class="badge">2024 CERTIFICADO</div>
     </div>
 
-    <!-- Quebra de página antes da tabela -->
-    <!-- A classe page-break já cuida da quebra de página -->
-    <div class="page-break"></div>
-
     <!-- Tabela de pontuação na segunda página -->
+    <div class="page-break"></div>
     <div class="certificate-content">
         <div class="overall-score" id="nota-geral">Nota Geral: 0</div>
 
@@ -242,46 +199,31 @@
             <tbody>
                 <tr>
                     <td>Conduta com os Clientes</td>
-                    <td>
-                        <input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()">
-                        <span class="input-value" id="span-clientes-corretas"></span>
-                    </td>
+                    <td><input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()"></td>
                     <td>3</td>
                     <td id="nota-clientes">0</td>
                 </tr>
                 <tr>
                     <td>Organização e Recomendações</td>
-                    <td>
-                        <input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-organizacao-corretas"></span>
-                    </td>
+                    <td><input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
                     <td>2</td>
                     <td id="nota-organizacao">0</td>
                 </tr>
                 <tr>
                     <td>Armazenamento</td>
-                    <td>
-                        <input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-armazenamento-corretas"></span>
-                    </td>
+                    <td><input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
                     <td>2</td>
                     <td id="nota-armazenamento">0</td>
                 </tr>
                 <tr>
                     <td>Avarias</td>
-                    <td>
-                        <input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-avarias-corretas"></span>
-                    </td>
+                    <td><input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
                     <td>2</td>
                     <td id="nota-avarias">0</td>
                 </tr>
                 <tr>
                     <td>Documentação das Cargas</td>
-                    <td>
-                        <input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()">
-                        <span class="input-value" id="span-documentacao-corretas"></span>
-                    </td>
+                    <td><input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()"></td>
                     <td>1</td>
                     <td id="nota-documentacao">0</td>
                 </tr>
@@ -291,7 +233,6 @@
 </div>
 
 <script>
-    // Suas funções JavaScript aqui
     function atualizarNome() {
         const nome = document.getElementById('input-nome').value;
         document.getElementById('nome').textContent = nome;
@@ -317,17 +258,14 @@
         const avariasCorretas = parseInt(document.getElementById('avarias-corretas').value) || 0;
         const documentacaoCorretas = parseInt(document.getElementById('documentacao-corretas').value) || 0;
 
-        // Totais de perguntas por tópico
         const totalClientes = 3;
         const totalOrganizacao = 2;
         const totalArmazenamento = 2;
         const totalAvarias = 2;
         const totalDocumentacao = 1;
 
-        // Nota máxima para cada tópico
         const notaMaximaPorTopico = 10;
 
-        // Cálculo das notas por tópico (escala de 0 a 10)
         const notaClientes = ((clientesCorretas / totalClientes) * notaMaximaPorTopico).toFixed(2);
         document.getElementById('nota-clientes').textContent = notaClientes;
 
@@ -343,7 +281,6 @@
         const notaDocumentacao = ((documentacaoCorretas / totalDocumentacao) * notaMaximaPorTopico).toFixed(2);
         document.getElementById('nota-documentacao').textContent = notaDocumentacao;
 
-        // Cálculo da nota geral (média das notas dos tópicos)
         const somaNotas = parseFloat(notaClientes) + parseFloat(notaOrganizacao) + parseFloat(notaArmazenamento) + parseFloat(notaAvarias) + parseFloat(notaDocumentacao);
         const notaGeral = (somaNotas / 5).toFixed(2);
 
@@ -362,38 +299,14 @@
                 allowTaint: true,
                 scrollY: 0
             },
-            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'landscape' },
+            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
             pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
-        // Atualiza os spans com os valores dos inputs
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            const span = document.getElementById('span-' + input.id);
-            if (span) {
-                span.textContent = input.value;
-            }
-        });
-
-        // Mostra os spans e oculta os inputs
-        const spans = document.querySelectorAll('.input-value');
-        spans.forEach(span => span.style.display = 'inline');
-        inputs.forEach(input => input.style.display = 'none');
-
-        // Gera o PDF usando html2pdf.js
-        html2pdf().set(opt).from(element).save().then(() => {
-            // Restaura os inputs e oculta os spans após gerar o PDF
-            inputs.forEach(input => input.style.display = '');
-            spans.forEach(span => span.style.display = 'none');
-        }).catch(error => {
-            console.error('Erro ao gerar o PDF:', error);
-            alert('Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.');
-        });
+        html2pdf().set(opt).from(element).save();
     }
 
-    // Inicializar nome e data
     atualizarNome();
-    // Definir a data atual como padrão
     const hoje = new Date().toISOString().split('T')[0];
     document.getElementById('input-data').value = hoje;
     atualizarData();
