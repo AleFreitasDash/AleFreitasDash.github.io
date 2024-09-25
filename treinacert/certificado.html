@@ -102,10 +102,10 @@
             transform: translateX(-50%);
             border-radius: 5px;
             font-size: 20px;
-			width: 150px;
+            width: 150px;
             height: auto;
         }
-		.certificado img {
+        .certificado img {
             width: 100%;
             height: auto;
         }
@@ -190,8 +190,10 @@
 <div class="inputs">
     <label for="input-nome">Nome:</label>
     <input type="text" id="input-nome" placeholder="Digite o nome" oninput="atualizarNome()" value="Nome">
-    <label for="input-data">Data:</label>
+    <label for="input-data">Data Emissão:</label>
     <input type="date" id="input-data" onchange="atualizarData()">
+    <label for="input-data2">Data Validade:</label>
+    <input type="date" id="input-data2" onchange="atualizarData()">
     <button onclick="downloadCertificate()">Download</button>
 </div>
 
@@ -216,7 +218,9 @@
         <div class="footer">
             <div style="color: #fff;background-color: #3e0031;border-radius: 10px;padding: 10px 10px 10px;">
                 <span class="field" id="data">24/09/2024</span><br>
-                DATA
+                DATA EMISSÃO<br>
+                <span class="field" id="dataa">24/09/2024</span><br>
+                DATA VALIDADE
             </div>
             <div>
                 <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;">Solistica</span><br>
@@ -224,7 +228,7 @@
             </div>
         </div>
 
-        <div class="certificado"><img src="certificado.png" alt="Logo"></div>
+        <div class="certificado"><img src="certificado.png" alt="Certificado"></div>
     </div>
 </div>
 
@@ -303,13 +307,25 @@
 
     function atualizarData() {
         const dataInput = document.getElementById('input-data').value;
+        const dataInput2 = document.getElementById('input-data2').value;
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
         if (dataInput) {
-            const data = new Date(dataInput);
-            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-            const dataFormatada = data.toLocaleDateString('pt-BR', options);
-            document.getElementById('data').textContent = dataFormatada;
+            const dataEmissao = new Date(dataInput);
+            dataEmissao.setDate(dataEmissao.getDate() + 1); // Adiciona um dia
+            const dataFormatadaEmissao = dataEmissao.toLocaleDateString('pt-BR', options);
+            document.getElementById('data').textContent = dataFormatadaEmissao;
         } else {
             document.getElementById('data').textContent = '';
+        }
+
+        if (dataInput2) {
+            const dataValidade = new Date(dataInput2);
+            dataValidade.setDate(dataValidade.getDate() + 1); // Adiciona um dia
+            const dataFormatadaValidade = dataValidade.toLocaleDateString('pt-BR', options);
+            document.getElementById('dataa').textContent = dataFormatadaValidade;
+        } else {
+            document.getElementById('dataa').textContent = '';
         }
     }
 
@@ -408,9 +424,9 @@
         });
     }
 
-    // Inicializar nome e data
+    // Inicializar nome e datas
     atualizarNome();
-    // Definir a data atual como padrão
+    // Definir a data atual como padrão para data de emissão
     const hoje = new Date().toISOString().split('T')[0];
     document.getElementById('input-data').value = hoje;
     atualizarData();
