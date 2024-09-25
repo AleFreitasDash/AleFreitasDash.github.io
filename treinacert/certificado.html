@@ -9,7 +9,6 @@
     <!-- Adicionando a biblioteca html2pdf.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        /* Ajustes gerais */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f4f4f4;
@@ -19,114 +18,110 @@
             margin: 0;
             padding-top: 20px;
         }
-
         .inputs {
             margin-bottom: 20px;
         }
-
         .inputs label {
             margin-right: 10px;
             font-weight: bold;
         }
-
         .inputs input {
             margin-right: 20px;
             padding: 5px;
             font-size: 16px;
         }
-
         .inputs button {
             padding: 6px 12px;
             font-size: 16px;
             cursor: pointer;
         }
-
         .certificate {
-            width: 800px; /* Ajustei para um tamanho mais adequado ao formato A4 */
+            width: 1100px;
             background: #ffffff;
-            padding: 20px;
-            border: 8px solid #1c2a5a;
+            padding: 40px;
+            border: 10px solid #1c2a5a;
             box-sizing: border-box;
             position: relative;
+            overflow: hidden;
             margin-bottom: 40px;
-            min-height: 600px;
-            page-break-after: always; /* Forçar quebra de página após o certificado */
+            min-height: 700px;
         }
-
+        .certificate::before,
+        .certificate::after {
+            content: '';
+            position: absolute;
+            border: 1px solid #f16821;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+        }
+        /* Estilos de cabeçalho e estrutura */
         .header {
             text-align: center;
-            font-size: 40px;
+            font-size: 50px;
             font-family: 'Great Vibes', cursive;
             color: #1c2a5a;
-            margin-top: 20px;
+            margin-top: 30px;
         }
-
         .sub-header {
             text-align: center;
-            font-size: 22px;
+            font-size: 24px;
             color: #f16821;
             margin: 10px 0;
         }
-
         .content {
             text-align: center;
             font-size: 18px;
-            margin: 30px 20px;
-            line-height: 1.5;
+            margin: 30px 50px;
+            line-height: 1.8;
         }
-
         .field {
             color: #d74343;
             font-weight: bold;
         }
-
         /* Ajuste do rodapé */
         .footer {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 20px;
+            padding: 0 0px;
         }
-
         .footer div {
             text-align: center;
             font-size: 16px;
         }
-
         .badge {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
             background-color: #1c2a5a;
             color: #ffffff;
-            padding: 8px 16px;
+            padding: 10px 20px;
             border-radius: 5px;
-            font-size: 18px;
+            font-size: 20px;
         }
-
-        /* Estilo para a tabela de pontuações */
+        /* Estilo para Tabela de Pontuações */
         .score-table {
             width: 80%;
             margin: 30px auto;
             border-collapse: collapse;
+            /* Adicionado para evitar quebra de tabela */
             page-break-inside: avoid;
         }
-
         .score-table th, .score-table td {
-            padding: 8px;
+            padding: 10px;
             text-align: center;
             border: 1px solid #ddd;
             font-size: 16px;
         }
-
         .score-table th {
             background-color: #1c2a5a;
             color: #ffffff;
         }
-
         .overall-score {
             text-align: center;
             font-size: 22px;
@@ -134,18 +129,50 @@
             color: #1c2a5a;
             font-weight: bold;
         }
-
+        /* Ajustes para a imagem do logo */
         .logo {
-            width: 100px;
-            height: auto;
-            margin-bottom: 20px;
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 140px;
+            height: 96px;
         }
-
-        /* Controle de quebras de página */
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        /* Adicionando o design da borda amarela e azul */
+        .top-banner {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: #f16821;
+            transform: rotate(95deg);
+            z-index: 1;
+        }
+        .bottom-banner {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: #1c2a5a;
+            transform: rotate(95deg);
+            z-index: 1;
+        }
+        /* Garantindo que os elementos interativos estejam acima dos banners */
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            min-height: 600px; /* Ajuste para garantir espaço para o rodapé */
+        }
+        /* Controle de quebras de página para PDF */
         .page-break {
             page-break-before: always;
         }
-
     </style>
 </head>
 <body>
@@ -158,32 +185,45 @@
     <button onclick="downloadCertificate()">Download</button>
 </div>
 
+<!-- Envolvendo o certificado e a tabela em um contêiner -->
 <div id="conteudo-para-pdf">
     <!-- Certificado na primeira página -->
     <div id="certificado" class="certificate">
-        <div class="header">Certificado de Conclusão</div>
-        <div class="sub-header">Este certificado é apresentado a:</div>
-        <div class="content">
-            <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 40px;" id="nome">Nome</span><br><br>
-            Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, sendo aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
+        <div class="logo">
+            <!-- Inserindo a imagem do logo diretamente no HTML -->
+            <img src="https://solistica.com/wp-content/uploads/2021/06/logo.svg" alt="Logo">
         </div>
+        <div class="top-banner"></div>
+        <div class="bottom-banner"></div>
 
-        <div class="footer">
-            <div>
-                <span class="field" id="data">24/09/2024</span><br>
-                DATA
+        <!-- Envolvendo o conteúdo interativo em uma div com classe 'certificate-content' -->
+        <div class="certificate-content">
+            <div class="header">Certificado de Conclusão</div>
+            <div class="sub-header">Este certificado é orgulhosamente apresentado a:</div>
+            <div class="content">
+                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;" id="nome">Nome</span><br><br>
+                Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, tendo sido aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
             </div>
-            <div>
-                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 20px;">Solistica</span><br>
-                ASSINATURA
+
+            <div class="footer">
+                <div>
+                    <span class="field" id="data">24/09/2024</span><br>
+                    DATA
+                </div>
+                <div>
+                    <span class="field">Solistica</span><br>
+                    ASSINATURA
+                </div>
             </div>
+
+            <div class="badge">2024 CERTIFICADO</div>
         </div>
-
-        <div class="badge">2024 CERTIFICADO</div>
     </div>
 
-    <!-- Tabela de pontuação na segunda página -->
+    <!-- Quebra de página antes da tabela -->
     <div class="page-break"></div>
+
+    <!-- Tabela de pontuação na segunda página -->
     <div class="certificate-content">
         <div class="overall-score" id="nota-geral">Nota Geral: 0</div>
 
@@ -199,31 +239,46 @@
             <tbody>
                 <tr>
                     <td>Conduta com os Clientes</td>
-                    <td><input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()"></td>
+                    <td>
+                        <input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()">
+                        <span class="input-value" id="span-clientes-corretas"></span>
+                    </td>
                     <td>3</td>
                     <td id="nota-clientes">0</td>
                 </tr>
                 <tr>
                     <td>Organização e Recomendações</td>
-                    <td><input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
+                    <td>
+                        <input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                        <span class="input-value" id="span-organizacao-corretas"></span>
+                    </td>
                     <td>2</td>
                     <td id="nota-organizacao">0</td>
                 </tr>
                 <tr>
                     <td>Armazenamento</td>
-                    <td><input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
+                    <td>
+                        <input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                        <span class="input-value" id="span-armazenamento-corretas"></span>
+                    </td>
                     <td>2</td>
                     <td id="nota-armazenamento">0</td>
                 </tr>
                 <tr>
                     <td>Avarias</td>
-                    <td><input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()"></td>
+                    <td>
+                        <input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                        <span class="input-value" id="span-avarias-corretas"></span>
+                    </td>
                     <td>2</td>
                     <td id="nota-avarias">0</td>
                 </tr>
                 <tr>
                     <td>Documentação das Cargas</td>
-                    <td><input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()"></td>
+                    <td>
+                        <input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()">
+                        <span class="input-value" id="span-documentacao-corretas"></span>
+                    </td>
                     <td>1</td>
                     <td id="nota-documentacao">0</td>
                 </tr>
@@ -258,14 +313,17 @@
         const avariasCorretas = parseInt(document.getElementById('avarias-corretas').value) || 0;
         const documentacaoCorretas = parseInt(document.getElementById('documentacao-corretas').value) || 0;
 
+        // Totais de perguntas por tópico
         const totalClientes = 3;
         const totalOrganizacao = 2;
         const totalArmazenamento = 2;
         const totalAvarias = 2;
         const totalDocumentacao = 1;
 
+        // Nota máxima para cada tópico
         const notaMaximaPorTopico = 10;
 
+        // Cálculo das notas por tópico (escala de 0 a 10)
         const notaClientes = ((clientesCorretas / totalClientes) * notaMaximaPorTopico).toFixed(2);
         document.getElementById('nota-clientes').textContent = notaClientes;
 
@@ -281,6 +339,7 @@
         const notaDocumentacao = ((documentacaoCorretas / totalDocumentacao) * notaMaximaPorTopico).toFixed(2);
         document.getElementById('nota-documentacao').textContent = notaDocumentacao;
 
+        // Cálculo da nota geral (média das notas dos tópicos)
         const somaNotas = parseFloat(notaClientes) + parseFloat(notaOrganizacao) + parseFloat(notaArmazenamento) + parseFloat(notaAvarias) + parseFloat(notaDocumentacao);
         const notaGeral = (somaNotas / 5).toFixed(2);
 
@@ -293,20 +352,36 @@
             margin:       0,
             filename:     'certificado.pdf',
             image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { 
-                scale: 2,
-                useCORS: true,
-                allowTaint: true,
-                scrollY: 0
-            },
-            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'landscape' },
+            pagebreak:    { mode: ['css', 'legacy'] }
         };
 
-        html2pdf().set(opt).from(element).save();
+        // Copia os valores dos inputs para os spans correspondentes
+        const inputs = element.querySelectorAll('input');
+        inputs.forEach(input => {
+            const span = document.getElementById('span-' + input.id);
+            if (span) {
+                span.textContent = input.value;
+            }
+        });
+
+        // Mostra os spans e oculta os inputs
+        const spans = element.querySelectorAll('.input-value');
+        spans.forEach(span => span.style.display = 'inline');
+        inputs.forEach(input => input.style.display = 'none');
+
+        // Gera o PDF
+        html2pdf().set(opt).from(element).save().then(() => {
+            // Restaura os inputs e oculta os spans após gerar o PDF
+            inputs.forEach(input => input.style.display = '');
+            spans.forEach(span => span.style.display = 'none');
+        });
     }
 
+    // Inicializar nome e data
     atualizarNome();
+    // Definir a data atual como padrão
     const hoje = new Date().toISOString().split('T')[0];
     document.getElementById('input-data').value = hoje;
     atualizarData();
