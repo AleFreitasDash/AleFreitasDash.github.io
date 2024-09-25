@@ -2,13 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificado de Conclusão</title>
+    <!-- Importando fontes do Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Montserrat&display=swap" rel="stylesheet">
     <!-- Adicionando as bibliotecas necessárias -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
+        /* Seu CSS aqui */
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #f4f4f4;
@@ -87,7 +88,7 @@
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 0px;
+            padding: 0;
         }
         .footer div {
             text-align: center;
@@ -109,7 +110,6 @@
             width: 80%;
             margin: 30px auto;
             border-collapse: collapse;
-            /* Adicionado para evitar quebra de tabela */
             page-break-inside: avoid;
         }
         .score-table th, .score-table td {
@@ -135,12 +135,11 @@
             top: 30px;
             left: 30px;
             width: 140px;
-            height: 96px;
+            height: auto;
         }
         .logo img {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            height: auto;
         }
         /* Adicionando o design da borda amarela e azul */
         .top-banner {
@@ -173,6 +172,13 @@
         .page-break {
             page-break-before: always;
         }
+        .input-value {
+            display: none;
+        }
+        /* Ajuste para garantir que a tabela não quebre entre páginas */
+        .certificate-content {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>
@@ -185,106 +191,103 @@
     <button onclick="downloadCertificate()">Download</button>
 </div>
 
-<!-- Envolvendo o certificado e a tabela em um contêiner -->
-<div id="conteudo-para-pdf">
-    <!-- Certificado na primeira página -->
-    <div id="certificado" class="certificate">
-        <div class="logo">
-            <!-- Inserindo a imagem do logo diretamente no HTML -->
-            <img src="https://solistica.com/wp-content/uploads/2021/06/logo.svg" alt="Logo">
-        </div>
-        <div class="top-banner"></div>
-        <div class="bottom-banner"></div>
-
-        <!-- Envolvendo o conteúdo interativo em uma div com classe 'certificate-content' -->
-        <div class="certificate-content">
-            <div class="header">Certificado de Conclusão</div>
-            <div class="sub-header">Este certificado é orgulhosamente apresentado a:</div>
-            <div class="content">
-                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;" id="nome">Nome</span><br><br>
-                Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, tendo sido aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
-            </div>
-
-            <div class="footer">
-                <div>
-                    <span class="field" id="data">24/09/2024</span><br>
-                    DATA
-                </div>
-                <div>
-                    <span class="field">Solistica</span><br>
-                    ASSINATURA
-                </div>
-            </div>
-
-            <div class="badge">2024 CERTIFICADO</div>
-        </div>
+<!-- Certificado na primeira página -->
+<div id="certificado" class="certificate">
+    <div class="logo">
+        <!-- Inserindo a imagem do logotipo localmente -->
+        <img src="logo.png" alt="Logo">
     </div>
+    <div class="top-banner"></div>
+    <div class="bottom-banner"></div>
 
-    <!-- Quebra de página antes da tabela -->
-    <div class="page-break"></div>
-
-    <!-- Tabela de pontuação na segunda página -->
+    <!-- Envolvendo o conteúdo interativo em uma div com classe 'certificate-content' -->
     <div class="certificate-content">
-        <div class="overall-score" id="nota-geral">Nota Geral: 0</div>
+        <div class="header">Certificado de Conclusão</div>
+        <div class="sub-header">Este certificado é orgulhosamente apresentado a:</div>
+        <div class="content">
+            <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;" id="nome">Nome</span><br><br>
+            Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, tendo sido aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
+        </div>
 
-        <table class="score-table">
-            <thead>
-                <tr>
-                    <th>Tópico</th>
-                    <th>Perguntas Corretas</th>
-                    <th>Total de Perguntas</th>
-                    <th>Nota</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Conduta com os Clientes</td>
-                    <td>
-                        <input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()">
-                        <span class="input-value" id="span-clientes-corretas"></span>
-                    </td>
-                    <td>3</td>
-                    <td id="nota-clientes">0</td>
-                </tr>
-                <tr>
-                    <td>Organização e Recomendações</td>
-                    <td>
-                        <input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-organizacao-corretas"></span>
-                    </td>
-                    <td>2</td>
-                    <td id="nota-organizacao">0</td>
-                </tr>
-                <tr>
-                    <td>Armazenamento</td>
-                    <td>
-                        <input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-armazenamento-corretas"></span>
-                    </td>
-                    <td>2</td>
-                    <td id="nota-armazenamento">0</td>
-                </tr>
-                <tr>
-                    <td>Avarias</td>
-                    <td>
-                        <input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()">
-                        <span class="input-value" id="span-avarias-corretas"></span>
-                    </td>
-                    <td>2</td>
-                    <td id="nota-avarias">0</td>
-                </tr>
-                <tr>
-                    <td>Documentação das Cargas</td>
-                    <td>
-                        <input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()">
-                        <span class="input-value" id="span-documentacao-corretas"></span>
-                    </td>
-                    <td>1</td>
-                    <td id="nota-documentacao">0</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="footer">
+            <div>
+                <span class="field" id="data">24/09/2024</span><br>
+                DATA
+            </div>
+            <div>
+                <span class="field">Solistica</span><br>
+                ASSINATURA
+            </div>
+        </div>
+
+        <div class="badge">2024 CERTIFICADO</div>
     </div>
+</div>
+
+<!-- Quebra de página antes da tabela -->
+<div class="page-break"></div>
+
+<!-- Tabela de pontuação na segunda página -->
+<div id="tabela-notas" class="certificate-content">
+    <div class="overall-score" id="nota-geral">Nota Geral: 0</div>
+
+    <table class="score-table">
+        <thead>
+            <tr>
+                <th>Tópico</th>
+                <th>Perguntas Corretas</th>
+                <th>Total de Perguntas</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Conduta com os Clientes</td>
+                <td>
+                    <input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()">
+                    <span class="input-value" id="span-clientes-corretas"></span>
+                </td>
+                <td>3</td>
+                <td id="nota-clientes">0</td>
+            </tr>
+            <tr>
+                <td>Organização e Recomendações</td>
+                <td>
+                    <input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-organizacao-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-organizacao">0</td>
+            </tr>
+            <tr>
+                <td>Armazenamento</td>
+                <td>
+                    <input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-armazenamento-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-armazenamento">0</td>
+            </tr>
+            <tr>
+                <td>Avarias</td>
+                <td>
+                    <input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-avarias-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-avarias">0</td>
+            </tr>
+            <tr>
+                <td>Documentação das Cargas</td>
+                <td>
+                    <input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()">
+                    <span class="input-value" id="span-documentacao-corretas"></span>
+                </td>
+                <td>1</td>
+                <td id="nota-documentacao">0</td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
 <script>
@@ -362,30 +365,42 @@
         inputs.forEach(input => input.style.display = 'none');
 
         // Gera o PDF
-        const element = document.getElementById('conteudo-para-pdf');
-        html2canvas(element, {
+        const pdf = new jspdf.jsPDF('landscape', 'pt', 'a4');
+
+        // Define as dimensões da página
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        // Captura o certificado (primeira página)
+        html2canvas(document.getElementById('certificado'), {
             scale: 2,
             useCORS: true,
-            allowTaint: true,
-            onclone: function (clonedDoc) {
-                // Remove os inputs do documento clonado
-                clonedDoc.querySelectorAll('input').forEach(input => input.style.display = 'none');
-                clonedDoc.querySelectorAll('.input-value').forEach(span => span.style.display = 'inline');
-            }
+            allowTaint: true
         }).then(canvas => {
             const imgData = canvas.toDataURL('image/png');
-            const pdf = new jspdf.jsPDF('landscape', 'pt', 'a4');
-            const imgWidth = 1122; // Largura da página em pontos (A4 landscape)
-            const pageHeight = 793; // Altura da página em pontos (A4 landscape)
+            const imgWidth = pageWidth;
             const imgHeight = canvas.height * imgWidth / canvas.width;
 
-            let position = 0;
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            pdf.save('certificado.pdf');
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
-            // Restaura os inputs e oculta os spans após gerar o PDF
-            inputs.forEach(input => input.style.display = '');
-            spans.forEach(span => span.style.display = 'none');
+            // Captura a tabela de notas (segunda página)
+            html2canvas(document.getElementById('tabela-notas'), {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas2 => {
+                pdf.addPage();
+                const imgData2 = canvas2.toDataURL('image/png');
+                const imgWidth2 = pageWidth;
+                const imgHeight2 = canvas2.height * imgWidth2 / canvas2.width;
+
+                pdf.addImage(imgData2, 'PNG', 0, 0, imgWidth2, imgHeight2);
+                pdf.save('certificado.pdf');
+
+                // Restaura os inputs e oculta os spans após gerar o PDF
+                inputs.forEach(input => input.style.display = '');
+                spans.forEach(span => span.style.display = 'none');
+            });
         });
     }
 
