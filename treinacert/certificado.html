@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificado de Conclusão</title>
-    <!-- Importando fontes do Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Montserrat&display=swap" rel="stylesheet">
-    <!-- Adicionando a biblioteca html2pdf.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Adicionando as bibliotecas necessárias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -347,18 +347,8 @@
     }
 
     function downloadCertificate() {
-        const element = document.getElementById('conteudo-para-pdf');
-        const opt = {
-            margin:       0,
-            filename:     'certificado.pdf',
-            image:        { type: 'jpeg', quality: 1 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'pt', format: 'a4', orientation: 'landscape' },
-            pagebreak:    { mode: ['css', 'legacy'] }
-        };
-
-        // Copia os valores dos inputs para os spans correspondentes
-        const inputs = element.querySelectorAll('input');
+        // Atualiza os spans com os valores dos inputs
+        const inputs = document.querySelectorAll('input');
         inputs.forEach(input => {
             const span = document.getElementById('span-' + input.id);
             if (span) {
@@ -367,12 +357,32 @@
         });
 
         // Mostra os spans e oculta os inputs
-        const spans = element.querySelectorAll('.input-value');
+        const spans = document.querySelectorAll('.input-value');
         spans.forEach(span => span.style.display = 'inline');
         inputs.forEach(input => input.style.display = 'none');
 
         // Gera o PDF
-        html2pdf().set(opt).from(element).save().then(() => {
+        const element = document.getElementById('conteudo-para-pdf');
+        html2canvas(element, {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            onclone: function (clonedDoc) {
+                // Remove os inputs do documento clonado
+                clonedDoc.querySelectorAll('input').forEach(input => input.style.display = 'none');
+                clonedDoc.querySelectorAll('.input-value').forEach(span => span.style.display = 'inline');
+            }
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jspdf.jsPDF('landscape', 'pt', 'a4');
+            const imgWidth = 1122; // Largura da página em pontos (A4 landscape)
+            const pageHeight = 793; // Altura da página em pontos (A4 landscape)
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+
+            let position = 0;
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            pdf.save('certificado.pdf');
+
             // Restaura os inputs e oculta os spans após gerar o PDF
             inputs.forEach(input => input.style.display = '');
             spans.forEach(span => span.style.display = 'none');
