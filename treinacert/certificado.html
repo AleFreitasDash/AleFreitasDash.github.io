@@ -1,69 +1,436 @@
-<!doctype html>
-<html lang="pt">
-
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-    crossorigin="anonymous">
-
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-
-  <script src="https://unpkg.com/blip-chat-extension@1.0.4" type="text/javascript"></script>
-
-  <title>Vídeo de Treinamento</title>
-
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      background-color: #000;
-    }
-
-    .video-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Certificado de Conclusão</title>
+    <!-- Importando fontes do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Montserrat&display=swap" rel="stylesheet">
+    <!-- Adicionando as bibliotecas necessárias -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        /* Seu CSS aqui */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding-top: 20px;
+        }
+        .inputs {
+            margin-bottom: 20px;
+        }
+        .inputs label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .inputs input {
+            margin-right: 20px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .inputs button {
+            padding: 6px 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .certificate {
+            width: 1100px;
+            background: #ffffff;
+            padding: 40px;
+            border: 10px solid #1c2a5a;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+            min-height: 700px;
+        }
+        .certificate::before,
+        .certificate::after {
+            content: '';
+            position: absolute;
+            border: 1px solid #f16821;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+        }
+        /* Estilos de cabeçalho e estrutura */
+        .header {
+            text-align: center;
+            font-size: 50px;
+            font-family: 'Great Vibes', cursive;
+            color: #1c2a5a;
+            margin-top: 30px;
+        }
+        .sub-header {
+            text-align: center;
+            font-size: 24px;
+            color: #f16821;
+            margin: 10px 0;
+        }
+        .content {
+            text-align: center;
+            font-size: 18px;
+            margin: 30px 50px;
+            line-height: 1.8;
+        }
+        .field {
+            color: #d74343;
+            font-weight: bold;
+        }
+        /* Ajuste do rodapé */
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+        }
+        .footer div {
+            text-align: center;
+            font-size: 16px;
+        }
+        .certificado {
+            position: absolute;
+            bottom: 30px;
+            top: 460px;
+            left: 500px;
+            transform: translateX(-50%);
+            border-radius: 5px;
+            font-size: 20px;
+            width: 150px;
+            height: auto;
+        }
+        .certificado img {
+            width: 100%;
+            height: auto;
+        }
+        /* Estilo para Tabela de Pontuações */
+        .score-table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+        }
+        .score-table th, .score-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        .score-table th {
+            background-color: #1c2a5a;
+            color: #ffffff;
+        }
+        .overall-score {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 20px;
+            color: #1c2a5a;
+            font-weight: bold;
+        }
+        /* Ajustes para a imagem do logo */
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 140px;
+            height: auto;
+        }
+        .logo img {
+            width: 100%;
+            height: auto;
+        }
+        /* Adicionando o design da borda amarela e azul */
+        .top-banner {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: #f16821;
+            transform: rotate(95deg);
+            z-index: 1;
+        }
+        .bottom-banner {
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background-color: #1c2a5a;
+            transform: rotate(95deg);
+            z-index: 1;
+        }
+        /* Garantindo que os elementos interativos estejam acima dos banners */
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            min-height: 600px; /* Ajuste para garantir espaço para o rodapé */
+        }
+        /* Controle de quebras de página para PDF */
+        .page-break {
+            page-break-before: always;
+        }
+        .input-value {
+            display: none;
+        }
+        /* Ajuste para garantir que a tabela não quebre entre páginas */
+        .certificate-content {
+            page-break-inside: avoid;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="video-container">
-    <iframe src="https://www.youtube-nocookie.com/embed/kB7hnqiNxwY?si=CRG2yim9dr07uvI2&amp;controls=0"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-    </iframe>
-  </div>
 
-  <script>
-    var webView = new BlipChatExtension();
+<div class="inputs">
+    <label for="input-nome">Nome:</label>
+    <input type="text" id="input-nome" placeholder="Digite o nome" oninput="atualizarNome()" value="Nome">
+    <label for="input-data">Data Emissão:</label>
+    <input type="date" id="input-data" onchange="atualizarData()">
+    <label for="input-data2">Data Validade:</label>
+    <input type="date" id="input-data2" onchange="atualizarData()">
+    <button onclick="downloadCertificate()">Download</button>
+</div>
 
-    // Função para fechar a webview após a visualização do vídeo
-    function fecharWebView() {
-      webView.closeWebView();
+<!-- Certificado na primeira página -->
+<div id="certificado" class="certificate">
+    <div class="logo">
+        <!-- Inserindo a imagem do logotipo localmente -->
+        <img src="logo.png" alt="Logo">
+    </div>
+    <div class="top-banner"></div>
+    <div class="bottom-banner"></div>
+
+    <!-- Envolvendo o conteúdo interativo em uma div com classe 'certificate-content' -->
+    <div class="certificate-content">
+        <div class="header">Certificado de Conclusão</div>
+        <div class="sub-header">Este certificado é orgulhosamente apresentado a:</div>
+        <div class="content">
+            <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;" id="nome">Nome</span><br><br>
+            Certificamos que <span class="field" id="nome2">Nome</span> concluiu com sucesso o treinamento Adimax realizado por vídeo, tendo sido aprovado na avaliação final. O conteúdo do treinamento abrangeu os seguintes temas: Conduta com os Clientes, Organização e Recomendações, Armazenamento, Avarias e Documentação das Cargas.
+        </div>
+
+        <div class="footer">
+            <div style="color: #fff;background-color: #3e0031;border-radius: 10px;padding: 10px 10px 10px;">
+                <span class="field" id="data">24/09/2024</span><br>
+                DATA EMISSÃO<br>
+                <span class="field" id="dataa">24/09/2024</span><br>
+                DATA VALIDADE
+            </div>
+            <div>
+                <span class="field" style="font-family: 'Great Vibes', cursive; font-size: 50px;">Solistica</span><br>
+                ASSINATURA
+            </div>
+        </div>
+
+        <div class="certificado"><img src="certificado.png" alt="Certificado"></div>
+    </div>
+</div>
+
+<!-- Quebra de página antes da tabela -->
+<div class="page-break"></div>
+
+<!-- Tabela de pontuação na segunda página -->
+<div id="tabela-notas" class="certificate-content">
+    <div class="overall-score" id="nota-geral">Nota Geral: 0</div>
+
+    <table class="score-table">
+        <thead>
+            <tr>
+                <th>Tópico</th>
+                <th>Perguntas Corretas</th>
+                <th>Total de Perguntas</th>
+                <th>Nota</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Conduta com os Clientes</td>
+                <td>
+                    <input type="number" id="clientes-corretas" value="0" min="0" max="3" onchange="calcularNota()">
+                    <span class="input-value" id="span-clientes-corretas"></span>
+                </td>
+                <td>3</td>
+                <td id="nota-clientes">0</td>
+            </tr>
+            <tr>
+                <td>Organização e Recomendações</td>
+                <td>
+                    <input type="number" id="organizacao-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-organizacao-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-organizacao">0</td>
+            </tr>
+            <tr>
+                <td>Armazenamento</td>
+                <td>
+                    <input type="number" id="armazenamento-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-armazenamento-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-armazenamento">0</td>
+            </tr>
+            <tr>
+                <td>Avarias</td>
+                <td>
+                    <input type="number" id="avarias-corretas" value="0" min="0" max="2" onchange="calcularNota()">
+                    <span class="input-value" id="span-avarias-corretas"></span>
+                </td>
+                <td>2</td>
+                <td id="nota-avarias">0</td>
+            </tr>
+            <tr>
+                <td>Documentação das Cargas</td>
+                <td>
+                    <input type="number" id="documentacao-corretas" value="0" min="0" max="1" onchange="calcularNota()">
+                    <span class="input-value" id="span-documentacao-corretas"></span>
+                </td>
+                <td>1</td>
+                <td id="nota-documentacao">0</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function atualizarNome() {
+        const nome = document.getElementById('input-nome').value;
+        document.getElementById('nome').textContent = nome;
+        document.getElementById('nome2').textContent = nome;
     }
 
-    // Você pode adicionar um evento de fechamento automático da webview após o vídeo terminar
-    // ou permitir que o usuário feche manualmente após assistir.
-  </script>
-</body>
+    function atualizarData() {
+        const dataInput = document.getElementById('input-data').value;
+        const dataInput2 = document.getElementById('input-data2').value;
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
 
+        if (dataInput) {
+            const dataEmissao = new Date(dataInput);
+            dataEmissao.setDate(dataEmissao.getDate() + 1); // Adiciona um dia
+            const dataFormatadaEmissao = dataEmissao.toLocaleDateString('pt-BR', options);
+            document.getElementById('data').textContent = dataFormatadaEmissao;
+        } else {
+            document.getElementById('data').textContent = '';
+        }
+
+        if (dataInput2) {
+            const dataValidade = new Date(dataInput2);
+            dataValidade.setDate(dataValidade.getDate() + 1); // Adiciona um dia
+            const dataFormatadaValidade = dataValidade.toLocaleDateString('pt-BR', options);
+            document.getElementById('dataa').textContent = dataFormatadaValidade;
+        } else {
+            document.getElementById('dataa').textContent = '';
+        }
+    }
+
+    function calcularNota() {
+        const clientesCorretas = parseInt(document.getElementById('clientes-corretas').value) || 0;
+        const organizacaoCorretas = parseInt(document.getElementById('organizacao-corretas').value) || 0;
+        const armazenamentoCorretas = parseInt(document.getElementById('armazenamento-corretas').value) || 0;
+        const avariasCorretas = parseInt(document.getElementById('avarias-corretas').value) || 0;
+        const documentacaoCorretas = parseInt(document.getElementById('documentacao-corretas').value) || 0;
+
+        // Totais de perguntas por tópico
+        const totalClientes = 3;
+        const totalOrganizacao = 2;
+        const totalArmazenamento = 2;
+        const totalAvarias = 2;
+        const totalDocumentacao = 1;
+
+        // Nota máxima para cada tópico
+        const notaMaximaPorTopico = 10;
+
+        // Cálculo das notas por tópico (escala de 0 a 10)
+        const notaClientes = ((clientesCorretas / totalClientes) * notaMaximaPorTopico).toFixed(2);
+        document.getElementById('nota-clientes').textContent = notaClientes;
+
+        const notaOrganizacao = ((organizacaoCorretas / totalOrganizacao) * notaMaximaPorTopico).toFixed(2);
+        document.getElementById('nota-organizacao').textContent = notaOrganizacao;
+
+        const notaArmazenamento = ((armazenamentoCorretas / totalArmazenamento) * notaMaximaPorTopico).toFixed(2);
+        document.getElementById('nota-armazenamento').textContent = notaArmazenamento;
+
+        const notaAvarias = ((avariasCorretas / totalAvarias) * notaMaximaPorTopico).toFixed(2);
+        document.getElementById('nota-avarias').textContent = notaAvarias;
+
+        const notaDocumentacao = ((documentacaoCorretas / totalDocumentacao) * notaMaximaPorTopico).toFixed(2);
+        document.getElementById('nota-documentacao').textContent = notaDocumentacao;
+
+        // Cálculo da nota geral (média das notas dos tópicos)
+        const somaNotas = parseFloat(notaClientes) + parseFloat(notaOrganizacao) + parseFloat(notaArmazenamento) + parseFloat(notaAvarias) + parseFloat(notaDocumentacao);
+        const notaGeral = (somaNotas / 5).toFixed(2);
+
+        document.getElementById('nota-geral').textContent = 'Nota Geral: ' + notaGeral;
+    }
+
+    function downloadCertificate() {
+        // Atualiza os spans com os valores dos inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            const span = document.getElementById('span-' + input.id);
+            if (span) {
+                span.textContent = input.value;
+            }
+        });
+
+        // Mostra os spans e oculta os inputs
+        const spans = document.querySelectorAll('.input-value');
+        spans.forEach(span => span.style.display = 'inline');
+        inputs.forEach(input => input.style.display = 'none');
+
+        // Gera o PDF
+        const pdf = new jspdf.jsPDF('landscape', 'pt', 'a4');
+
+        // Define as dimensões da página
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+
+        // Captura o certificado (primeira página)
+        html2canvas(document.getElementById('certificado'), {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true
+        }).then(canvas => {
+            const imgData = canvas.toDataURL('image/png');
+            const imgWidth = pageWidth;
+            const imgHeight = canvas.height * imgWidth / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+            // Captura a tabela de notas (segunda página)
+            html2canvas(document.getElementById('tabela-notas'), {
+                scale: 2,
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas2 => {
+                pdf.addPage();
+                const imgData2 = canvas2.toDataURL('image/png');
+                const imgWidth2 = pageWidth;
+                const imgHeight2 = canvas2.height * imgWidth2 / canvas2.width;
+
+                pdf.addImage(imgData2, 'PNG', 0, 0, imgWidth2, imgHeight2);
+                pdf.save('certificado.pdf');
+
+                // Restaura os inputs e oculta os spans após gerar o PDF
+                inputs.forEach(input => input.style.display = '');
+                spans.forEach(span => span.style.display = 'none');
+            });
+        });
+    }
+
+    // Inicializar nome e datas
+    atualizarNome();
+    // Definir a data atual como padrão para data de emissão
+    const hoje = new Date().toISOString().split('T')[0];
+    document.getElementById('input-data').value = hoje;
+    atualizarData();
+</script>
+
+</body>
 </html>
