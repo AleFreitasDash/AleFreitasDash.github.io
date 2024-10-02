@@ -34,12 +34,11 @@
             width: 800px;
             height: 600px;
             margin: 0 auto;
-            background-color: #ccc;
         }
 
         #flipbook .page {
-            width: 100%;
-            height: 100%;
+            width: 400px;
+            height: 600px;
         }
 
         .download-link {
@@ -58,8 +57,8 @@
     </style>
     <!-- Inclua as bibliotecas necessárias -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Incluindo o turn.js via CDN alternativo -->
-    <script src="https://cdn.jsdelivr.net/npm/turn.js@4/turn.min.js"></script>
+    <!-- Incluindo o turn.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 </head>
 
 <body>
@@ -75,7 +74,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
     <script>
         // Carrega o PDF
-        const url = 'Treinamento%20Motoristas.pdf';
+        const url = 'Treinamento Motoristas.pdf';
 
         const flipbook = $('#flipbook');
 
@@ -91,7 +90,8 @@
 
             for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
                 pagesPromises.push(pdf.getPage(pageNum).then(function (page) {
-                    const viewport = page.getViewport({ scale: 1.5 });
+                    const viewport = page.getViewport({ scale: 1 });
+
                     const canvas = document.createElement('canvas');
                     const context = canvas.getContext('2d');
                     canvas.height = viewport.height;
@@ -104,8 +104,8 @@
 
                     return page.render(renderContext).promise.then(function () {
                         const pageDiv = $('<div />').addClass('page');
-                        // Ajusta o tamanho do canvas para caber no flipbook
-                        const pageWidth = flipbook.width();
+                        // Ajusta o tamanho do canvas para caber na página do flipbook
+                        const pageWidth = 400; // Metade da largura do flipbook (800px / 2)
                         const scale = pageWidth / canvas.width;
                         canvas.style.width = pageWidth + 'px';
                         canvas.style.height = (canvas.height * scale) + 'px';
@@ -128,18 +128,19 @@
                     flipbook.append(data.pageDiv);
                 });
 
-                // Inicializa o flipbook após um pequeno atraso para garantir que as páginas sejam renderizadas
-                setTimeout(function () {
-                    flipbook.turn({
-                        width: flipbook.width(),
-                        height: flipbook.height(),
-                        autoCenter: true,
-                        display: 'double',
-                        acceleration: true,
-                        gradients: true,
-                        elevation: 50
-                    });
-                }, 500);
+                flipbook.turn({
+                    width: 800,
+                    height: 600,
+                    autoCenter: true,
+                    display: 'double',
+                    elevation: 50,
+                    gradients: true,
+                    when: {
+                        turning: function (e, page, view) {
+                            // Código adicional se necessário durante a virada de página
+                        }
+                    }
+                });
             });
         });
     </script>
