@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador de PDF em Formato de Livro - Treinamento de Motoristas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pdf-viewer-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .pdf-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        #flipbook {
+            width: 800px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        .download-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .download-link:hover {
+            color: #0056b3;
+        }
+    </style>
+    <!-- Inclua as bibliotecas necessárias -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Incluindo o turn.js via CDN alternativo -->
+    <script src="https://rawcdn.githack.com/blasten/turn.js/4.1.0/lib/turn.min.js"></script>
+</head>
+
+<body>
+    <div class="pdf-viewer-container">
+        <h1 class="pdf-title">Treinamento de Motoristas</h1>
+        <div id="flipbook">
+            <!-- As páginas serão carregadas aqui -->
+        </div>
+        <a class="download-link" href="Treinamento Motoristas.pdf" download>Baixar PDF</a>
+    </div>
+
+    <!-- Inclua a biblioteca PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+    <script>
+        // Carrega o PDF
+        const url = 'Treinamento Motoristas.pdf';
+
+        const flipbook = $('#flipbook');
+
+        const pdfjsLib = window['pdfjsLib'];
+
+        // Atualize o caminho para o pdf.worker.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
+
+        pdfjsLib.getDocument(url).promise.then(function (pdf) {
+            const totalPages = pdf.numPages;
+
+            let pagesPromises = [];
+
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                pagesPromises.push(pdf.getPage(pageNum).then(function (page) {
+                    const viewport = page.getViewport({ scale: 1.5 });
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+
+                    return page.render(renderContext).promise.then(function () {
+                        const pageDiv = $('<div/>').css({
+                            width: viewport.width,
+                            height: viewport.height
+                        });
+                        pageDiv.append(canvas);
+
+                        return {
+                            pageNum: pageNum,
+                            pageDiv: pageDiv,
+                            viewport: viewport
+                        };
+                    });
+                }));
+            }
+
+            Promise.all(pagesPromises).then(function (pagesData) {
+                // Ordenar as páginas pela numeração
+                pagesData.sort((a, b) => a.pageNum - b.pageNum);
+
+                let viewportWidth = 0;
+                let viewportHeight = 0;
+
+                pagesData.forEach(function (data) {
+                    flipbook.append(data.pageDiv);
+                    viewportWidth = data.viewport.width;
+                    viewportHeight = data.viewport.height;
+                });
+
+                flipbook.turn({
+                    width: viewportWidth * 2,
+                    height: viewportHeight,
+                    autoCenter: true
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
