@@ -4,146 +4,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizador de PDF em Formato de Livro - Treinamento de Motoristas</title>
+    <title>Visualizador de PDF - Treinamento de Motoristas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
             margin: 0;
             padding: 0;
+            color: #333;
         }
 
         .pdf-viewer-container {
             max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-sizing: border-box;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
         }
 
         .pdf-title {
             text-align: center;
-            font-size: 24px;
+            font-size: 32px;
             font-weight: bold;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 2px 2px #333;
         }
 
-        #flipbook {
-            width: 800px;
-            height: 600px;
-            margin: 0 auto;
-        }
-
-        #flipbook .page {
-            width: 400px;
-            height: 600px;
+        .pdf-viewer {
+            width: 100%;
+            height: 700px;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .download-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 16px;
-            color: #007bff;
+            display: inline-block;
+            margin: 30px auto 0;
+            padding: 15px 25px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 8px;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
         .download-link:hover {
-            color: #0056b3;
+            background-color: #0056b3;
+        }
+
+        /* Animação no botão */
+        .download-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-link::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-link:hover::after {
+            left: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .pdf-title {
+                font-size: 24px;
+            }
+
+            .pdf-viewer {
+                height: 500px;
+            }
         }
     </style>
-    <!-- Inclua as bibliotecas necessárias -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Incluindo o turn.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 </head>
 
 <body>
     <div class="pdf-viewer-container">
         <h1 class="pdf-title">Treinamento de Motoristas</h1>
-        <div id="flipbook">
-            <!-- As páginas serão carregadas aqui -->
-        </div>
+        <iframe class="pdf-viewer" src="Treinamento%20Motoristas.pdf"></iframe>
         <a class="download-link" href="Treinamento%20Motoristas.pdf" download>Baixar PDF</a>
     </div>
-
-    <!-- Inclua a biblioteca PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
-    <script>
-        // Carrega o PDF
-        const url = 'Treinamento Motoristas.pdf';
-
-        const flipbook = $('#flipbook');
-
-        const pdfjsLib = window['pdfjsLib'];
-
-        // Atualize o caminho para o pdf.worker.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js';
-
-        pdfjsLib.getDocument(url).promise.then(function (pdf) {
-            const totalPages = pdf.numPages;
-
-            let pagesPromises = [];
-
-            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-                pagesPromises.push(pdf.getPage(pageNum).then(function (page) {
-                    const viewport = page.getViewport({ scale: 1 });
-
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.height = viewport.height;
-                    canvas.width = viewport.width;
-
-                    const renderContext = {
-                        canvasContext: context,
-                        viewport: viewport
-                    };
-
-                    return page.render(renderContext).promise.then(function () {
-                        const pageDiv = $('<div />').addClass('page');
-                        // Ajusta o tamanho do canvas para caber na página do flipbook
-                        const pageWidth = 400; // Metade da largura do flipbook (800px / 2)
-                        const scale = pageWidth / canvas.width;
-                        canvas.style.width = pageWidth + 'px';
-                        canvas.style.height = (canvas.height * scale) + 'px';
-
-                        pageDiv.append(canvas);
-
-                        return {
-                            pageNum: pageNum,
-                            pageDiv: pageDiv
-                        };
-                    });
-                }));
-            }
-
-            Promise.all(pagesPromises).then(function (pagesData) {
-                // Ordenar as páginas pela numeração
-                pagesData.sort((a, b) => a.pageNum - b.pageNum);
-
-                pagesData.forEach(function (data) {
-                    flipbook.append(data.pageDiv);
-                });
-
-                flipbook.turn({
-                    width: 800,
-                    height: 600,
-                    autoCenter: true,
-                    display: 'double',
-                    elevation: 50,
-                    gradients: true,
-                    when: {
-                        turning: function (e, page, view) {
-                            // Código adicional se necessário durante a virada de página
-                        }
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 
 </html>
