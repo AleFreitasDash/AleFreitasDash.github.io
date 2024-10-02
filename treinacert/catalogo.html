@@ -19,6 +19,7 @@
             padding: 20px;
             background-color: #fff;
             border-radius: 8px;
+            box-sizing: border-box;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -33,6 +34,12 @@
             width: 800px;
             height: 600px;
             margin: 0 auto;
+            background-color: #ccc;
+        }
+
+        #flipbook .page {
+            width: 100%;
+            height: 100%;
         }
 
         .download-link {
@@ -52,7 +59,7 @@
     <!-- Inclua as bibliotecas necessárias -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Incluindo o turn.js via CDN alternativo -->
-    <script src="https://rawcdn.githack.com/blasten/turn.js/4.1.0/lib/turn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/turn.js@4/turn.min.js"></script>
 </head>
 
 <body>
@@ -61,14 +68,14 @@
         <div id="flipbook">
             <!-- As páginas serão carregadas aqui -->
         </div>
-        <a class="download-link" href="Treinamento Motoristas.pdf" download>Baixar PDF</a>
+        <a class="download-link" href="Treinamento%20Motoristas.pdf" download>Baixar PDF</a>
     </div>
 
     <!-- Inclua a biblioteca PDF.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
     <script>
         // Carrega o PDF
-        const url = 'Treinamento Motoristas.pdf';
+        const url = 'Treinamento%20Motoristas.pdf';
 
         const flipbook = $('#flipbook');
 
@@ -96,16 +103,18 @@
                     };
 
                     return page.render(renderContext).promise.then(function () {
-                        const pageDiv = $('<div/>').css({
-                            width: viewport.width,
-                            height: viewport.height
-                        });
+                        const pageDiv = $('<div />').addClass('page');
+                        // Ajusta o tamanho do canvas para caber no flipbook
+                        const pageWidth = flipbook.width();
+                        const scale = pageWidth / canvas.width;
+                        canvas.style.width = pageWidth + 'px';
+                        canvas.style.height = (canvas.height * scale) + 'px';
+
                         pageDiv.append(canvas);
 
                         return {
                             pageNum: pageNum,
-                            pageDiv: pageDiv,
-                            viewport: viewport
+                            pageDiv: pageDiv
                         };
                     });
                 }));
@@ -115,20 +124,22 @@
                 // Ordenar as páginas pela numeração
                 pagesData.sort((a, b) => a.pageNum - b.pageNum);
 
-                let viewportWidth = 0;
-                let viewportHeight = 0;
-
                 pagesData.forEach(function (data) {
                     flipbook.append(data.pageDiv);
-                    viewportWidth = data.viewport.width;
-                    viewportHeight = data.viewport.height;
                 });
 
-                flipbook.turn({
-                    width: viewportWidth * 2,
-                    height: viewportHeight,
-                    autoCenter: true
-                });
+                // Inicializa o flipbook após um pequeno atraso para garantir que as páginas sejam renderizadas
+                setTimeout(function () {
+                    flipbook.turn({
+                        width: flipbook.width(),
+                        height: flipbook.height(),
+                        autoCenter: true,
+                        display: 'double',
+                        acceleration: true,
+                        gradients: true,
+                        elevation: 50
+                    });
+                }, 500);
             });
         });
     </script>
