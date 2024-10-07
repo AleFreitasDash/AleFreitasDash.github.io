@@ -12,14 +12,12 @@
 </head>
 <body>
 
-<header class="bg-primary text-white py-3">
-    <div class="container">
-        <h1 class="mb-0">Calculadora de Rotas com Capacidade de Veículo</h1>
-    </div>
+<header class="bg-primary text-white text-center py-3">
+    <h1>Calculadora de Rotas com Capacidade de Veículo</h1>
 </header>
 
 <main class="container my-4">
-    <form id="routeForm" class="needs-validation" novalidate>
+    <form id="routeForm" class="needs-validation shadow-sm p-4 rounded" novalidate>
         <div class="row g-3">
             <div class="col-md-6">
                 <label for="origin" class="form-label">Origem:</label>
@@ -49,7 +47,7 @@
 
         <div class="my-3">
             <label for="destinations" class="form-label">Destinos e Pesos:</label>
-            <textarea class="form-control" id="destinations" rows="5" placeholder="Digite um destino por linha no formato: Destino;Peso em kg"></textarea>
+            <textarea class="form-control" id="destinations" rows="4" placeholder="Digite um destino por linha no formato: Destino;Peso em kg"></textarea>
             <div class="form-text">
                 Exemplo: <em>São Paulo;100</em>
             </div>
@@ -74,57 +72,37 @@
         </div>
     </form>
 
-    <div id="map" class="my-4"></div>
+    <div id="map" class="my-4 rounded border"></div>
 
-    <h2 class="mt-5">Resultados</h2>
-    <div class="table-responsive">
-        <table class="table table-striped table-hover" id="resultsTable">
-            <thead class="table-dark">
-                <tr>
-                    <th>Rota</th>
-                    <th>Sequência</th>
-                    <th>Origem</th>
-                    <th>Destino</th>
-                    <th>Peso (kg)</th>
-                    <th>Distância (km)</th>
-                    <th>Veículo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Resultados serão inseridos aqui -->
-            </tbody>
-        </table>
-    </div>
-
-    <div class="download-buttons text-center my-4">
-        <button class="btn btn-success me-2" id="downloadXLSX"><i class="bi bi-file-earmark-excel"></i> Download XLS</button>
-        <button class="btn btn-danger me-2" id="downloadPDF"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
-        <button class="btn btn-secondary" id="downloadTXT"><i class="bi bi-file-earmark-text"></i> Download TXT</button>
+    <div class="results-section">
+        <h2 class="mt-5">Resultados</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover" id="resultsTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Rota</th>
+                        <th>Sequência</th>
+                        <th>Origem</th>
+                        <th>Destino</th>
+                        <th>Peso (kg)</th>
+                        <th>Distância (km)</th>
+                        <th>Veículo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Resultados serão inseridos aqui -->
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
-
-<footer class="bg-light text-center py-3">
-    <div class="container">
-        <small>&copy; 2023 Calculadora de Rotas. Todos os direitos reservados.</small>
-    </div>
-</footer>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- jsPDF AutoTable -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
-<!-- SheetJS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<!-- FileSaver.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
-<!-- Custom Script -->
+<!-- Custom JavaScript -->
 <script src="script.js"></script>
 
 </body>
