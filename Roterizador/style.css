@@ -7,21 +7,17 @@
 
 /* Corpo da página */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
 }
 
-/* Container principal */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+/* Cabeçalho */
+header {
+    background-color: #007bff;
 }
 
-/* Títulos */
-h1, h2 {
-    margin-bottom: 20px;
-    color: #343a40;
+header h1 {
+    font-size: 1.75rem;
 }
 
 /* Formulário */
@@ -29,22 +25,20 @@ h1, h2 {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
-    margin-bottom: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 #routeForm .form-label {
-    font-weight: bold;
-    color: #495057;
+    font-weight: 600;
 }
 
-#routeForm .form-control, 
-#routeForm .form-select {
-    margin-bottom: 15px;
+#routeForm .form-text {
+    font-size: 0.9rem;
+    color: #6c757d;
 }
 
-#routeForm button {
-    width: 100%;
+#routeForm .invalid-feedback {
+    font-size: 0.9rem;
 }
 
 /* Mapa */
@@ -52,7 +46,6 @@ h1, h2 {
     height: 500px;
     border: 1px solid #ced4da;
     border-radius: 5px;
-    margin-bottom: 30px;
 }
 
 /* Tabela de resultados */
@@ -60,9 +53,11 @@ h1, h2 {
     margin-top: 20px;
 }
 
+#resultsTable th, #resultsTable td {
+    vertical-align: middle;
+}
+
 #resultsTable th {
-    background-color: #007bff;
-    color: #fff;
     text-align: center;
 }
 
@@ -70,31 +65,32 @@ h1, h2 {
     text-align: center;
 }
 
-#resultsTable tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+#resultsTable tbody tr:hover {
+    background-color: #f1f1f1;
 }
 
 /* Botões de download */
-.download-buttons {
-    margin: 20px 0;
-    text-align: center;
+.download-buttons .btn {
+    width: 200px;
+    margin-bottom: 10px;
 }
 
-.download-buttons .btn {
-    margin: 5px;
+/* Rodapé */
+footer {
+    background-color: #e9ecef;
+}
+
+footer small {
+    color: #6c757d;
 }
 
 /* Responsividade */
-@media (max-width: 767px) {
-    #routeForm .row {
-        flex-direction: column;
+@media (max-width: 576px) {
+    header h1 {
+        font-size: 1.5rem;
     }
-    
-    #routeForm .col-md-6 {
+
+    .download-buttons .btn {
         width: 100%;
-    }
-    
-    #routeForm button {
-        margin-top: 10px;
     }
 }
