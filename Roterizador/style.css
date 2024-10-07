@@ -1,33 +1,100 @@
-body {
+/* Reset básico */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
     font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
+    background-color: #f8f9fa;
 }
 
+/* Container principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Títulos */
+h1, h2 {
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+/* Formulário */
+#routeForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#routeForm .form-label {
+    font-weight: bold;
+    color: #495057;
+}
+
+#routeForm .form-control, 
+#routeForm .form-select {
+    margin-bottom: 15px;
+}
+
+#routeForm button {
+    width: 100%;
+}
+
+/* Mapa */
 #map {
-    flex: 1;
-    height: 100%;
+    height: 500px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin-bottom: 30px;
 }
 
-#controls {
-    width: 300px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    background: #fff;
-    overflow-y: auto;
+/* Tabela de resultados */
+.table-responsive {
+    margin-top: 20px;
 }
 
-#waypoints {
-    margin-top: 10px;
+#resultsTable th {
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
 }
 
-.waypoint {
-    display: flex;
-    margin-bottom: 5px;
+#resultsTable td {
+    text-align: center;
 }
 
-.waypoint input {
-    flex: 1;
-    margin-right: 5px;
+#resultsTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Botões de download */
+.download-buttons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.download-buttons .btn {
+    margin: 5px;
+}
+
+/* Responsividade */
+@media (max-width: 767px) {
+    #routeForm .row {
+        flex-direction: column;
+    }
+    
+    #routeForm .col-md-6 {
+        width: 100%;
+    }
+    
+    #routeForm button {
+        margin-top: 10px;
+    }
 }
