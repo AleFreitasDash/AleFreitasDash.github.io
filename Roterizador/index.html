@@ -18,7 +18,7 @@
             <h1 class="h4 text-center">Calculadora de Rotas com Capacidade de Veículo</h1>
         </div>
         <div class="card-body">
-            <form id="routeForm">
+            <form id="routeForm" onsubmit="return false;">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -55,7 +55,7 @@
                     <label for="numRoutes">Quantidade de Rotas:</label>
                     <input type="number" class="form-control" id="numRoutes" min="1" value="1">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Calcular Rotas</button>
+                <button type="submit" class="btn btn-primary btn-block" id="calculateRoutesButton">Calcular Rotas</button>
             </form>
         </div>
     </div>
@@ -109,6 +109,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <!-- Custom JS -->
 <script src="app.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#routeForm').on('submit', function(event) {
+            event.preventDefault(); // Prevenir o recarregamento da página ao enviar o formulário
+            calculateRoutes(); // Função para calcular rotas
+        });
+    });
+</script>
 
 </body>
 </html>
