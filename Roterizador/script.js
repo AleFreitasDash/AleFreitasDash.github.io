@@ -1,212 +1,217 @@
-// app.js
-
 $(document).ready(function () {
     // Definição dos veículos e suas capacidades
-    var vehicles = [
-		{ type: 'Fiorino', capacity: 500 },
+    const vehicles = [
+        { type: 'Fiorino', capacity: 500 },
         { type: 'Van', capacity: 1500 },
-		{ type: 'Vuc', capacity: 2200 },
-		{ type: '34', capacity: 3200 },
-		{ type: 'Toco', capacity: 6800 },
-		{ type: 'Truck', capacity: 12000 },
-		{ type: 'Bitruck', capacity: 18000 },
+        { type: 'VUC', capacity: 2200 },
+        { type: '3/4', capacity: 3200 },
+        { type: 'Toco', capacity: 6800 },
+        { type: 'Truck', capacity: 12000 },
+        { type: 'Bitruck', capacity: 18000 },
         { type: 'Carreta', capacity: 27000 }
     ];
 
-    var map = L.map('map').setView([-23.0291596, -46.9752306], 5); // Centralizado em Vinhedo - SP
+    const map = L.map('map').setView([-23.0291596, -46.9752306], 5); // Centralizado em Vinhedo - SP
 
     // Adiciona o tile layer do OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    var markers = [];
-    var polylines = [];
+    let markers = [];
+    let polylines = [];
 
     $('#routeForm').on('submit', function (e) {
         e.preventDefault();
         calculateRoutes();
     });
 
-    function calculateRoutes() {
-        var origin = $('#origin').val();
-        var destinationsText = $('#destinations').val();
-        var selectedVehicleType = $('#vehicleType').val();
-        var numRoutes = parseInt($('#numRoutes').val());
+    async function calculateRoutes() {
+        const originInput = $('#origin').val().trim();
+        const destinationsText = $('#destinations').val().trim();
+        const selectedVehicleType = $('#vehicleType').val();
+        const numRoutes = parseInt($('#numRoutes').val());
 
         // Obter veículo selecionado
-        var selectedVehicle = vehicles.find(v => v.type === selectedVehicleType);
+        let selectedVehicle = vehicles.find(v => v.type === selectedVehicleType);
 
-        // Obter destinos e pesos
-        var destinations = [];
+        if (!originInput) {
+            alert('Por favor, insira o endereço de origem.');
+            return;
+        }
 
-        if (destinationsText.trim() !== '') {
+        if (!selectedVehicle) {
+            alert('Por favor, selecione um tipo de veículo.');
+            return;
+        }
+
+        if (isNaN(numRoutes) || numRoutes < 1) {
+            alert('Por favor, insira um número válido de rotas.');
+            return;
+        }
+
+        let destinations = [];
+
+        if (destinationsText !== '') {
             // Processar entrada de texto
-            destinations = destinationsText.split('\n').map(function (line) {
-                var parts = line.split(';');
-                // Remover espaços extras e tabulações
-                var address = parts[0].replace(/\s+/g, ' ').trim();
-                var weight = parseFloat(parts[1]) || 0;
-                return {
-                    address: address,
-                    weight: weight
-                };
-            }).filter(function (dest) {
-                return dest.address !== '';
-            });
-
-            proceedWithCalculations();
+            destinations = parseDestinations(destinationsText);
         } else if ($('#fileUpload')[0].files.length > 0) {
             // Processar arquivo XLSX
-            var file = $('#fileUpload')[0].files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                var data = new Uint8Array(e.target.result);
-                var workbook = XLSX.read(data, { type: 'array' });
-                var firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                var sheetData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-                destinations = sheetData.map(function (row) {
-                    var address = (row[0] || '').toString().replace(/\s+/g, ' ').trim();
-                    var weight = parseFloat(row[1]) || 0;
-                    return {
-                        address: address,
-                        weight: weight
-                    };
-                }).filter(function (dest) {
-                    return dest.address !== '';
-                });
-
-                proceedWithCalculations();
-            };
-            reader.readAsArrayBuffer(file);
+            try {
+                destinations = await parseDestinationsFromFile($('#fileUpload')[0].files[0]);
+            } catch (error) {
+                alert('Erro ao processar o arquivo: ' + error.message);
+                return;
+            }
         } else {
             alert('Por favor, insira destinos e pesos ou faça upload de um arquivo XLSX.');
             return;
         }
 
-        function proceedWithCalculations() {
-            if (!origin || destinations.length === 0) {
-                alert('Por favor, insira a origem e pelo menos um destino.');
+        if (destinations.length === 0) {
+            alert('Nenhum destino válido foi fornecido.');
+            return;
+        }
+
+        // Limpar mapa e resultados anteriores
+        clearMapAndResults();
+
+        try {
+            const originLocation = await geocodeAddress(originInput);
+            if (!originLocation) {
+                alert('Endereço de origem não encontrado: ' + originInput);
                 return;
             }
 
-            if (isNaN(numRoutes) || numRoutes < 1) {
-                alert('Por favor, insira um número válido de rotas.');
+            const destinationLocations = await geocodeDestinations(destinations);
+
+            if (destinationLocations.length === 0) {
+                alert('Nenhum destino válido foi encontrado após geocodificação.');
                 return;
             }
 
-            // Limpa marcadores, polilinhas e tabela
-            markers.forEach(function (marker) {
-                map.removeLayer(marker);
-            });
-            polylines.forEach(function (polyline) {
-                map.removeLayer(polyline);
-            });
-            markers = [];
-            polylines = [];
-            $('#resultsTable tbody').empty();
-
-            // Limpar e formatar a origem
-            origin = origin.replace(/\s+/g, ' ').trim();
-
-            // Geocodifica a origem
-            geocodeAddress(origin, function (originData) {
-                if (!originData) {
-                    alert('Endereço de origem não encontrado: ' + origin);
-                    return;
-                }
-
-                var originLocation = {
-                    type: 'origin',
-                    address: origin,
-                    lat: parseFloat(originData.lat),
-                    lon: parseFloat(originData.lon)
-                };
-
-                // Geocodifica destinos
-                var geocodePromises = destinations.map(function (dest) {
-                    return new Promise(function (resolve) {
-                        geocodeAddress(dest.address, function (destData) {
-                            if (destData) {
-                                resolve({
-                                    type: 'destination',
-                                    address: dest.address,
-                                    lat: parseFloat(destData.lat),
-                                    lon: parseFloat(destData.lon),
-                                    weight: dest.weight
-                                });
-                            } else {
-                                alert('Endereço não encontrado: ' + dest.address);
-                                resolve(null);
-                            }
-                        });
-                    });
-                });
-
-                Promise.all(geocodePromises).then(function (destResults) {
-                    destResults = destResults.filter(function (res) {
-                        return res !== null;
-                    });
-
-                    if (destResults.length < 1) {
-                        alert('Nenhum destino válido encontrado.');
-                        return;
-                    }
-
-                    calculateAndDisplayRoutes(originLocation, destResults, selectedVehicle, numRoutes);
-                });
-            });
+            calculateAndDisplayRoutes(originLocation, destinationLocations, selectedVehicle, numRoutes);
+        } catch (error) {
+            alert('Erro ao calcular rotas: ' + error.message);
         }
     }
 
-    function geocodeAddress(address, callback) {
-		var encodedAddress = encodeURIComponent(address);
-        var url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodedAddress;
-
-        console.log('Endereço original:', address);
-        console.log('Endereço codificado:', encodedAddress);
-
-        $.getJSON(url, function (data) {
-            if (data && data.length > 0) {
-                callback(data[0]);
+    function parseDestinations(text) {
+        return text.split('\n').map(line => {
+            const parts = line.split(';');
+            const address = parts[0].trim();
+            const weight = parseFloat(parts[1]);
+            if (address && !isNaN(weight)) {
+                return { address, weight };
             } else {
-                callback(null);
+                return null;
             }
-        }).fail(function () {
-            callback(null);
+        }).filter(dest => dest !== null);
+    }
+
+    function parseDestinationsFromFile(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const sheetData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+                    const destinations = sheetData.map(row => {
+                        const address = (row[0] || '').toString().trim();
+                        const weight = parseFloat(row[1]);
+                        if (address && !isNaN(weight)) {
+                            return { address, weight };
+                        } else {
+                            return null;
+                        }
+                    }).filter(dest => dest !== null);
+
+                    resolve(destinations);
+                } catch (error) {
+                    reject(error);
+                }
+            };
+            reader.onerror = function (error) {
+                reject(error);
+            };
+            reader.readAsArrayBuffer(file);
         });
+    }
+
+    function clearMapAndResults() {
+        // Remover marcadores e polilinhas
+        markers.forEach(marker => map.removeLayer(marker));
+        polylines.forEach(polyline => map.removeLayer(polyline));
+        markers = [];
+        polylines = [];
+        // Limpar tabela de resultados
+        $('#resultsTable tbody').empty();
+    }
+
+    function geocodeAddress(address) {
+        return new Promise((resolve) => {
+            const encodedAddress = encodeURIComponent(address);
+            const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodedAddress}`;
+
+            $.getJSON(url, data => {
+                if (data && data.length > 0) {
+                    const result = data[0];
+                    resolve({
+                        address: address,
+                        lat: parseFloat(result.lat),
+                        lon: parseFloat(result.lon)
+                    });
+                } else {
+                    resolve(null);
+                }
+            }).fail(() => {
+                resolve(null);
+            });
+        });
+    }
+
+    async function geocodeDestinations(destinations) {
+        const geocodedDestinations = [];
+
+        for (const dest of destinations) {
+            const location = await geocodeAddress(dest.address);
+            if (location) {
+                geocodedDestinations.push({
+                    ...location,
+                    weight: dest.weight
+                });
+            } else {
+                alert('Endereço não encontrado: ' + dest.address);
+            }
+        }
+
+        return geocodedDestinations;
     }
 
     function splitDestinationsIntoRoutes(destinations, vehicleCapacity, numRoutes) {
-        // Ordenar destinos por peso decrescente (heurística simples)
-        destinations.sort(function (a, b) {
-            return b.weight - a.weight;
-        });
+        // Ordenar destinos por peso decrescente
+        destinations.sort((a, b) => b.weight - a.weight);
 
-        // Inicializar rotas vazias
-        var routes = [];
-        for (var i = 0; i < numRoutes; i++) {
-            routes.push({
-                destinations: [],
-                totalWeight: 0
-            });
-        }
+        const routes = Array.from({ length: numRoutes }, () => ({
+            destinations: [],
+            totalWeight: 0
+        }));
 
-        var unassignedDestinations = [];
+        const unassignedDestinations = [];
 
-        // Atribuir destinos às rotas
-        destinations.forEach(function (dest) {
+        destinations.forEach(dest => {
             // Encontrar a rota com menor peso total que possa acomodar o destino
-            var suitableRoute = null;
+            let suitableRoute = null;
 
-            routes.forEach(function (route) {
+            for (const route of routes) {
                 if (route.totalWeight + dest.weight <= vehicleCapacity) {
-                    if (!suitableRoute || route.totalWeight < suitableRoute.totalWeight) {
-                        suitableRoute = route;
-                    }
+                    suitableRoute = route;
+                    break;
                 }
-            });
+            }
 
             if (suitableRoute) {
                 suitableRoute.destinations.push(dest);
@@ -217,32 +222,21 @@ $(document).ready(function () {
             }
         });
 
-        return { routes: routes, unassignedDestinations: unassignedDestinations };
+        return { routes, unassignedDestinations };
     }
 
-    function calculateAndDisplayRoutes(origin, destinations, selectedVehicle, numRoutes) {
-        var totalDistance = 0;
-        var routePromises = [];
-        var routeIndex = 1;
-
-        // Se nenhum veículo for selecionado, determinar o veículo adequado para cada rota
-        if (!selectedVehicle) {
-            // Vamos assumir inicialmente que o veículo é o de maior capacidade
-            selectedVehicle = vehicles[vehicles.length - 1]; // Veículo com maior capacidade
-        }
+    async function calculateAndDisplayRoutes(origin, destinations, selectedVehicle, numRoutes) {
+        let totalDistance = 0;
+        const routePromises = [];
 
         // Dividir destinos em rotas com base na capacidade e no número de rotas
-        var result = splitDestinationsIntoRoutes(destinations, selectedVehicle.capacity, numRoutes);
-        var routes = result.routes;
-        var unassignedDestinations = result.unassignedDestinations;
+        const { routes, unassignedDestinations } = splitDestinationsIntoRoutes(destinations, selectedVehicle.capacity, numRoutes);
 
         // Lidar com destinos não atribuídos
         if (unassignedDestinations.length > 0) {
-            unassignedDestinations.forEach(function (dest) {
+            for (const dest of unassignedDestinations) {
                 // Tentar encontrar um veículo que suporte esta entrega
-                var vehicleForDestination = vehicles.find(function (v) {
-                    return v.capacity >= dest.weight;
-                });
+                const vehicleForDestination = vehicles.find(v => v.capacity >= dest.weight);
 
                 if (vehicleForDestination) {
                     // Criar uma nova rota para esta entrega
@@ -252,112 +246,124 @@ $(document).ready(function () {
                         vehicle: vehicleForDestination
                     });
                 } else {
-                    alert('Nenhum veículo disponível suporta a entrega para ' + dest.address + ' (Peso: ' + dest.weight + ' kg)');
+                    alert(`Nenhum veículo disponível suporta a entrega para ${dest.address} (Peso: ${dest.weight} kg)`);
                 }
-            });
+            }
         }
 
-        routes.forEach(function (route, routeIdx) {
-            var routeDestinations = route.destinations;
+        let routeIdx = 1;
+        for (const route of routes) {
+            const routeDestinations = route.destinations;
 
             // Determinar o veículo adequado para esta rota com base no peso total
-            var routeVehicle = route.vehicle || selectedVehicle;
+            let routeVehicle = route.vehicle || selectedVehicle;
 
             // Encontrar o menor veículo que suporte o peso total da rota
-            var routeTotalWeight = route.totalWeight;
-            routeVehicle = vehicles.find(function (v) {
-                return v.capacity >= routeTotalWeight;
-            });
+            const routeTotalWeight = route.totalWeight;
+            routeVehicle = vehicles.find(v => v.capacity >= routeTotalWeight) || vehicles[vehicles.length - 1];
 
-            if (!routeVehicle) {
-                alert('Nenhum veículo disponível suporta o peso total da rota ' + (routeIdx + 1));
-                return;
+            for (let index = 0; index < routeDestinations.length; index++) {
+                const destination = routeDestinations[index];
+                try {
+                    const distanceKm = await calculateRouteDistance(origin, destination);
+
+                    totalDistance += distanceKm;
+
+                    // Desenha a rota no mapa
+                    drawRouteOnMap(origin, destination);
+
+                    // Adiciona marcadores
+                    addMarkersToMap(origin, destination);
+
+                    // Adiciona dados na tabela
+                    addToResultsTable(routeIdx, index + 1, origin.address, destination.address, destination.weight, distanceKm, routeVehicle.type);
+                } catch (error) {
+                    alert('Erro ao calcular rota para ' + destination.address + ': ' + error.message);
+                }
             }
+            routeIdx++;
+        }
 
-            routeDestinations.forEach(function (destination, index) {
-                var delay = (routeIdx * routeDestinations.length + index) * 500; // Ajuste do delay
-                var promise = new Promise(function (resolve) {
-                    setTimeout(function () {
-                        var coordinates = origin.lon + ',' + origin.lat + ';' + destination.lon + ',' + destination.lat;
-                        var url = 'https://router.project-osrm.org/route/v1/driving/' + coordinates + '?overview=full&geometries=geojson';
+        // Ajusta o zoom do mapa para mostrar todos os marcadores
+        adjustMapZoom();
 
-                        $.getJSON(url, function (data) {
-                            if (data && data.routes && data.routes.length > 0) {
-                                var routeData = data.routes[0];
-                                var distanceKm = (routeData.distance / 1000).toFixed(2);
-                                totalDistance += parseFloat(distanceKm);
+        // Exibe a distância total
+        displayTotalDistance(totalDistance);
+    }
 
-                                // Desenha a rota no mapa
-                                var geojson = L.geoJSON(routeData.geometry, {
-                                    style: function () {
-                                        return { color: getRandomColor() };
-                                    }
-                                }).addTo(map);
-                                polylines.push(geojson);
+    function calculateRouteDistance(origin, destination) {
+        return new Promise((resolve, reject) => {
+            const coordinates = `${origin.lon},${origin.lat};${destination.lon},${destination.lat}`;
+            const url = `https://router.project-osrm.org/route/v1/driving/${coordinates}?overview=false`;
 
-                                // Adiciona marcadores
-                                var originMarker = L.marker([origin.lat, origin.lon]).addTo(map);
-                                originMarker.bindPopup('Origem: ' + origin.address);
-                                markers.push(originMarker);
-
-                                var destMarker = L.marker([destination.lat, destination.lon]).addTo(map);
-                                destMarker.bindPopup('Destino: ' + destination.address);
-                                markers.push(destMarker);
-
-                                // Adiciona dados na tabela
-                                $('#resultsTable tbody').append(
-                                    '<tr>' +
-                                    '<td>' + (routeIdx + 1) + '</td>' +
-                                    '<td>' + (index + 1) + '</td>' +
-                                    '<td>' + origin.address + '</td>' +
-                                    '<td>' + destination.address + '</td>' +
-                                    '<td>' + destination.weight + '</td>' +
-                                    '<td>' + distanceKm + '</td>' +
-                                    '<td>' + routeVehicle.type + '</td>' +
-                                    '</tr>'
-                                );
-
-                                resolve();
-                            } else {
-                                alert('Não foi possível calcular a rota para ' + destination.address);
-                                resolve();
-                            }
-                        }).fail(function () {
-                            alert('Erro ao solicitar dados de roteamento para ' + destination.address);
-                            resolve();
-                        });
-                    }, delay);
-                });
-
-                routePromises.push(promise);
+            $.getJSON(url, data => {
+                if (data && data.routes && data.routes.length > 0) {
+                    const routeData = data.routes[0];
+                    const distanceKm = routeData.distance / 1000;
+                    resolve(distanceKm);
+                } else {
+                    reject(new Error('Dados de rota inválidos.'));
+                }
+            }).fail(() => {
+                reject(new Error('Erro na solicitação ao serviço de roteamento.'));
             });
-
-            routeIndex++;
-        });
-
-        // Após todas as rotas serem processadas
-        Promise.all(routePromises).then(function () {
-            // Ajusta o zoom do mapa para mostrar todos os marcadores
-            var group = new L.featureGroup(markers);
-            if (group.getBounds().isValid()) {
-                map.fitBounds(group.getBounds().pad(0.5));
-            }
-
-            // Exibe a distância total
-            $('#resultsTable tbody').append(
-                '<tr>' +
-                '<td colspan="5"><strong>Distância Total</strong></td>' +
-                '<td><strong>' + totalDistance.toFixed(2) + '</strong></td>' +
-                '<td></td>' +
-                '</tr>'
-            );
         });
     }
 
+    function drawRouteOnMap(origin, destination) {
+        const latlngs = [
+            [origin.lat, origin.lon],
+            [destination.lat, destination.lon]
+        ];
+        const polyline = L.polyline(latlngs, { color: getRandomColor() }).addTo(map);
+        polylines.push(polyline);
+    }
+
+    function addMarkersToMap(origin, destination) {
+        const originMarker = L.marker([origin.lat, origin.lon]).addTo(map);
+        originMarker.bindPopup('Origem: ' + origin.address);
+        markers.push(originMarker);
+
+        const destMarker = L.marker([destination.lat, destination.lon]).addTo(map);
+        destMarker.bindPopup('Destino: ' + destination.address);
+        markers.push(destMarker);
+    }
+
+    function addToResultsTable(routeNumber, sequence, originAddress, destinationAddress, weight, distanceKm, vehicleType) {
+        $('#resultsTable tbody').append(
+            `<tr>
+                <td>${routeNumber}</td>
+                <td>${sequence}</td>
+                <td>${originAddress}</td>
+                <td>${destinationAddress}</td>
+                <td>${weight}</td>
+                <td>${distanceKm.toFixed(2)}</td>
+                <td>${vehicleType}</td>
+            </tr>`
+        );
+    }
+
+    function adjustMapZoom() {
+        const group = new L.featureGroup(markers);
+        if (group.getBounds().isValid()) {
+            map.fitBounds(group.getBounds().pad(0.5));
+        }
+    }
+
+    function displayTotalDistance(totalDistance) {
+        $('#resultsTable tbody').append(
+            `<tr>
+                <td colspan="5"><strong>Distância Total</strong></td>
+                <td><strong>${totalDistance.toFixed(2)}</strong></td>
+                <td></td>
+            </tr>`
+        );
+    }
+
     function getRandomColor() {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
@@ -366,26 +372,26 @@ $(document).ready(function () {
     // Funções de download
 
     $('#downloadXLSX').on('click', function () {
-        var wb = XLSX.utils.table_to_book(document.getElementById('resultsTable'), { sheet: "Resultados" });
+        const wb = XLSX.utils.table_to_book(document.getElementById('resultsTable'), { sheet: "Resultados" });
         XLSX.writeFile(wb, 'rotas.xlsx');
     });
 
     $('#downloadPDF').on('click', function () {
-        var doc = new jsPDF();
+        const doc = new jsPDF();
         doc.autoTable({ html: '#resultsTable' });
         doc.save('rotas.pdf');
     });
 
     $('#downloadTXT').on('click', function () {
-        var text = '';
+        let text = '';
         $('#resultsTable tr').each(function () {
-            var row = [];
+            const row = [];
             $(this).find('th, td').each(function () {
                 row.push($(this).text());
             });
             text += row.join('\t') + '\n';
         });
-        var blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+        const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
         saveAs(blob, 'rotas.txt');
     });
 });
