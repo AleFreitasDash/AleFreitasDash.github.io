@@ -11,9 +11,10 @@ $(document).ready(function () {
         { type: 'Carreta', capacity: 27000 }
     ];
 
+    // Inicialização do mapa Leaflet
     const map = L.map('map').setView([-23.0291596, -46.9752306], 5); // Centralizado em Vinhedo - SP
 
-    // Adiciona o tile layer do OpenStreetMap
+    // Adiciona o tile layer do OpenStreetMap ao mapa
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
@@ -21,26 +22,27 @@ $(document).ready(function () {
     let markers = [];
     let polylines = [];
 
+    // Evento ao submeter o formulário
     $('#routeForm').on('submit', function (e) {
         e.preventDefault();
         calculateRoutes();
     });
 
+    // Função principal para calcular as rotas
     async function calculateRoutes() {
+        // Obtenção dos valores dos campos do formulário
         const originInput = $('#origin').val().trim();
         const destinationsText = $('#destinations').val().trim();
         const selectedVehicleType = $('#vehicleType').val();
         const numRoutes = parseInt($('#numRoutes').val());
 
-        // Obter veículo selecionado
-        let selectedVehicle = vehicles.find(v => v.type === selectedVehicleType);
-
+        // Verificações básicas dos campos
         if (!originInput) {
             alert('Por favor, insira o endereço de origem.');
             return;
         }
 
-        if (!selectedVehicle) {
+        if (!selectedVehicleType) {
             alert('Por favor, selecione um tipo de veículo.');
             return;
         }
@@ -50,13 +52,15 @@ $(document).ready(function () {
             return;
         }
 
+        // Seleciona o veículo com base no tipo escolhido
+        let selectedVehicle = vehicles.find(v => v.type === selectedVehicleType);
+
         let destinations = [];
 
+        // Processa os destinos a partir do texto ou arquivo
         if (destinationsText !== '') {
-            // Processar entrada de texto
             destinations = parseDestinations(destinationsText);
         } else if ($('#fileUpload')[0].files.length > 0) {
-            // Processar arquivo XLSX
             try {
                 destinations = await parseDestinationsFromFile($('#fileUpload')[0].files[0]);
             } catch (error) {
@@ -73,16 +77,18 @@ $(document).ready(function () {
             return;
         }
 
-        // Limpar mapa e resultados anteriores
+        // Limpa o mapa e resultados anteriores
         clearMapAndResults();
 
         try {
+            // Geocodifica a origem
             const originLocation = await geocodeAddress(originInput);
             if (!originLocation) {
                 alert('Endereço de origem não encontrado: ' + originInput);
                 return;
             }
 
+            // Geocodifica os destinos
             const destinationLocations = await geocodeDestinations(destinations);
 
             if (destinationLocations.length === 0) {
@@ -90,12 +96,14 @@ $(document).ready(function () {
                 return;
             }
 
+            // Calcula e exibe as rotas no mapa e na tabela
             calculateAndDisplayRoutes(originLocation, destinationLocations, selectedVehicle, numRoutes);
         } catch (error) {
             alert('Erro ao calcular rotas: ' + error.message);
         }
     }
 
+    // Função para analisar os destinos a partir do texto
     function parseDestinations(text) {
         return text.split('\n').map(line => {
             const parts = line.split(';');
@@ -109,6 +117,7 @@ $(document).ready(function () {
         }).filter(dest => dest !== null);
     }
 
+    // Função para analisar os destinos a partir de um arquivo XLSX
     function parseDestinationsFromFile(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -141,16 +150,16 @@ $(document).ready(function () {
         });
     }
 
+    // Função para limpar o mapa e os resultados anteriores
     function clearMapAndResults() {
-        // Remover marcadores e polilinhas
         markers.forEach(marker => map.removeLayer(marker));
         polylines.forEach(polyline => map.removeLayer(polyline));
         markers = [];
         polylines = [];
-        // Limpar tabela de resultados
         $('#resultsTable tbody').empty();
     }
 
+    // Função para geocodificar um endereço usando o Nominatim
     function geocodeAddress(address) {
         return new Promise((resolve) => {
             const encodedAddress = encodeURIComponent(address);
@@ -173,6 +182,7 @@ $(document).ready(function () {
         });
     }
 
+    // Função para geocodificar uma lista de destinos
     async function geocodeDestinations(destinations) {
         const geocodedDestinations = [];
 
@@ -191,8 +201,9 @@ $(document).ready(function () {
         return geocodedDestinations;
     }
 
+    // Função para dividir os destinos em rotas com base na capacidade do veículo
     function splitDestinationsIntoRoutes(destinations, vehicleCapacity, numRoutes) {
-        // Ordenar destinos por peso decrescente
+        // Ordena os destinos por peso decrescente
         destinations.sort((a, b) => b.weight - a.weight);
 
         const routes = Array.from({ length: numRoutes }, () => ({
@@ -203,7 +214,7 @@ $(document).ready(function () {
         const unassignedDestinations = [];
 
         destinations.forEach(dest => {
-            // Encontrar a rota com menor peso total que possa acomodar o destino
+            // Tenta encontrar uma rota que possa acomodar o destino
             let suitableRoute = null;
 
             for (const route of routes) {
@@ -225,21 +236,21 @@ $(document).ready(function () {
         return { routes, unassignedDestinations };
     }
 
+    // Função para calcular e exibir as rotas no mapa e na tabela
     async function calculateAndDisplayRoutes(origin, destinations, selectedVehicle, numRoutes) {
         let totalDistance = 0;
-        const routePromises = [];
 
-        // Dividir destinos em rotas com base na capacidade e no número de rotas
+        // Divide os destinos em rotas com base na capacidade do veículo
         const { routes, unassignedDestinations } = splitDestinationsIntoRoutes(destinations, selectedVehicle.capacity, numRoutes);
 
-        // Lidar com destinos não atribuídos
+        // Trata os destinos não atribuídos
         if (unassignedDestinations.length > 0) {
             for (const dest of unassignedDestinations) {
-                // Tentar encontrar um veículo que suporte esta entrega
+                // Tenta encontrar um veículo que suporte esta entrega
                 const vehicleForDestination = vehicles.find(v => v.capacity >= dest.weight);
 
                 if (vehicleForDestination) {
-                    // Criar uma nova rota para esta entrega
+                    // Cria uma nova rota para esta entrega
                     routes.push({
                         destinations: [dest],
                         totalWeight: dest.weight,
@@ -255,10 +266,10 @@ $(document).ready(function () {
         for (const route of routes) {
             const routeDestinations = route.destinations;
 
-            // Determinar o veículo adequado para esta rota com base no peso total
+            // Determina o veículo adequado para esta rota com base no peso total
             let routeVehicle = route.vehicle || selectedVehicle;
 
-            // Encontrar o menor veículo que suporte o peso total da rota
+            // Encontra o menor veículo que suporte o peso total da rota
             const routeTotalWeight = route.totalWeight;
             routeVehicle = vehicles.find(v => v.capacity >= routeTotalWeight) || vehicles[vehicles.length - 1];
 
@@ -272,10 +283,10 @@ $(document).ready(function () {
                     // Desenha a rota no mapa
                     drawRouteOnMap(origin, destination);
 
-                    // Adiciona marcadores
+                    // Adiciona marcadores ao mapa
                     addMarkersToMap(origin, destination);
 
-                    // Adiciona dados na tabela
+                    // Adiciona dados na tabela de resultados
                     addToResultsTable(routeIdx, index + 1, origin.address, destination.address, destination.weight, distanceKm, routeVehicle.type);
                 } catch (error) {
                     alert('Erro ao calcular rota para ' + destination.address + ': ' + error.message);
@@ -287,10 +298,11 @@ $(document).ready(function () {
         // Ajusta o zoom do mapa para mostrar todos os marcadores
         adjustMapZoom();
 
-        // Exibe a distância total
+        // Exibe a distância total na tabela de resultados
         displayTotalDistance(totalDistance);
     }
 
+    // Função para calcular a distância da rota entre dois pontos usando o OSRM
     function calculateRouteDistance(origin, destination) {
         return new Promise((resolve, reject) => {
             const coordinates = `${origin.lon},${origin.lat};${destination.lon},${destination.lat}`;
@@ -310,6 +322,7 @@ $(document).ready(function () {
         });
     }
 
+    // Função para desenhar a rota no mapa
     function drawRouteOnMap(origin, destination) {
         const latlngs = [
             [origin.lat, origin.lon],
@@ -319,6 +332,7 @@ $(document).ready(function () {
         polylines.push(polyline);
     }
 
+    // Função para adicionar marcadores de origem e destino ao mapa
     function addMarkersToMap(origin, destination) {
         const originMarker = L.marker([origin.lat, origin.lon]).addTo(map);
         originMarker.bindPopup('Origem: ' + origin.address);
@@ -329,6 +343,7 @@ $(document).ready(function () {
         markers.push(destMarker);
     }
 
+    // Função para adicionar informações na tabela de resultados
     function addToResultsTable(routeNumber, sequence, originAddress, destinationAddress, weight, distanceKm, vehicleType) {
         $('#resultsTable tbody').append(
             `<tr>
@@ -343,6 +358,7 @@ $(document).ready(function () {
         );
     }
 
+    // Função para ajustar o zoom do mapa para mostrar todos os marcadores
     function adjustMapZoom() {
         const group = new L.featureGroup(markers);
         if (group.getBounds().isValid()) {
@@ -350,6 +366,7 @@ $(document).ready(function () {
         }
     }
 
+    // Função para exibir a distância total na tabela de resultados
     function displayTotalDistance(totalDistance) {
         $('#resultsTable tbody').append(
             `<tr>
@@ -360,6 +377,7 @@ $(document).ready(function () {
         );
     }
 
+    // Função para gerar uma cor aleatória para as rotas no mapa
     function getRandomColor() {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -369,8 +387,7 @@ $(document).ready(function () {
         return color;
     }
 
-    // Funções de download
-
+    // Funções para download dos resultados em diferentes formatos
     $('#downloadXLSX').on('click', function () {
         const wb = XLSX.utils.table_to_book(document.getElementById('resultsTable'), { sheet: "Resultados" });
         XLSX.writeFile(wb, 'rotas.xlsx');
