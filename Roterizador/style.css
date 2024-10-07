@@ -9,23 +9,25 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
+    line-height: 1.6;
 }
 
 /* Cabeçalho */
 header {
     background-color: #007bff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-size: 1.75rem;
+    font-size: 2rem;
 }
 
 /* Formulário */
 #routeForm {
     background-color: #fff;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
 }
 
 #routeForm .form-label {
@@ -41,10 +43,19 @@ header h1 {
     font-size: 0.9rem;
 }
 
+#routeForm .btn-primary {
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+#routeForm .btn-primary:hover {
+    background-color: #0056b3;
+}
+
 /* Mapa */
 #map {
     height: 500px;
-    border: 1px solid #ced4da;
+    border: 2px solid #ced4da;
     border-radius: 5px;
 }
 
@@ -69,15 +80,11 @@ header h1 {
     background-color: #f1f1f1;
 }
 
-/* Botões de download */
-.download-buttons .btn {
-    width: 200px;
-    margin-bottom: 10px;
-}
-
 /* Rodapé */
 footer {
     background-color: #e9ecef;
+    padding: 10px 0;
+    text-align: center;
 }
 
 footer small {
@@ -90,7 +97,7 @@ footer small {
         font-size: 1.5rem;
     }
 
-    .download-buttons .btn {
+    .btn {
         width: 100%;
     }
 }
