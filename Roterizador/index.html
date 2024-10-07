@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <style>
-        #map {
-            height: 500px;
-            margin-bottom: 20px;
-        }
-    </style>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="container">
-    <h1 class="mt-4">Calculadora de Rotas com Capacidade de Veículo</h1>
-    <form id="routeForm">
-        <div class="row mb-3">
+<header class="bg-primary text-white py-3">
+    <div class="container">
+        <h1 class="mb-0">Calculadora de Rotas com Capacidade de Veículo</h1>
+    </div>
+</header>
+
+<main class="container my-4">
+    <form id="routeForm" class="needs-validation" novalidate>
+        <div class="row g-3">
             <div class="col-md-6">
                 <label for="origin" class="form-label">Origem:</label>
                 <input type="text" class="form-control" id="origin" placeholder="Digite o endereço de origem" required>
+                <div class="invalid-feedback">
+                    Por favor, insira o endereço de origem.
+                </div>
             </div>
             <div class="col-md-6">
                 <label for="vehicleType" class="form-label">Tipo de Veículo:</label>
@@ -37,37 +41,53 @@
                     <option value="Bitruck">Bitruck (Capacidade: 18000 kg)</option>
                     <option value="Carreta">Carreta (Capacidade: 27000 kg)</option>
                 </select>
+                <div class="invalid-feedback">
+                    Por favor, selecione um tipo de veículo.
+                </div>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="destinations" class="form-label">Destinos e Pesos (um por linha, formato: Destino;Peso em kg):</label>
-            <textarea class="form-control" id="destinations" rows="6" placeholder="Exemplo: São Paulo;100"></textarea>
+
+        <div class="my-3">
+            <label for="destinations" class="form-label">Destinos e Pesos:</label>
+            <textarea class="form-control" id="destinations" rows="5" placeholder="Digite um destino por linha no formato: Destino;Peso em kg"></textarea>
+            <div class="form-text">
+                Exemplo: <em>São Paulo;100</em>
+            </div>
         </div>
-        <div class="mb-3">
+
+        <div class="my-3">
             <label for="fileUpload" class="form-label">Ou faça upload de um arquivo XLSX com destinos e pesos:</label>
             <input type="file" class="form-control" id="fileUpload" accept=".xlsx">
         </div>
-        <div class="mb-3">
-            <label for="numRoutes" class="form-label">Quantidade de Rotas:</label>
-            <input type="number" class="form-control" id="numRoutes" min="1" value="1">
+
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="numRoutes" class="form-label">Quantidade de Rotas:</label>
+                <input type="number" class="form-control" id="numRoutes" min="1" value="1" required>
+                <div class="invalid-feedback">
+                    Por favor, insira a quantidade de rotas.
+                </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Calcular Rotas</button>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Calcular Rotas</button>
     </form>
 
     <div id="map" class="my-4"></div>
 
-    <h2>Resultados</h2>
+    <h2 class="mt-5">Resultados</h2>
     <div class="table-responsive">
-        <table class="table table-striped" id="resultsTable">
-            <thead>
+        <table class="table table-striped table-hover" id="resultsTable">
+            <thead class="table-dark">
                 <tr>
                     <th>Rota</th>
-                    <th>Sequência de Entrega</th>
+                    <th>Sequência</th>
                     <th>Origem</th>
                     <th>Destino</th>
                     <th>Peso (kg)</th>
-                    <th>Distância (KM)</th>
-                    <th>Tipo de Veículo</th>
+                    <th>Distância (km)</th>
+                    <th>Veículo</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,12 +96,18 @@
         </table>
     </div>
 
-    <div class="mb-4">
-        <button class="btn btn-success" id="downloadXLSX">Download XLS</button>
-        <button class="btn btn-danger" id="downloadPDF">Download PDF</button>
-        <button class="btn btn-secondary" id="downloadTXT">Download TXT</button>
+    <div class="download-buttons text-center my-4">
+        <button class="btn btn-success me-2" id="downloadXLSX"><i class="bi bi-file-earmark-excel"></i> Download XLS</button>
+        <button class="btn btn-danger me-2" id="downloadPDF"><i class="bi bi-file-earmark-pdf"></i> Download PDF</button>
+        <button class="btn btn-secondary" id="downloadTXT"><i class="bi bi-file-earmark-text"></i> Download TXT</button>
     </div>
-</div>
+</main>
+
+<footer class="bg-light text-center py-3">
+    <div class="container">
+        <small>&copy; 2023 Calculadora de Rotas. Todos os direitos reservados.</small>
+    </div>
+</footer>
 
 <!-- JavaScript Libraries -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -96,6 +122,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <!-- FileSaver.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css">
 <!-- Custom Script -->
 <script src="script.js"></script>
 
